@@ -1,0 +1,119 @@
+<div id="">
+
+  <div class="row">
+
+    <div class="row">
+      <!-- <div class="input-field col s4 m4 l4">
+            <i class="material-icons prefix icon-padding">search</i>
+            <input id="term" type="text" [(ngModel)]="term">
+            <label for="term">Digite um termo</label>
+          </div> -->
+      <div class="input-field col s3 m3 l3">
+        <input type="text" name="datepicker" materialize="pickadate" [materializeParams]="[{format:'dd/mm/yyyy'}]" #dataRef />
+        <label for="referenceDate">Data de referência</label>
+      </div>
+      <div class="margin-div col s4 m4 l4">
+
+        <form action="teste">
+
+          <input type="checkbox" id="titulo" value="TIT" name="titulo" #TIT [(ngModel)]="types.TIT" />
+          <label for="titulo">Título</label>
+
+          <input type="checkbox" id="contabil" value="CTB" name="contabil" #CTB [(ngModel)]="types.CTB" />
+          <label for="contabil">Contábil</label>
+
+          <input type="checkbox" id="aging" value="AGN" name="aging" #AGN [(ngModel)]="types.AGN" />
+          <label for="aging">Aging</label>
+
+        </form>
+
+      </div>
+      <div class="col s5 m5 l5 button-search">
+        <button class="btn waves-effect waves-light blue lighten-1 left" name="action" (click)="searchChargeManagement(dataRef.value, types)">Pesquisar
+          <i class="material-icons left">search</i>
+        </button>
+        <div class="col s5 m5 l5 button-add_box">
+          <button class="btn waves-effect waves-light blue lighten-1 left" name="action" (click)="gerarLote(dataRef.value)">Gerar Lote
+            <i class="material-icons right">add_box</i>
+          </button>
+        </div>
+      </div>
+
+      <table class="striped centered grid-border">
+        <thead class="grid-background">
+          <tr>
+            <th class="grid-border">Data</th>
+            <th class="grid-border">Qtd.</th>
+            <th class="grid-border">Tipo</th>
+            <th class="grid-border">Versão</th>
+            <th class="grid-border">Versão Oficial</th>
+            <th class="grid-border">Valor</th>
+            <th class="grid-border">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of data | async | paginate: { itemsPerPage: 20, currentPage: p } | filter:term">
+            <td class="grid-border">{{ d.dataMovimentacao | date: 'dd/MM/yyyy' }}</td>
+            <td class="grid-border">{{ d.quantidade }}</td>
+            <td class="grid-border">{{ d.tipo }}</td>
+            <td class="grid-border">{{ d.versao }}</td>
+            <td class="grid-border">{{ d.versaoOficialLabel }}</td>
+            <td class="grid-border tooltip" data-position="bottom" data-tooltip="I am tooltip">{{ d.valor | number:'.2' }}
+              <span *ngIf="d.tipo === 'TIT'" class="tooltiptext"> Soma(Valor título = 'VLRMOV') </span>
+              <span *ngIf="d.tipo === 'CTB'" class="tooltiptext"> Soma(Valor crédito - Valor débito) </span>
+              <span *ngIf="d.tipo === 'AGN'" class="tooltiptext"> Soma (Saldo do título) </span>
+            </td>
+            <td class="grid-border">
+              <!-- <a class="waves-effect waves-light btn-small tooltipped" data-position="bottom" (click)="openDetails(d.id)"><i class="material-icons left">remove_red_eye</i></a> -->
+              <a class="waves-effect waves-light modal-trigger" href="#alterar">
+                <i class="material-icons left">refresh</i>
+              </a>
+              <a class="waves-effect waves-light modal-trigger" href="#remover">
+                <i class="material-icons left">delete</i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+      </pagination-controls>
+    </div>
+  </div>
+
+  <!-- <div class="row detailsCanvas" id="mySidenav" [hidden]="!this.showDetails">
+  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+  <div class="s12 m12 l12 p-15">ID: {{ details.id }}</div>
+  <div class="s12 m12 l12 p-15">Nome: {{ details.name }}</div>
+  <div class="s12 m12 l12 p-15">Nome de usuário: {{ details.username }}</div>
+  <div class="s12 m12 l12 p-15">E-mail: {{ details.email }}</div>
+  <div class="s12 m12 l12 p-15">Telefone: {{ details.phone }}</div>
+  <div class="s12 m12 l12 p-15">Site: {{ details.website }}</div>
+</div> -->
+
+  <div id="alterar" class="modal">
+    <div class="modal-header">
+      <i class="material-icons icons">edit</i>
+      <span style="vertical-align: middle;">Alterar versão oficial de movimento do dia</span>
+    </div>
+    <div class="modal-content">
+      <p>Você confirma a alteração da versão oficial para esta versão?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" (click)="mudarVersao()">Confirmar</a> {{d}}
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+    </div>
+  </div>
+
+  <div id="remover" class="modal">
+    <div class="modal-header">
+      <i class="material-icons icons">delete</i>
+      <span style="vertical-align: middle;">Remover versão do movimento do dia</span>
+    </div>
+    <div class="modal-content">
+      <p>Você confirma a remoção desta versão de carga de movimento?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" (click)="removerVersao()">Confirmar</a>
+      <a class="btn-cancel modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+    </div>
+  </div>

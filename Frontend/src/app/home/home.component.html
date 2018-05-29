@@ -1,0 +1,62 @@
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper" style="background-color: #00447d">
+      <a href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+      <a href="#" class="brand-logo header-martins"><b>Conciliação</b> - {{ currentUser.menu }}  </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
+          <a class="header-content" [routerLink]="['/']">
+            <span class="row">Bem vindo, {{ currentUser.firstName }}             <span class="new badge red">{{ currentUser.quantidade_avisos }}</span>
+          </span>
+            <span class="row">Usuário desde teste</span>
+          </a>
+        </li>
+        <li><a class= "logout-header" (click)="logout()"><i class="material-icons right">exit_to_app</i>Sair</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div class="row">
+  <div class="col s12 m4 l3">
+    <div class="side-nav" id="mobile-demo">
+      <!-- <ul class="collapsible collapsible-accordion">
+        <li>
+          <a class="collapsible-header">Cadastros<i class="material-icons">event_note</i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="#!">Arquivo</a></li>
+              <li><a href="#!">Regras Arquivo</a></li>
+              <li><a href="#!">Tipo Empresa</a></li>
+              <li><a href="#!">Tipo Arquivo</a></li>
+              <li><a href="#!">Tipo Identificador</a></li>
+              <li><a href="#!">Empresa Fornecedora</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <ul class="collapsible collapsible-accordion">
+        <li>
+          <a class="collapsible-header">Consultas<i class="material-icons">search</i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="#!">Movimentações de Arquivos</a></li>
+              <li><a href="#!">Status Arquivos Obrigatórios</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul> -->
+      <ul>
+        <li><a [routerLink]="['/home/chargeManagement']" (click)="atualizaMenu('Movimentos de cobrança e contábil')">Gestão de Cargas</a></li>
+        <li><a [routerLink]="['/home/pendingConciliation']" (click)="atualizaMenu('Controle de pendências de conciliação')">Conciliação de Pendências</a></li>
+        <li><a [routerLink]="['/home/agingPeriod']" (click)="atualizaMenu('Períodos - Aging')">Períodos - Aging</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col s12 m12 l12">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>

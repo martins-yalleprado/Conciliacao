@@ -1,0 +1,70 @@
+<div id="pending">
+ 
+  <div class="row">
+
+    <div class="card">
+      <div class="card-content card-padding">
+
+        <span class="font-18">Filtro da pesquisa</span>
+
+        <div class="row">
+          <div class="input-field col s4 m4 l4">
+            <input id="conta" type="text" class="validate">
+            <label for="conta">Conta</label>
+          </div>
+          <div class="input-field col s4 m4 l4">
+            <input id="evento" type="text" class="validate">
+            <label for="evento">Evento</label>
+          </div>
+          <div class="input-field col s4 m4 l4">
+            <input id="foto" type="text" class="validate">
+            <label for="foto">Foto</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s4 m4 l4">
+            <input type="text" name="datepicker" materialize="pickadate" [materializeParams]="[{format:'dd/mm/yyyy'}]" />
+            <label for="referenceDate">Data início</label>
+          </div>
+          <div class="input-field col s4 m4 l4">
+            <input type="text" name="datepicker" materialize="pickadate" [materializeParams]="[{format:'dd/mm/yyyy'}]" />
+            <label for="referenceDate">Data fim</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 m12 l12">
+            <button class="btn waves-effect waves-light teal lighten-1 right" name="action">Pesquisar
+            <i class="material-icons left">search</i>
+          </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <table class="striped centered grid-border">
+      <thead class="grid-background">
+        <tr>
+          <th class="grid-border">Id</th>
+          <th class="grid-border">Nome</th>
+          <th class="grid-border">E-mail</th>
+          <th class="grid-border">Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of data | async | paginate: { itemsPerPage: 20, currentPage: p } | filter:term">
+          <td class="grid-border">{{ d.id }}</td>
+          <td class="grid-border">{{ d.name }}</td>
+          <td class="grid-border">{{ d.email }}</td>
+          <td class="grid-border">
+            <a class="waves-effect waves-light btn-small tooltipped" data-position="bottom">Finalizar</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+    </pagination-controls>
+  </div>
+</div>

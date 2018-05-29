@@ -1,0 +1,39 @@
+<div id="main">
+<div class="content-page" style="height: 100vh;">
+ <div class="row login-page">
+     <div class="col s12 card-panel">
+       <div class="login-form">
+         <div class="row">
+           <div class="input-field col s12 center">
+             <img src="../../assets/images/logo.png" alt="" class="responsive-img valign profile-image-login icone">
+           </div>
+         </div>
+         <div class="row margin">
+           <div class="input-field col s12">
+             <i class="material-icons prefix">person_pin</i>
+             <input id="username" type="text" [(ngModel)]="user.username">
+             <label for="username" class="center-align">Username</label>
+           </div>
+         </div>
+         <div class="row margin">
+           <div class="input-field col s12">
+             <i class="material-icons prefix">lock_outline</i>
+             <input id="password" type="password" [(ngModel)]="user.password">
+             <label for="password">Password</label>
+           </div>
+         </div>
+         <div class="row">
+           <div class="input-field col s12">
+             <button class="btn waves-effect waves-light col s12 botton" (click)="login(this.user)">Login</button>
+           </div>
+         </div>
+         <!-- <div class="row">
+           <div class="input-field col s12 m12 l12">
+               <p class="margin center-align medium-small"><a href="page-forgot-password.html">Esqueci minha senha</a></p>
+           </div>
+         </div> -->
+      </div>
+     </div>
+   </div>
+</div>
+</div>
