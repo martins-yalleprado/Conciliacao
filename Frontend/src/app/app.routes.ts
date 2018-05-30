@@ -11,6 +11,9 @@ import { AgingPeriodComponent } from './agingPeriod/agingPeriod.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth.guard';
+import { SelecionaUnidadeComponent } from './seleciona-unidade/seleciona-unidade.component';
+import { ConfiguracaoEmpresaComponent } from './configuracao-empresa/configuracao-empresa.component';
+import { TiposMovimentacoesComponent } from './tipos-movimentacoes/tipos-movimentacoes.component';
 
 
 // Route Configuration
@@ -40,6 +43,21 @@ export const routes: Routes = [
       {
         path: 'agingPeriod',
         component: AgingPeriodComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'selecionaUnidade',
+        component: SelecionaUnidadeComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'configuracaoEmpresa',
+        component: ConfiguracaoEmpresaComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'tiposMovimentacoes',
+        component: TiposMovimentacoesComponent,
         canActivate: [AuthGuard]
       },
       // {

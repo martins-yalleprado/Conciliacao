@@ -63,7 +63,7 @@ Namespace Code.GestaoCarga
 				command.CommandText = sql.deleteGestaoCargaCtb()
                 command.Parameters.Add("codigo", id)
 
-                LogUtil.Execute(New Dictionary(Of String, Object)(), "MOVCTBCLOSYSCOB", command)
+                LogUtil.Execute(New Dictionary(Of String, Object)(), "MOVCTBCLOSISCOB", command)
 
                 command.ExecuteNonQuery()
 				command.CommandText = sql.deleteGestaoCargaTit()
@@ -152,11 +152,11 @@ Namespace Code.GestaoCarga
       If "CTB".Equals(tipo) OrElse "TODOS".Equals(tipo) Then
         inserirLoteContabil(dataRef, codUnidade)
       End If
-      If "AGN".Equals(tipo) OrElse "TODOS".Equals(tipo) Then
-        inserirLoteAging(dataRef, codUnidade)
-      End If
+            If "AGI".Equals(tipo) OrElse "TODOS".Equals(tipo) Then
+                inserirLoteAging(dataRef, codUnidade)
+            End If
 
-    End Sub
+        End Sub
     Public Function proximoCodigoGestaoCarga(command As OracleCommand) As Integer
 			Dim sql As New GestaoCargaSQL()
 			command.CommandText = sql.proximoCodigoGestaoCarga()
@@ -182,10 +182,10 @@ Namespace Code.GestaoCarga
 
         Dim sql As New GestaoCargaSQL()
 
-        Dim gestaoCargaModel As GestaoCargaModel = gerarGestaoCargaModel(dataRef, "AGN", codUnidade, command)
+                Dim gestaoCargaModel As GestaoCargaModel = gerarGestaoCargaModel(dataRef, "AGI", codUnidade, command)
 
 
-        command.CommandText = sql.insertLoteAging()
+                command.CommandText = sql.insertLoteAging()
         command.CommandType = System.Data.CommandType.Text
         command.Parameters.Clear()
         command.Parameters.Add("Codigo", gestaoCargaModel.codGestaoCarga)
@@ -287,7 +287,7 @@ Namespace Code.GestaoCarga
         command.Parameters.Add("datamov", gestaoCargaModel.dataMovimentacao)
         command.ExecuteNonQuery()
 
-                LogUtil.Execute(New Dictionary(Of String, Object)(), "MOVTITCLOSYSCOB", command, "where NUMSEQCRGTAB = :Codigo")
+                LogUtil.Execute(New Dictionary(Of String, Object)(), "MOVTITCLOSISCOB", command, "where NUMSEQCRGTAB = :Codigo")
 
                 transaction.Commit()
 			Catch ex As Exception

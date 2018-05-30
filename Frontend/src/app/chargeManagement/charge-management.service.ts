@@ -22,34 +22,19 @@ export class ChargeManagementService {
     }
 
     removerVersao(id) {
-    return  this.http.delete(AppConstants.API_ROOT+'/api/GestaoCarga', id).catch
-    ((error:any) => Observable.throw(error.json().error || 'Server error'));
+    return  this.http.delete(AppConstants.API_ROOT + '/api/GestaoCarga', id).catch
+    ((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     mudarVersao(objeto) {
       this.http.put('https://jsonplaceholder.typicode.com/api/GestaoCarga/change', objeto);
     }
 
-    gerarLote(dataref) : Promise<any> {
-        return this.http
-          .post(AppConstants.API_ROOT+'/api/GestaoCarga?'+dataref,{ headers: this.headers })
-          .toPromise()
-          .then(res => res);
+    gerarLote(dataref, tipo): Observable<any> {
+      return this.http.post(AppConstants.API_ROOT + '/api/GestaoCarga?' + 'dataref=' + dataref + '&tipo=' + tipo + '&codUnidade=0',
+        { 'dataref': dataref, 'tipo': tipo.toString(), 'codUnidade': 0} )
+        .map((res: Response) => res.json())
+        .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
-
-    // Não utilizaremos este método, favor ignorar
-    // this.http.post('http://jsonplaceholder.typicode.com/posts', objeto)
-    //       .subscribe(
-    //         res => {
-    //           console.log(res);
-    //         },
-    //         err => {
-    //           console.log("Error occured");
-    //         }
-    //       );
-    //
-    // getChargeManagementById(id): Observable<any> {
-    //     return this.http.get('https://jsonplaceholder.typicode.com/users/' + id);
-    // }
 
 }

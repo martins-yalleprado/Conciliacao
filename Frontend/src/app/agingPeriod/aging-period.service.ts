@@ -31,7 +31,6 @@ export class AgingPeriodService {
     }
 
     salvarNovoPeriodo(objeto) {
-      debugger;
      return this.http.post(AppConstants.API_ROOT +'/api/Periodo', objeto)
      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }

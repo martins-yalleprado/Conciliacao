@@ -44,7 +44,6 @@ export class AgingPeriodComponent implements OnInit {
   }
   buscaIntervalos(idPeriodo)
   {
-    debugger;
     this.dataIntervalo = this.service.buscaIntervalo(idPeriodo);
   }
 
@@ -61,7 +60,6 @@ export class AgingPeriodComponent implements OnInit {
   }
 
   salvarNovoPeriodo () {
-    debugger;
     var teste = this.agingPeriod.nome;
     this.service.salvarNovoPeriodo(this.agingPeriod)
   }

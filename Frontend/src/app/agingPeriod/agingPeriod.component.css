@@ -21,11 +21,6 @@
     margin-left: 50px;
 }
 
-#linha {
-    width: 100%;
-    border-bottom: 1px solid #000000;
-  }
-
 #main {
     transition: margin-bottom .5s;
     padding: 20px;
@@ -48,4 +43,9 @@
 .button-search {
     padding-right: 0;
     padding-top: 20px;
+}
+
+#linha {
+  width: 100%;
+  border-bottom: 1px solid #000000;
 }

@@ -3,11 +3,6 @@
   <div class="row">
 
     <div class="row">
-      <!-- <div class="input-field col s4 m4 l4">
-            <i class="material-icons prefix icon-padding">search</i>
-            <input id="term" type="text" [(ngModel)]="term">
-            <label for="term">Digite um termo</label>
-          </div> -->
       <div class="input-field col s3 m3 l3">
         <input type="text" name="datepicker" materialize="pickadate" [materializeParams]="[{format:'dd/mm/yyyy'}]" #dataRef />
         <label for="referenceDate">Data de referência</label>
@@ -33,7 +28,7 @@
           <i class="material-icons left">search</i>
         </button>
         <div class="col s5 m5 l5 button-add_box">
-          <button class="btn waves-effect waves-light blue lighten-1 left" name="action" (click)="gerarLote(dataRef.value)">Gerar Lote
+          <button class="btn waves-effect waves-light blue lighten-1 left" name="action" (click)="gerarLote(dataRef.value, types)">Gerar Lote
             <i class="material-icons right">add_box</i>
           </button>
         </div>
@@ -64,8 +59,7 @@
               <span *ngIf="d.tipo === 'AGN'" class="tooltiptext"> Soma (Saldo do título) </span>
             </td>
             <td class="grid-border">
-              <!-- <a class="waves-effect waves-light btn-small tooltipped" data-position="bottom" (click)="openDetails(d.id)"><i class="material-icons left">remove_red_eye</i></a> -->
-              <a class="waves-effect waves-light modal-trigger" href="#alterar">
+              <a class="waves-effect waves-light modal-trigger" (click)="alterarLoteDado(d)">
                 <i class="material-icons left">refresh</i>
               </a>
               <a class="waves-effect waves-light modal-trigger" href="#remover">
@@ -80,16 +74,6 @@
     </div>
   </div>
 
-  <!-- <div class="row detailsCanvas" id="mySidenav" [hidden]="!this.showDetails">
-  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-  <div class="s12 m12 l12 p-15">ID: {{ details.id }}</div>
-  <div class="s12 m12 l12 p-15">Nome: {{ details.name }}</div>
-  <div class="s12 m12 l12 p-15">Nome de usuário: {{ details.username }}</div>
-  <div class="s12 m12 l12 p-15">E-mail: {{ details.email }}</div>
-  <div class="s12 m12 l12 p-15">Telefone: {{ details.phone }}</div>
-  <div class="s12 m12 l12 p-15">Site: {{ details.website }}</div>
-</div> -->
-
   <div id="alterar" class="modal">
     <div class="modal-header">
       <i class="material-icons icons">edit</i>
@@ -99,7 +83,7 @@
       <p>Você confirma a alteração da versão oficial para esta versão?</p>
     </div>
     <div class="modal-footer">
-      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" (click)="mudarVersao()">Confirmar</a> {{d}}
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" (click)="mudarVersao()">Confirmar</a>
       <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
     </div>
   </div>

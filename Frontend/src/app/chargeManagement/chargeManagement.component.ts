@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { ChargeManagement } from './chargeManagement';
 import { Types } from './types';
+import { Router } from '@angular/router';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -22,8 +23,13 @@ export class ChargeManagementComponent implements OnInit {
   types: Types = new Types();
   data: Observable<any>;
   type: string;
+  objeto: any;
 
-  constructor(private service: ChargeManagementService, private el: ElementRef, private _flashMessagesService: FlashMessagesService) {
+  isDesc: boolean = false;
+  column: string = 'Tipo';
+
+  constructor(private service: ChargeManagementService, private el: ElementRef, private router: Router,
+     private _flashMessagesService: FlashMessagesService) {
     const currentUser = JSON.parse(localStorage.getItem('user'));
     currentUser.menu = 'Movimentos de cobrança e contábil';
     localStorage.setItem('user', JSON.stringify(currentUser));
@@ -39,6 +45,8 @@ export class ChargeManagementComponent implements OnInit {
 
     jQuery(this.el.nativeElement).find('.modal').modal({
     });
+
+    //this.sort(this.column);
 
   }
 
@@ -78,36 +86,34 @@ export class ChargeManagementComponent implements OnInit {
   }
 
   mudarVersao(objeto) {
-    debugger;
     if (objeto !== undefined) {
       this.service.mudarVersao(objeto);
     }
   }
 
-  gerarLote(dataref) {
+  alterarLoteDado(objeto) {
+    this.objeto = objeto;
+ 
+    // jQuery(this.el.nativeElement).find('.alterar').modal({
+    //   show: 'true'
+    // });
+  }
+
+  gerarLote(dataref, tipo) {
     if (dataref !== '') {
       const dataformatada = this.formataData(dataref);
-      this.service.gerarLote('dataref=');
-      this.data = this.service.getChargeManagement(dataref, '');
+
+      this.data = this.service.gerarLote(dataformatada, Object.keys(tipo));
+
+      // Observable
+      //   .forkJoin(this.service.gerarLote(dataformatada, Object.keys(tipo)))
+      //   .subscribe(
+      //     ([data]) => {
+      //       this.data = data;
+      //     }
+      //   );
     } else {
       this._flashMessagesService.show('Obrigatório informar uma data!', { cssClass: 'card-panel red lighten-5', timeout: 5000 });
     }
   }
-
-
-  // Este método chama o modalno canto inferior da tela, está comentado pois não estamos utilizando no momento
-  // openDetails(id) {
-  //
-  //     document.getElementById("mySidenav").style.width = "100%";
-  //     document.getElementById("main").style.marginBottom = "250px";
-  //
-  //     this.showDetails = true;
-  //
-  //     this.service.getChargeManagementById(id).subscribe((res:Response) => this.details = res.json());
-  // }
-
-  // closeNav() {
-  //   document.getElementById("mySidenav").style.width = "0";
-  //   document.getElementById("main").style.marginBottom = "0";
-  // }
 }

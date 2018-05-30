@@ -1,0 +1,27 @@
+
+<div class="row" >
+  <img class="img-logo" src="../../assets/images/logo.png">
+</div>
+<div class="row">
+  <div class="input-field col s6 m6 l6">
+    <select materialize="material_select" [materializeSelectOptions]="selectOptions">
+      <option value="" disabled selected>Escolha uma opção</option>
+      <option value="1">Martins</option>
+      <option value="2">e-Fácil</option>
+    </select>
+    <label>Empresa</label>
+  </div>
+  <div class="input-field col s6 m6 l6">
+    <select materialize="material_select" [materializeSelectOptions]="selectOptions">
+        <option value="" disabled selected>Escolha uma opção</option>
+        <option value="1">101020</option>
+        <option value="2">303030</option>
+    </select>
+    <label>Conta</label>
+  </div>
+</div>
+<div class="row">
+  <div class="centered">
+    <button data-target="modal" class="waves-effect waves-light btn blue darken-1 modal-trigger" >Confirmar</button>
+  </div>
+</div>

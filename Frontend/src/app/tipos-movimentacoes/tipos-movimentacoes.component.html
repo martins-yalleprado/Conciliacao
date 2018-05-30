@@ -1,0 +1,199 @@
+<span class="font-18">Parâmetros Contábeis:</span>
+
+
+<ul class="collapsible">
+  <li>
+    <div class="collapsible-header">
+      <i class="material-icons">search</i>Pesquisa</div>
+    <div class="collapsible-body">
+      <span>Aqui será nosso filtro de pesquisa</span>
+    </div>
+  </li>
+</ul>
+
+<table class="striped centered grid-border">
+  <thead class="grid-background">
+    <tr>
+      <th class="grid-border">IDT</th>
+      <th class="grid-border">UN</th>
+      <th class="grid-border">Conta</th>
+      <th class="grid-border">SIS</th>
+      <th class="grid-border">Evento</th>
+      <th class="grid-border">Desc. Evento</th>
+      <th class="grid-border">Fato</th>
+      <th class="grid-border">Desc. Fato</th>
+      <th class="grid-border">RM</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of data | async | paginate: { itemsPerPage: 20, currentPage: p }">
+      <td class="grid-border">{{ d.idt }}</td>
+      <td class="grid-border">{{ d.un }}</td>
+      <td class="grid-border">{{ d.conta }}</td>
+      <td class="grid-border">{{ d.sis }}</td>
+      <td class="grid-border">{{ d.evento }}</td>
+      <td class="grid-border">{{ d.descEvento }}</td>
+      <td class="grid-border">{{ d.fato }}</td>
+      <td class="grid-border">{{ d.descFato }}</td>
+      <td class="grid-border">{{ d.rm }}</td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+</pagination-controls>
+
+<div id="linha">
+
+</div>
+
+<span class="font-18">Tipos de Movimentações:</span>
+
+
+<ul class="collapsible">
+  <li>
+    <div class="collapsible-header">
+      <i class="material-icons">search</i>Pesquisa</div>
+    <div class="collapsible-body">
+      <span>Aqui será nosso filtro de pesquisa</span>
+    </div>
+  </li>
+</ul>
+
+
+<table class="striped centered grid-border">
+  <thead class="grid-background">
+    <tr>
+      <th class="grid-border">IDT</th>
+      <th class="grid-border">R</th>
+      <th class="grid-border">CM</th>
+      <th class="grid-border">Desc</th>
+      <th class="grid-border">FP</th>
+      <th class="grid-border">Desc</th>
+      <th class="grid-border">O</th>
+      <th class="grid-border">E</th>
+      <th class="grid-border">C</th>
+      <th class="grid-border">CH</th>
+      <th class="grid-border">VD</th>
+      <th class="grid-border">F</th>
+      <th class="grid-border">UN</th>
+      <th class="grid-border">CONTA</th>
+      <th class="grid-border">SI</th>
+      <th class="grid-border">EV</th>
+      <th class="grid-border">FT</th>
+      <th class="grid-border">SEQ</th>
+      <th class="grid-border">L</th>
+      <th class="grid-border">Id/Mov</th>
+      <th class="grid-border">RM</th>
+      <th class="grid-border">*</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of data | async | paginate: { itemsPerPage: 20, currentPage: p }">
+      <td class="grid-border">{{ d.idt }}</td>
+      <td class="grid-border">{{ d.r }}</td>
+      <td class="grid-border">{{ d.cm }}</td>
+      <td class="grid-border">{{ d.desc_ }}</td>
+      <td class="grid-border">{{ d.o }}</td>
+      <td class="grid-border">{{ d.e }}</td>
+      <td class="grid-border">{{ d.c }}</td>
+      <td class="grid-border">{{ d.ch }}</td>
+      <td class="grid-border">{{ d.vd }}</td>
+      <td class="grid-border">{{ d.f }}</td>
+      <td class="grid-border">{{ d.un }}</td>
+      <td class="grid-border">{{ d.conta }}</td>
+      <td class="grid-border">{{ d.si }}</td>
+      <td class="grid-border">{{ d.ev }}</td>
+      <td class="grid-border">{{ d.ft }}</td>
+      <td class="grid-border">{{ d.seq }}</td>
+      <td class="grid-border">{{ d.l }}</td>
+      <td class="grid-border">{{ d.idMov }}</td>
+      <td class="grid-border">{{ d.rm }}</td>
+      <td class="grid-border">{{ d.semNome }}</td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+</pagination-controls>
+
+<div class="row">
+<div class="input-field col s3 m3 l3">
+
+    <input id="idt" type="text" class="validate" maxlength="120" data-length="120">
+<label for="idt">IDT</label>
+
+  </div>
+<div class="input-field col s3 m3 l3">
+
+    <input id="movimento" type="text" class="validate" maxlength="120" data-length="120">
+<label for="movimento">Movimento</label>
+
+  </div>
+<div class="input-field col s3 m3 l3">
+    <input id="formaPagamento" type="text" class="validate" maxlength="120" data-length="120">
+<label for="formaPagamento">Forma de Pagamento</label>
+  </div>
+
+<div class="input-field col s3 m3 l3">
+  <input id="prop" type="text" class="validate" maxlength="120" data-length="120">
+  <label for="prop">Prop</label>
+</div>
+
+</div>
+<div class="row">
+
+<div class="input-field col s3 m3 l3">
+    <input id="risco" type="text" class="validate" maxlength="120" data-length="120">
+    <label for="risco">Risco</label>
+  </div>
+<div class="input-field col s3 m3 l3">
+    <input id="origem" type="text" class="validate" maxlength="120" data-length="120">
+    <label for="origem">Origem</label>
+  </div>
+<div class="input-field col s3 m3 l3">
+    <input id="sitVendor" type="text" class="validate" maxlength="120" data-length="120">
+<label for="sitVendor">Sit. Vendor</label>
+
+  </div>
+<div class="input-field col s3 m3 l3">
+    <input id="emissor" type="text" class="validate" maxlength="120" data-length="120">
+    <label for="emissor">Emissor</label>
+  </div>
+</div>
+<div class="row">
+<div class="input-field col s3 m3 l3">
+
+    <input id="chequeSemFundo" type="text" class="validate" maxlength="120" data-length="120">
+<label for="chequeSemFundo">Cheque S/Fdo</label>
+
+  </div>
+<div class="input-field col s3 m3 l3">
+
+    <input id="tipoCobranca" type="text" class="validate" maxlength="120" data-length="120">
+<label for="tipoCobranca">Tipo Cobrança</label>
+
+  </div>
+<div class="input-field col s3 m3 l3">
+
+    <input id="vencimento" type="text" class="validate" maxlength="120" data-length="120">
+<label for="vencimento">Vencimento</label>
+
+  </div>
+<div class="input-field col s3 m3 l3">
+
+    <input id="origemFiscal" type="text" class="validate" maxlength="120" data-length="120">
+<label for="origemFiscal">Org. Fiscal</label>
+
+  </div>
+</div>
+
+
+<div class="row button-right">
+<button class="btn waves-effect waves-light blue lighten-1 left" name="action" (click)="searchChargeManagement(dataRef.value, types)">Novo
+  <i class="material-icons left">add</i>
+</button>
+
+<button class="btn ml-10 waves-effect waves-light blue lighten-1 left" name="action" (click)="gerarLote(dataRef.value, types)">Salvar/Atualizar
+<i class="material-icons left">save</i>
+</button>
+</div>
+

@@ -34,6 +34,9 @@ import { PendingConciliationService } from './pendingConciliation/pending-concil
 import { ChargeManagementService } from './chargeManagement/charge-management.service';
 import { AgingPeriodService } from './agingPeriod/aging-period.service';
 import { AgingPeriodComponent } from './agingPeriod/agingPeriod.component';
+import { ConfiguracaoEmpresaComponent } from './configuracao-empresa/configuracao-empresa.component';
+import { SelecionaUnidadeComponent } from './seleciona-unidade/seleciona-unidade.component';
+import { TiposMovimentacoesComponent } from './tipos-movimentacoes/tipos-movimentacoes.component';
 
 
 @NgModule({
@@ -45,7 +48,10 @@ import { AgingPeriodComponent } from './agingPeriod/agingPeriod.component';
     NotFoundComponent,
     PendingConciliationComponent,
     HomeComponent,
-    AgingPeriodComponent
+    AgingPeriodComponent,
+    ConfiguracaoEmpresaComponent,
+    SelecionaUnidadeComponent,
+    TiposMovimentacoesComponent
   ],
   imports: [
     BrowserModule,
