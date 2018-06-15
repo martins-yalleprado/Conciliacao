@@ -1,0 +1,113 @@
+﻿@Scripts.Render("~/AngularApp/gestaoCarga/gestaoCarga.js")
+@Styles.Render("~/Content/css/gestaoCarga.css")
+
+
+
+<html ng-app="MartinsApp">
+<body>
+  <div ng-controller="GestaoCarga" id="">
+    <div class="row">
+      <div class="row">
+        <div class="input-field col s3 m3 l3">
+          <input input-date
+                 type="text"
+                 name="created"
+                 id="referenceDate"
+                 ng-model="dataRef.value"
+                 container=""
+                 format="dd/mm/yyyy"
+                 months-full="{{ month }}"
+                 months-short="{{ monthShort }}"
+                 weekdays-full="{{ weekdaysFull }}"
+                 weekdays-short="{{ weekdaysShort }}"
+                 weekdays-letter="{{ weekdaysLetter }}"
+                 disable="disable"
+                 min="{{ minDate }}"
+                 max="{{ maxDate }}"
+                 today="today"
+                 first-day="1"
+                 clear="clear"
+                 close="close"
+                 select-years="15"
+                 on-start="onStart()"
+                 on-render="onRender()"
+                 on-open="onOpen()"
+                 on-close="onClose()"
+                 on-set="onSet()"
+                 on-stop="onStop()" />
+
+          <label for="referenceDate">Data de referência</label>
+
+        </div>
+        <div class="margin-div col s4 m4 l4">
+          <form action="teste">
+            <input type="checkbox" id="titulo" value="TIT" name="titulo" #TIT ng-model="types.TIT" />
+            <label for="titulo">Título</label>
+            <input type="checkbox" id="contabil" value="CTB" name="contabil" #CTB ng-model="types.CTB" />
+            <label for="contabil">Contábil</label>
+            <input type="checkbox" id="aging" value="AGI" name="aging" #AGI ng-model="types.AGI" />
+            <label for="aging">Aging</label>
+          </form>
+        </div>
+        <div class="col s5 m5 l5 button-search">
+          <button class="btn waves-effect waves-light blue lighten-1 left" name="action" ng-click="searchChargeManagement(dataRef.value, types)">
+
+            Pesquisar
+            <i class="material-icons left">search</i>
+          </button>
+          <div class="col s5 m5 l5 button-add_box">
+            <button class="btn waves-effect waves-light blue lighten-1 left" name="action" ng-click="gerarLote(dataRef.value, types)">
+              Gerar Lote
+              <i class="material-icons left">add_box</i>
+            </button>
+          </div>
+        </div>
+        <table class="striped centered grid-border">
+          <thead class="grid-background">
+            <tr>
+              <th class="grid-border">Data</th>
+              <th class="grid-border">Data Movimentação</th>
+              <th class="grid-border">Qtd.</th>
+              <th class="grid-border">Tipo</th>
+              <th class="grid-border">Versão</th>
+              <th class="grid-border">Versão Oficial</th>
+              <th class="grid-border">Valor</th>
+              <th class="grid-border" colspan="2">Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            @*<tr ng-repeat="d in data | paginate: { itemsPerPage: 20, currentPage: p } | filter:term">*@
+            <tr ng-repeat="d in data ">
+              <td class="grid-border">{{ d.data | date: 'dd/MM/yyyy' }}</td>
+              <td class="grid-border">{{ d.dataMovimentacao | date: 'dd/MM/yyyy' }}</td>
+              <td class="grid-border">{{ d.quantidade }}</td>
+              <td class="grid-border">{{ d.tipo }}</td>
+              <td class="grid-border">{{ d.versao }}</td>
+              <td class="grid-border">{{ d.versaoOficialLabel }}</td>
+              <td class="grid-border tooltip">
+                {{ d.valor | number:'.2' }}
+                <span ng-if="d.tipo === 'TIT'" class="tooltiptext"> @*Soma(Valor título = 'VLRMOV')*@ </span>
+                <span ng-if="d.tipo === 'CTB'" class="tooltiptext"> @*Soma(Valor crédito - Valor débito)*@ </span>
+                <span ng-if="d.tipo === 'AGI'" class="tooltiptext"> @*Soma (Saldo do título)*@ </span>
+              </td>
+              <td class="grid-border">
+                <a ng-if="d.versaoOficialLabel == 'Não'" class="waves-effect waves-light" ng-click="mudarVersao(d)">
+                  <i class="material-icons left">check</i>
+                  <!-- Ativar-->
+                </a>
+              </td>
+              <td class="grid-border">
+                <a ng-if="d.versaoOficialLabel == 'Não'" class="waves-effect waves-light" ng-click="removerVersao(d.codGestaoCarga)">
+                  <i class="material-icons left">delete</i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

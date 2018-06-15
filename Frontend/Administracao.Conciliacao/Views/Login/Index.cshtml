@@ -1,0 +1,86 @@
+@{
+  Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@ViewBag.Title - Meu Aplicativo ASP.NET</title>
+
+  @Scripts.Render("~/bundles/jquery")
+  @Scripts.Render("~/Scripts/jquery/dist/jquery.js")
+  @Scripts.Render("~/Scripts/angular.js")
+  @Styles.Render("~/Content/materialize-css/dist/css/materialize.css")
+  @Scripts.Render("~/bundles/modernizr")
+  @Scripts.Render("~/Scripts/hammerjs/hammer.js")
+  @Scripts.Render("~/Content/materialize-css/dist/js/materialize.js")
+  @Scripts.Render("~/AngularApp/layout/MartinsApp.js")
+  @Scripts.Render("~/Scripts/angular-route.js")
+
+  <script src="@Url.Content("~/AngularApp/AppConstants.js")"></script>
+  <script src="@Url.Content("~/AngularApp/commons/Http.js")"></script>
+
+  <script src="@Url.Content("~/AngularApp/login/authService.js")"></script>
+  <script src="@Url.Content("~/AngularApp/login/index.js")"></script>
+  <script src="@Url.Content("~/Scripts/toPromise.js")"></script>
+  @Scripts.Render("~/Scripts/sweetalert2.all.js")
+
+  <link rel="stylesheet" type="text/css" href="../../Content/css/login.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+  <html ng-app="MartinsApp">
+  <div ng-controller="Login" id="main">
+    <div class="content-page" style="height: 100vh;">
+      <div class="row login-page">
+        <div class="col s12 card-panel">
+          <div class="login-form">
+            <div class="row">
+              <div class="input-field col s12 center">
+                <img src="../../assets/images/logo.png" alt="" class="responsive-img valign profile-image-login icone">
+              </div>
+            </div>
+            <div class="row margin">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">person_pin</i>
+                <input id="username" type="text" ng-model="user.username" required="" aria-required="true">
+                <label for="username" class="center-align">Username</label>
+              </div>
+            </div>
+            <div class="row margin">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">lock_outline</i>
+                <input id="password" type="password" ng-model="user.password" required="" aria-required="true">
+                <label for="password">Password</label>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <button class="btn waves-effect waves-light col s12 botton" ng-click="login(user)">Login</button>
+                <!-- <button [swal]="{ title: 'Enter your email', input: 'email' }" (confirm)="saveEmail($event)" (cancel)="handleRefusalToSetEmail($event)">
+
+                  Set my e-mail address
+                </button> -->
+
+              </div>
+            </div>
+            <!-- <div class="row">
+              <div class="input-field col s12 m12 l12">
+                  <p class="margin center-align medium-small"><a href="page-forgot-password.html">Esqueci minha senha</a></p>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</html>
+</body>
+</html>

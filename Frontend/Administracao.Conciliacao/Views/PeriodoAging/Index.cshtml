@@ -1,0 +1,266 @@
+@Scripts.Render("~/AngularApp/periodoAging/periodoAging.js")
+@Styles.Render("~/Content/css/periodoAging.css")
+
+
+<div id="" ng-controller="PeriodoAging">
+  <div class="row">
+    <div class="row">
+      <!-- <div class="input-field col s4 m4 l4">
+        <i class="material-icons prefix icon-padding">search</i>
+        <input id="term" type="text" [(ngModel)]="term">
+        <label for="term">Digite um termo</label>
+      </div> -->
+      <div class="input-field col s3 m3 l3">
+
+        <label for="inputCreated">Período</label>
+        @*<input input-date
+    type="text"
+    name="created"
+    id="inputCreated"
+    ng-model="currentTime"
+    container=""
+    format="dd/mm/yyyy"
+    months-full="{{ month }}"
+    months-short="{{ monthShort }}"
+    weekdays-full="{{ weekdaysFull }}"
+    weekdays-short="{{ weekdaysShort }}"
+    weekdays-letter="{{ weekdaysLetter }}"
+    disable="disable"
+    min="{{ minDate }}"
+    max="{{ maxDate }}"
+    today="today"
+    first-day="1"
+    clear="clear"
+    close="close"
+    select-years="15"
+    on-start="onStart()"
+    on-render="onRender()"
+    on-open="onOpen()"
+    on-close="onClose()"
+    on-set="onSet()"
+    on-stop="onStop()" />*@
+        <input
+               type="text"
+               name="created"
+               id="inputCreated"
+               ng-model="datepicker"/>
+
+      </div>
+      <div class="col s5 m5 l5 button-search">
+        <button class="btn waves-effect waves-light blue lighten-1 left" name="action" ng-click="getBuscaPeriodos()">
+          Pesquisar
+          <i class="material-icons left">search</i>
+        </button>
+        <div class="col s5 m5 l5 button-add_box">
+          <a class="waves-effect waves-light modal-trigger" data-toggle="modal" data-target="novoPeriodo">
+            <button class="btn waves-effect waves-light blue lighten-1 right" name="action">
+              Novo Período
+              <i class="material-icons right">add_box</i>
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s3 m3 l3">
+        <form action="">
+          <input class="with-gap flex-center" type="checkbox" id="titulo" name="group1" ng-model="ativo" value="TIT"/>
+          <label for="titulo">Somente Ativos</label>
+        </form>
+      </div>
+    </div>
+
+    <table class="striped centered grid-border">
+      <thead class="grid-background">
+        <tr>
+          <th class="grid-border left">Período</th>
+          <th class="grid-border">Situação</th>
+          <th class="grid-border">Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        @*<tr *ngFor="let d of data | async | paginate: { itemsPerPage: 20, currentPage: p } | filter:term" (click)="setClickedRow(d)">*@
+        <tr ng-repeat="d in data | filter:setAtivoPeriodo" ng-click="setClickedRow(d)">
+          <td class="grid-border">{{ d.nome }}</td>
+          <td class="grid-border">{{ d.situacaoLabel }}</td>
+          <td class="grid-border">
+            <!-- <a class="waves-effect waves-light btn-small tooltipped" data-position="bottom" (click)="openDetails(d.id)"><i class="material-icons left">remove_red_eye</i></a> -->
+            <a class="waves-effect waves-light modal-trigger" href="#editarPeriodo"><i class="material-icons left">edit</i></a>
+            <a class="waves-effect waves-light modal-trigger" href="#ativarInativarPeriodo"><i class="material-icons left">delete</i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+    </pagination-controls>
+  </div>
+
+  <div id="divIntervalo" ng-show="show_element" ng-hide="!show_element">
+    <div id="linha">
+    </div>
+    <div class="row">
+      <h5>
+        Intervalos do Período: {{agingPeriod.nome}}
+      </h5>
+      <div class="row">
+
+
+
+        <div class="col s5 m5 l5 button-add_box right">
+          <a class="waves-effect waves-light modal-trigger" href="#novoIntervalo">
+            <button class="btn waves-effect waves-light blue lighten-1 right" name="action">
+              Novo Intervalo
+              <i class="material-icons right">add_box</i>
+            </button>
+          </a>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col s3 m3 l3">
+          <form action="">
+            <input class="with-gap flex-center" type="checkbox" id="ativoIntervalo" name="group2" ng-model="ativoIntervalo" value="TIT"/>
+            <label for="ativoIntervalo">Somente Ativos</label>
+          </form>
+        </div>
+      </div>
+
+      <table class="striped centered grid-border">
+        <thead class="grid-background">
+          <tr>
+            <th class="grid-border">Dê</th>
+            <th class="grid-border">Até</th>
+            <th class="grid-border">Situação</th>
+            <th class="grid-border">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          @*<tr *ngFor="let i of dataIntervalo | async | paginate: { itemsPerPage: 20, currentPage: p } | filter:term">*@
+
+          <tr ng-repeat="i in dataIntervalo | filter:setAtivoIntervalo" ng-click="setClickedInterval(i)">
+            <td class="grid-border">{{ i.inicio }} dias</td>
+            <td class="grid-border">{{ i.fim }} dias</td>
+            <td class="grid-border">{{ i.situacao }}</td>
+            <td class="grid-border">
+              <!-- <a class="waves-effect waves-light btn-small tooltipped" data-position="bottom" (click)="openDetails(d.id)"><i class="material-icons left">remove_red_eye</i></a> -->
+              <a class="waves-effect waves-light modal-trigger" href="#editarIntervalo"><i class="material-icons left">edit</i></a>
+              <a class="waves-effect waves-light modal-trigger" href="#ativarInativarIntervalo"><i class="material-icons left">delete</i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+      </pagination-controls>
+    </div>
+  </div>
+  <!-- <div class="row detailsCanvas" id="mySidenav" [hidden]="!this.showDetails">
+    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+    <div class="s12 m12 l12 p-15">ID: {{ details.id }}</div>
+    <div class="s12 m12 l12 p-15">Nome: {{ details.name }}</div>
+    <div class="s12 m12 l12 p-15">Nome de usuário: {{ details.username }}</div>
+    <div class="s12 m12 l12 p-15">E-mail: {{ details.email }}</div>
+    <div class="s12 m12 l12 p-15">Telefone: {{ details.phone }}</div>
+    <div class="s12 m12 l12 p-15">Site: {{ details.website }}</div>
+  </div> -->
+  <div id="novoPeriodo" class="modal">
+    <div class="modal-header">
+      <i class="material-icons icons">add_box</i>
+      <span style="vertical-align: middle;">Novo Período</span>
+    </div>
+    <div class="modal-content">
+      <input type="text" name="periodoReferencia" ng-model="agingPeriod.nome" />
+      <label for="periodoReferencia">Nome do Período</label>
+    </div>
+    <div class="modal-footer">
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="salvarNovoPeriodo()">Salvar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+    </div>
+  </div>
+  <div id="editarPeriodo" class="modal">
+    <div class="modal-header">
+      <i class="material-icons icons">edit</i>
+      <h4>Editando:</h4>
+      <span style="vertical-align: middle;">Descrição:</span>
+      <input type="text" id="editPeriodoNome" name="editPeriodo" ng-value="agingPeriod.nome" ng-model="editNameAging" />
+    </div>
+    <div class="modal-content">
+      <p>Você confirma a alteração do Período?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="atualizaPeriodo()">Confirmar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+    </div>
+  </div>
+  <div id="ativarInativarPeriodo" class="modal">
+    <div class="modal-header">
+      <i class="material-icons icons">delete</i>
+      <span style="vertical-align: middle;">Remover Período</span>
+    </div>
+    <div class="modal-content">
+      <p>Você confirma a remoção deste período?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="removerPeriodo()">Confirmar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1" ng-click="buscaTodosPeriodos()">Cancelar</a>
+    </div>
+  </div>
+  <div id="novoIntervalo" class="modal">
+    <div class="modal-header">
+      <i class="material-icons icons">add_box</i>
+      <span style="vertical-align: middle;">Novo Intervalo Período</span>
+    </div>
+    <div class="modal-content">
+      <div class="row">
+        <div class="col s5 m5 l5 button-search">
+          <input type="text" name="periodoReferencia" ng-model="agingPeriodInterval.inicio" />
+          <label for="periodoReferencia">De</label>
+        </div>
+        <div class="col s5 m5 l5 button-search">
+          <input type="text" name="periodoReferencia" ng-model="agingPeriodInterval.fim" />
+          <label for="periodoReferencia">Até</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="salvarNovoIntervalo()">Salvar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+    </div>
+  </div>
+  <div id="editarIntervalo" class="modal">
+    <div class="modal-header">
+      <i class="material-icons icons">edit</i>
+      <h4>Editando:</h4>
+      <div class="row">
+        <div class="col s5 m5 l5 button-search">
+          <input type="text" name="periodoReferencia" ng-value="agingPeriodInterval.inicio" ng-model="agingPeriodIntervalIni" />
+          <label for="periodoReferencia">De</label>
+        </div>
+        <div class="col s5 m5 l5 button-search">
+          <input type="text" name="periodoReferencia" ng-value="agingPeriodInterval.fim" ng-model="agingPeriodIntervalFim"/>
+          <label for="periodoReferencia">Até</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-content">
+      <p>Você confirma a alteração do intervalo?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="atualizaIntervalo('alterar')">Confirmar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+    </div>
+  </div>
+
+  <div id="ativarInativarIntervalo" class="modal">
+    <div class="modal-header">
+      <i class="material-icons icons">delete</i>
+      <span style="vertical-align: middle;">Remover Intervalo</span>
+    </div>
+    <div class="modal-content">
+      <p>Você confirma a remoção deste intervalo?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="atualizaIntervalo('desativar')">Confirmar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+    </div>
+  </div>
+</div>

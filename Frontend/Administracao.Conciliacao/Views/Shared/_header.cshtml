@@ -1,0 +1,25 @@
+﻿
+
+<div class="navbar-fixed">
+
+  <nav>
+    <div class="nav-wrapper" style="background-color: #00447d">
+      <a href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+      <a href="#" class="brand-logo header-martins"><b>Conciliação</b> - {{$rootScope.mySetting}}  </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
+          <a class="header-content" [routerLink]="['/']">
+            @*<span class="row">
+                  Bem vindo, {{ currentUser.firstName }}             <span class="new badge red">{{ currentUser.quantidade_avisos }}</span>
+              </span>*@
+            <span *ngIf="currentUser" class="row">
+              Bem vindo, {{ currentUser.firstName }}             <span class="new badge red">{{ currentUser.quantidade_avisos }}</span>
+            </span>
+            <span class="row">Usuário desde teste</span>
+          </a>
+        </li>
+        <li><a class="logout-header" (click)="logout()"><i class="material-icons right">exit_to_app</i>Sair</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>

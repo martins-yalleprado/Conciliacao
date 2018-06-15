@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+
+@*
+    Para adicionar mais componentes do materialize favor seguir esses exemplos  =**
+    http://krescruz.github.io/angular-materialize/
+*@
+
+<html lang="pt-br">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <title>@ViewBag.Title - Meu Aplicativo ASP.NET</title>
+  @Styles.Render("~/Content/css/materialize.min.css")
+  @Scripts.Render("~/Content/js/jquery-3.1.1.min.js")
+  @Scripts.Render("~/Content/js/angular.min.js")
+  @Scripts.Render("~/Content/js/materialize.min.js")
+  @Scripts.Render("~/Content/js/angular-materialize.min.js")
+
+  @*Iniciando Angular e Componentes*@
+  @Scripts.Render("~/Scripts/angular-locale_pt-br.js")
+
+  @Scripts.Render("~/Scripts/hammerjs/hammer.js")
+
+  @Scripts.Render("~/AngularApp/layout/MartinsApp.js")
+  @Scripts.Render("~/AngularApp/AppConstants.js")
+
+  @Scripts.Render("~/AngularApp/commons/Interceptor.js")
+  @Scripts.Render("~/AngularApp/commons/Config.js")
+  @Scripts.Render("~/AngularApp/commons/DataService.js")
+  @Scripts.Render("~/AngularApp/commons/ModuloService.js")
+  @Scripts.Render("~/Scripts/angular-datepicker.js")
+  @Scripts.Render("~/Scripts/sweetalert2.all.js")
+  @Scripts.Render("~/AngularApp/commons/Commons.js")
+
+  @Scripts.Render("~/bundles/modernizr")
+  @Scripts.Render("~/Scripts/hammerjs/hammer.js")
+  @Scripts.Render("~/AngularApp/layout/Menu.js")
+
+  @Scripts.Render("~/Scripts/sweetalert2.all.js")
+  @Scripts.Render("~/AngularApp/commons/Commons.js")
+
+
+  @Styles.Render("~/Content/css/DatePicker.css")
+  @Styles.Render("~/Content/css/MaterialIcons.css")
+  <script>
+    $(document).ready(function () {
+      $('.modal').modal();
+    });
+  </script>
+
+
+</head>
+<body>
+  <div ng-app="MartinsApp">
+
+    @RenderPage("_header.cshtml")
+
+    <div class="row">
+      @RenderPage("_menu.cshtml")
+      <div class="col s12 m12 l12">
+        <router-outlet> </router-outlet>
+      </div>
+
+      @RenderBody()
+    </div>
+
+    @RenderSection("Scripts", required: false)
+
+  </div>
+</body>
+</html>

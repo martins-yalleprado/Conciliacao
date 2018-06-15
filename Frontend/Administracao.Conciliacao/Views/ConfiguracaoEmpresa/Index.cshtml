@@ -1,0 +1,65 @@
+﻿<link rel="stylesheet" type="text/css" href="../../Content/css/configuracaoEmpresa.css">
+<script src="@Url.Content("~/AngularApp/configuracaoEmpresa/configuracaoEmpresa.js")"></script>
+<script src="@Url.Content("~/AngularApp/selecionaUnidade/selecionaUnidade.js")"></script>
+
+<html ng-app="MartinsApp">
+<body>
+    <div class="row-fields" ng-controller="ConfiguracaoEmpresa">
+
+        <div class="section col s4">
+            <div input-field>
+                <select id="unidadeSelecionada" ng-model="selectedUnidade" material-select>
+                    <option ng-repeat="value in unidades" value="{{value.CodUnidade}}">{{value.DesUnidade}}</option>
+                </select>
+                <label>Unidade de Negócio</label>
+            </div>
+        </div>
+
+        <div class="section col s4">
+            <div input-field>
+                <select id="contaSelecionada" ng-model="selectedConta" material-select>
+                    <option ng-repeat="conta in contas" value="{{conta.CodContaContabil}}">{{conta.DescricaoDaContaContabil}}</option>
+                </select>
+                <label>Conta</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6 m3 l2">
+                <button data-target="modal" class="waves-effect waves-light btn blue darken-1 modal-trigger" ng-click="salvar(selectedUnidade,selectedConta)">Salvar</button>
+            </div>
+            <div class="col s6 m3 l2">
+                <button data-target="modal" class="waves-effect waves-light btn blue darken-1 modal-trigger" ng-click="pesquisar(selectedUnidade, selectedConta)">Pesquisar</button>
+            </div>
+        </div>
+        <div>
+            <table class="striped centered grid-border">
+                <thead class="grid-background">
+                    <tr>
+                        <th class="grid-border">Unidade de Negócio</th>
+                        <th class="grid-border">Conta</th>
+                        <th class="grid-border">Ação</th>
+                        <th class="grid-border">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-model="UnidadesContas" ng-repeat="item in UnidadesContas">
+                        <td class="grid-border">{{item.UnidadeModel.DesUnidade}}</td>
+                        <td class="grid-border">{{item.ContaModel.DescricaoDaContaContabil}}</td>
+                        <td class="grid-border">{{item.FlagLabel}}</td>
+                        <td class="grid-border">
+                            <a ng-if="item.FlagLabel == 'Ativo'" class="waves-effect waves-light" ng-click="desativarContaUniadde(item)">
+                                <i class="material-icons left">block</i>
+                            </a>
+                            <a ng-if="item.FlagLabel == 'Inativo'" class="waves-effect waves-light" ng-click="ativarContaUniadde()">
+                                <i class="material-icons left">check</i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+                <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+                </pagination-controls>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
