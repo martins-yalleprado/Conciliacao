@@ -147,9 +147,11 @@
     <Compile Include="Controllers\CadastroController.cs" />
     <Compile Include="Controllers\ConciliacaoPendenteController.cs" />
     <Compile Include="Controllers\ConfiguracaoEmpresaController.cs" />
+    <Compile Include="Controllers\FechamentoPeriodoController.cs" />
     <Compile Include="Controllers\GestaoCargaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\SaldoContaController.cs" />
     <Compile Include="Controllers\MovimentacaoAcertoController.cs" />
     <Compile Include="Controllers\NotFoundController.cs" />
     <Compile Include="Controllers\PeriodoAgingController.cs" />
@@ -166,18 +168,25 @@
     <Content Include="AngularApp\commons\Config.js" />
     <Content Include="AngularApp\commons\Http.js" />
     <Content Include="AngularApp\commons\Interceptor.js" />
+    <Content Include="AngularApp\commons\LocalStorageService.js" />
     <Content Include="AngularApp\commons\ModuloService.js" />
     <Content Include="AngularApp\conciliacaoPendente\conciliacaoPendente.js" />
     <Content Include="AngularApp\configuracaoEmpresa\configuracaoEmpresa.js" />
+    <Content Include="AngularApp\fechamentoPeriodo\fechamentoPeriodo.js" />
+    <Content Include="AngularApp\fechamentoPeriodo\fechamentoPeriodoSrv.js" />
     <Content Include="AngularApp\gestaoCarga\gestaoCarga.js" />
     <Content Include="AngularApp\home\home.js" />
+    <Content Include="AngularApp\layout\Header.js" />
     <Content Include="AngularApp\layout\MartinsApp.js" />
     <Content Include="AngularApp\layout\Menu.js" />
     <Content Include="AngularApp\login\index.js" />
     <Content Include="AngularApp\login\authService.js" />
     <Content Include="AngularApp\movimentacaoAcerto\movimentacaoAcerto.js" />
+    <Content Include="AngularApp\movimentacaoAcerto\movimentacaoAcertoSrv.js" />
     <Content Include="AngularApp\periodoAging\periodoAging.js" />
+    <Content Include="AngularApp\saldoConta\saldoContaSrv.js" />
     <Content Include="AngularApp\selecionaUnidade\selecionaUnidade.js" />
+    <Content Include="AngularApp\saldoConta\saldoConta.js" />
     <Content Include="AngularApp\tiposMovimentacoes\tiposMovimentacoes.js" />
     <Content Include="assets\images\logo.png" />
     <Content Include="Content\bootstrap.css" />
@@ -206,6 +215,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="AngularApp\Web.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -235,7 +246,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_header.cshtml" />
     <Content Include="Views\Shared\_menu.cshtml" />
-    <Content Include="tsconfig.json" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\GestaoCarga\Index.cshtml" />
     <Content Include="Views\PeriodoAging\Index.cshtml" />
@@ -246,6 +256,8 @@
     <Content Include="Views\ConciliacaoPendente\Index.cshtml" />
     <Content Include="Views\SelecionaUnidade\Index.cshtml" />
     <Content Include="Views\TiposMovimentacoes\Index.cshtml" />
+    <Content Include="Views\SaldoConta\Index.cshtml" />
+    <Content Include="Views\FechamentoPeriodo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AngularApp\notFound\" />

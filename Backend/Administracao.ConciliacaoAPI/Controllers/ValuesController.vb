@@ -3,17 +3,19 @@ Imports System.Linq
 Imports System.Net
 Imports System.Net.Http
 Imports System.Web.Http
-Imports Martins.Conciliacao.Filters
-Imports Martins.Conciliacao.Util
+Imports Administracao.ConciliacaoAPI.Filters
+Imports Administracao.ConciliacaoAPI.Util
 
 Namespace Controllers
   <Authorize>
   Public Class ValuesController
     Inherits ApiController
     ' GET api/values
-    <HttpGet, HeaderFilter, Authorize(Roles:="Financeiro, Administraçãox")>
+    '<HttpGet, HeaderFilter, Authorize(Roles:="Financeiro, Administraçãox")>
+    <HttpGet, HeaderFilter(Roles:="Financeirox, Administraçãox")>
     Public Function [Get]() As IEnumerable(Of String)
-      Return New String() {"value1", "value2", "ldap_usercode " + Utils.UserCodeLDAP.ToString(), "count roles_json " + Utils.RolesObject.Count().ToString()}
+      'Return New String() {"value1", "value2", "ldap_usercode " + Utils.UserCodeLDAP.ToString(), "count roles_json " + Utils.RolesObject.Count().ToString()}
+      Return New String() {"value1", "value2", "ldap_usercode " + Utils.UserCodeLDAP.ToString()}
     End Function
 
     ' GET api/values/5

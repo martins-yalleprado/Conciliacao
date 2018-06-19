@@ -1,4 +1,4 @@
-Imports Martins.Conciliacao.Model
+Imports Administracao.ConciliacaoAPI.Model
 
 Namespace Code.GestaoCarga
   Public Class GestaoCargaBLL
@@ -36,11 +36,11 @@ Namespace Code.GestaoCarga
       DAL.atualizarVersao(gestaoCargaModel)
     End Sub
 
-    Public Sub insertGestaoCarga(dataRef As DateTime, tipo As String, codUnidade As Integer)
+    Public Sub insertGestaoCarga(dataRef As DateTime, tipo As String, codUnidade As Integer, codConta As Integer)
       Try
         Dim DAL As New GestaoCargaDAL()
 
-        DAL.insertGestaoCarga(dataRef, tipo, codUnidade)
+        DAL.insertGestaoCarga(dataRef, tipo, codUnidade, codConta)
       Catch e As Exception
         Throw e
       End Try

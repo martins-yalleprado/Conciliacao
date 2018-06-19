@@ -1,4 +1,4 @@
-Imports Martins.Conciliacao.Model
+Imports Administracao.ConciliacaoAPI.Model
 
 Namespace Code.Unidade
   Public Class UnidadeBLL
@@ -6,6 +6,14 @@ Namespace Code.Unidade
       Try
         Dim dal As New UnidadeDAL()
         Return dal.SelectUnidade()
+      Catch ex As Exception
+        Throw ex
+      End Try
+    End Function
+    Public Function SelectUnidadePorId(CodUnidade As Integer) As UnidadeModel
+      Try
+        Dim dal As New UnidadeDAL()
+        Return dal.SelectUnidadePorId(CodUnidade)
       Catch ex As Exception
         Throw ex
       End Try

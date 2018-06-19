@@ -54,7 +54,7 @@
       </div>
     </li>
   </ul>
-  <table class="highlight centered grid-border cursor-pointer">
+  <table class="striped highlight centered grid-border cursor-pointer">
     <thead class="grid-background">
       <tr>
         <th class="grid-border">IDT</th>
@@ -87,75 +87,75 @@
   </pagination-controls>
   <div ng-hide="!this.conciliacoes">
     <span class="font-18">Tipos de Movimentações:</span>
-    <ul class="collapsible">
+    <ul class="collapsible" id="teste">
       <li>
-        <div class="collapsible-header">
-          <i class="material-icons">add</i>Novo
+        <div class="collapsible-header" ng-class="{'active':active}">
+          <i class="material-icons">add</i>Novo/Atualizar
         </div>
-        <div class="collapsible-body">
+        <div class="collapsible-body" ng-style="{'display':mostra}">
           <div class="row">
             <div class="input-field col s3 m3 l3">
-              <input id="idt" type="text" class="validate" maxlength="30" data-length="30" ng-value="conciliacao.CodIdentidadeContabil">
+              <input id="idt" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodIdentidadeContabil">
 
               <label for="idt">IDT</label>
             </div>
             <div class="input-field col s3 m3 l3">
-              <input id="movimento" type="text" class="validate" maxlength="30" data-length="30" ng-value="conciliacao.CodMovimentoConciliacao">
+              <input id="movimento" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodTipoMovimentacaoTituloReceber">
               <label for="movimento">Movimento</label>
             </div>
             <div class="input-field col s3 m3 l3">
-              <input id="formaPagamento" type="text" class="validate" maxlength="30" data-length="30" ng-value="conciliacao.CodFormaPagamento">
+              <input id="formaPagamento" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodFormaPagamento">
               <label for="formaPagamento">Forma de Pagamento</label>
             </div>
             <div class="input-field col s3 m3 l3">
-              <input id="prop" type="text" class="validate" maxlength="30" data-length="30" ng-value="conciliacao.CodProprietarioTitulo">
+              <input id="prop" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodProprietarioTitulo">
               <label for="prop">Prop</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s3 m3 l3">
-              <input id="risco" type="text" class="validate" maxlength="30" data-length="30" ng-value="conciliacao.CodResponsavelRiscoCredito">
+              <input id="risco" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodResponsavelRiscoCredito">
               <label for="risco">Risco</label>
             </div>
             <div class="input-field col s3 m3 l3">
-              <input id="origem" type="text" class="validate" maxlength="30" data-length="30" ng-value="conciliacao.CodOrigemPedido">
+              <input id="origem" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodOrigemPedido">
               <label for="origem">Origem</label>
             </div>
             <div class="input-field col s3 m3 l3">
-              <input id="sitVendor" type="text" class="validate" maxlength="30" data-length="30" ng-value="conciliacao.CodSituacaoTituloVendor">
+              <input id="sitVendor" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodSituacaoTituloVendor">
               <label for="sitVendor">Sit. Vendor</label>
             </div>
             <div class="input-field col s3 m3 l3">
-              <input id="emissor" type="text" class="validate" maxlength="30" data-length="30" ng-value="conciliacao.CodEmitenteTitulo">
+              <input id="emissor" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodEmitenteTitulo">
               <label for="emissor">Emissor</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s3 m3 l3">
-              <input id="chequeSemFundo" type="text" class="validate" maxlength="30" data-length="30" ng-value="conciliacao.TipoCheque">
+              <input id="chequeSemFundo" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.TipoCheque">
               <label for="chequeSemFundo">Cheque S/Fdo</label>
             </div>
             <div class="input-field col s3 m3 l3">
-              <input id="tipoCobranca" type="text" class="validate" maxlength="30" data-length="30" ng-value="conciliacao.CodTipoCobranca">
+              <input id="tipoCobranca" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodTipoCobranca">
               <label for="tipoCobranca">Tipo Cobrança</label>
             </div>
             <div class="input-field col s3 m3 l3">
-              <input id="vencimento" type="text" class="validate" maxlength="30" data-length="30" ng-value="conciliacao.CodSituacaoVencimentoTitulo">
+              <input id="vencimento" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodSituacaoVencimentoTitulo">
               <label for="vencimento">Vencimento</label>
             </div>
             <div class="input-field col s3 m3 l3">
-              <input id="origemFiscal" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodSituacaoTituloOrgaoFiscal" value="{{ ::conciliacao.CodSituacaoTituloOrgaoFiscal }}">
+              <input id="origemFiscal" type="text" class="validate" maxlength="30" data-length="30" ng-model="conciliacao.CodSituacaoTituloOrgaoFiscal">
               <label for="origemFiscal">Org. Fiscal</label>
             </div>
           </div>
-          <div class="row ">
-            <button class="btn waves-effect waves-light blue lighten-1 left" name="action" ng-click="limpar()">
+          <div class="row">
+            <button class="btn waves-effect waves-light blue lighten-1 left" name="action" ng-click="limparNovo()">
               Limpar
               <i class="material-icons left">clear</i>
             </button>
-            <button class="btn ml-10 waves-effect waves-light blue lighten-1 left" name="action" ng-click="doSomething()">
-              Salvar/Atualizar
-              <i class="material-icons left">save</i>
+            <button class="btn ml-10 waves-effect waves-light blue lighten-1 left" style="margin-left:10px" name="action" ng-click="salvaAtualizaConciliacao()">
+                {{buttonText}}
+                <i class="material-icons left">save</i>
             </button>
           </div>
         </div>
@@ -196,7 +196,7 @@
               <label for="chequeSemFundo_filtro">Chq. S/Fdo</label>
             </div>
             <div class="input-field col s3 m3 l3">
-              <input id="movimento_filtro" type="text" class="validate" ng-model="searchConciliacao.CodMovimentoConciliacao">
+              <input id="movimento_filtro" type="text" class="validate" ng-model="searchConciliacao.CodTipoMovimentacaoTituloReceber">
               <label for="movimento_filtro">Movimento</label>
             </div>
             <div class="input-field col s3 m3 l3">
@@ -239,61 +239,61 @@
       </li>
     </ul>
 
-    <table class="highlight centered grid-border cursor-pointer">
+    <table class="striped highlight centered grid-border cursor-pointer">
       <thead class="grid-background">
-        <tr>
-          <th class="grid-border">IDT</th>
-          <th class="grid-border">R</th>
-          <th class="grid-border">CM</th>
-          <th class="grid-border">Desc</th>
-          <th class="grid-border">FP</th>
-          <th class="grid-border">Desc</th>
-          <th class="grid-border">O</th>
-          <th class="grid-border">P</th>
-          <th class="grid-border">E</th>
-          <th class="grid-border">C</th>
-          <th class="grid-border">CH</th>
-          <th class="grid-border">VD</th>
-          <th class="grid-border">VC</th>
-          <th class="grid-border">F</th>
-          <th class="grid-border">UN</th>
-          <th class="grid-border">CONTA</th>
-          <th class="grid-border">SI</th>
-          <th class="grid-border">EV</th>
-          <th class="grid-border">FT</th>
-          <th class="grid-border">SEQ</th>
-          <th class="grid-border">L</th>
-          <th class="grid-border">Id/Mov</th>
-          <th class="grid-border">RM</th>
-          <th class="grid-border">Ação</th>
-        </tr>
+          <tr>
+              <th class="grid-border tooltipped" data-tooltip="Código identidade contábil">IDT</th>
+              <th class="grid-border tooltipped" data-tooltip="Risco">R</th>
+              <th class="grid-border tooltipped" data-tooltip="Movimento">CM</th>
+              <th class="grid-border tooltipped" data-tooltip="Descrição">Desc</th>
+              <th class="grid-border tooltipped" data-tooltip="F. Pagamento">FP</th>
+              <th class="grid-border tooltipped" data-tooltip="Descrição">Desc</th>
+              <th class="grid-border tooltipped" data-tooltip="Origem">O</th>
+              <th class="grid-border tooltipped" data-tooltip="Prop">P</th>
+              <th class="grid-border tooltipped" data-tooltip="Emissor">E</th>
+              <th class="grid-border tooltipped" data-tooltip="Tipo Cob.">C</th>
+              <th class="grid-border tooltipped" data-tooltip="Chq. S/Fdo">CH</th>
+              <th class="grid-border tooltipped" data-tooltip="Sit. Vendor">VD</th>
+              <th class="grid-border tooltipped" data-tooltip="Vencimento">VC</th>
+              <th class="grid-border tooltipped" data-tooltip="Org. Fiscal">F</th>
+              <th class="grid-border tooltipped" data-tooltip="Unidade">UN</th>
+              <th class="grid-border tooltipped" data-tooltip="Conta">CONTA</th>
+              <th class="grid-border tooltipped" data-tooltip="">SI</th>
+              <th class="grid-border tooltipped" data-tooltip="Evento">EV</th>
+              <th class="grid-border tooltipped" data-tooltip="Fato">FT</th>
+              <th class="grid-border tooltipped" data-tooltip="Sequência">SEQ</th>
+              <th class="grid-border tooltipped" data-tooltip="">L</th>
+              <th class="grid-border tooltipped" data-tooltip="Código Movimento Conciliação">Id/Mov</th>
+              <th class="grid-border tooltipped" data-tooltip="">RM</th>
+              <th class="grid-border">Ação</th>
+          </tr>
       </thead>
       <tbody>
         <tr ng-repeat="conc in conciliacoes | filter:filterConciliacao" ng-click="preencherConciliacao(conc)">
-          <td class="grid-border">{{ conc.CodIdentidadeContabil }}</td>
-          <td class="grid-border">{{ conc.CodResponsavelRiscoCredito }}</td>
-          <td class="grid-border">{{ conc.CodTipoMovimentacaoTituloReceber }}</td>
-          <td class="grid-border">{{ conc.desc_ }}</td>
-          <td class="grid-border">{{ conc.CodFormaPagamento }}</td>
-          <td class="grid-border">{{ conc.desc2 }}</td>
-          <td class="grid-border">{{ conc.CodOrigemPedido }}</td>
-          <td class="grid-border">{{ conc.CodEmitenteTitulo }}</td>
-          <td class="grid-border">{{ conc.CodProprietarioTitulo }}</td>
-          <td class="grid-border">{{ conc.CodTipoCobranca }}</td>
-          <td class="grid-border">{{ conc.TipoCheque }}</td>
-          <td class="grid-border">{{ conc.CodSituacaoTituloVendor }}</td>
-          <td class="grid-border">{{ conc.CodSituacaoVencimentoTitulo }}</td>
-          <td class="grid-border">{{ conc.CodSituacaoTituloOrgaoFiscal }}</td>
-          <td class="grid-border">{{ conc.un }}</td>
-          <td class="grid-border">{{ conc.conta }}</td>
-          <td class="grid-border">{{ conc.si }}</td>
-          <td class="grid-border">{{ conc.ev }}</td>
-          <td class="grid-border">{{ conc.ft }}</td>
-          <td class="grid-border">{{ conc.seq }}</td>
-          <td class="grid-border">{{ conc.l }}</td>
-          <td class="grid-border">{{ conc.CodMovimentoConciliacao }}</td>
-          <td class="grid-border">{{ conc.rm }}</td>
-          <td class="grid-border">{{ conc.acao }}</td>
+          <td class="grid-border">{{ ::conc.CodIdentidadeContabil }}</td>
+          <td class="grid-border">{{ ::conc.CodResponsavelRiscoCredito }}</td>
+          <td class="grid-border">{{ ::conc.CodTipoMovimentacaoTituloReceber }}</td>
+          <td class="grid-border">{{ ::conc.desc_ }}</td>
+          <td class="grid-border">{{ ::conc.CodFormaPagamento }}</td>
+          <td class="grid-border">{{ ::conc.desc2 }}</td>
+          <td class="grid-border">{{ ::conc.CodOrigemPedido }}</td>
+          <td class="grid-border">{{ ::conc.CodEmitenteTitulo }}</td>
+          <td class="grid-border">{{ ::conc.CodProprietarioTitulo }}</td>
+          <td class="grid-border">{{ ::conc.CodTipoCobranca }}</td>
+          <td class="grid-border">{{ ::conc.TipoCheque }}</td>
+          <td class="grid-border">{{ ::conc.CodSituacaoTituloVendor }}</td>
+          <td class="grid-border">{{ ::conc.CodSituacaoVencimentoTitulo }}</td>
+          <td class="grid-border">{{ ::conc.CodSituacaoTituloOrgaoFiscal }}</td>
+          <td class="grid-border">{{ ::conc.un }}</td>
+          <td class="grid-border">{{ ::conc.conta }}</td>
+          <td class="grid-border">{{ ::conc.si }}</td>
+          <td class="grid-border">{{ ::conc.ev }}</td>
+          <td class="grid-border">{{ ::conc.ft }}</td>
+          <td class="grid-border">{{ ::conc.seq }}</td>
+          <td class="grid-border">{{ ::conc.l }}</td>
+          <td class="grid-border">{{ ::conc.CodMovimentoConciliacao }}</td>
+          <td class="grid-border">{{ ::conc.rm }}</td>
+          <td class="grid-border">{{ ::conc.acao }}</td>
         </tr>
       </tbody>
     </table>

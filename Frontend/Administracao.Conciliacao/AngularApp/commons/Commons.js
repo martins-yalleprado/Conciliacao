@@ -1,4 +1,4 @@
-//angular.module('MartinsApp'
+//angular.module('MartinsApp')
 //['$scope', 'ModuloService', function ($scope, ModuloService) {
  
 //}]);

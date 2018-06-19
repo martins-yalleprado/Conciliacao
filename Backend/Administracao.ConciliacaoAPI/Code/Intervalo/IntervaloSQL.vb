@@ -6,34 +6,39 @@ Namespace Code.Intervalo
             stringBuilder.Append("Select CODIVLPODAGI,NUMINIIVLPODAGI,NUMFIMIVLPODAGI,IDTSITIVLPODAGI,CODPODAGI from MRT.CADIVLPODAGI where CODIVLPODAGI =:codigo")
             Return stringBuilder.ToString()
 		End Function
-		Public Function selectIntervalo() As String
-			Dim stringBuilder As New StringBuilder()
-            stringBuilder.Append("Select CODIVLPODAGI,NUMINIIVLPODAGI,NUMFIMIVLPODAGI,IDTSITIVLPODAGI,CODPODAGI from MRT.CADIVLPODAGI where CODPODAGI=:periodo ")
+        Public Function selectIntervalo() As String
+            Dim stringBuilder As New StringBuilder()
+            stringBuilder.Append("Select CODIVLPODAGI,NUMINIIVLPODAGI,NUMFIMIVLPODAGI,IDTSITIVLPODAGI,CODPODAGI from MRT.CADIVLPODAGI where CODPODAGI=:periodo and NVL(IDTSITIVLPODAGI,:situacao) =NVL(:situacao,IDTSITIVLPODAGI)")
             Return stringBuilder.ToString()
-		End Function
-		Public Function deleteIntervalo() As String
+        End Function
+        Public Function selectIntervaloDeAte() As String
+            Dim stringBuilder As New StringBuilder()
+            stringBuilder.Append("Select CODIVLPODAGI,NUMINIIVLPODAGI,NUMFIMIVLPODAGI,IDTSITIVLPODAGI,CODPODAGI from MRT.CADIVLPODAGI where CODPODAGI=:periodo and NUMINIIVLPODAGI=:inicio and NUMFIMIVLPODAGI=:fim")
+            Return stringBuilder.ToString()
+        End Function
+        Public Function deleteIntervalo() As String
 			Dim stringBuilder As New StringBuilder()
             stringBuilder.Append("delete MRT.CADIVLPODAGI where CODIVLPODAGI =:codigo")
             Return stringBuilder.ToString()
 		End Function
 		Public Function updateIntervalo() As String
 			Dim stringBuilder As New StringBuilder()
-            stringBuilder.Append("update MRT.CADIVLPODAGI set NUMINIIVLPODAGI= :inicio,NUMFIMIVLPODAGI=:fim,CODPODAGI =:periodo where CODIVLPODAGI=:codigo")
+            stringBuilder.Append("update MRT.CADIVLPODAGI set NUMINIIVLPODAGI=:inicio,NUMFIMIVLPODAGI=:fim,CODPODAGI=:periodo where CODIVLPODAGI=:codigo")
             Return stringBuilder.ToString()
 		End Function
 		Public Function ativarIntervalo() As String
 			Dim stringBuilder As New StringBuilder()
-            stringBuilder.Append("update MRT.CADIVLPODAGI set IDTSITPODAGI='1' where CODIVLPODAGI =:codigo")
+            stringBuilder.Append("update MRT.CADIVLPODAGI set IDTSITIVLPODAGI=1 where CODIVLPODAGI =:codigo")
             Return stringBuilder.ToString()
 		End Function
 		Public Function desativarIntervalo() As String
 			Dim stringBuilder As New StringBuilder()
-            stringBuilder.Append("update MRT.CADIVLPODAGI set IDTSITPODAGI='0' where CODIVLPODAGI =:codigo")
+            stringBuilder.Append("update MRT.CADIVLPODAGI set IDTSITIVLPODAGI=0 where CODIVLPODAGI =:codigo")
             Return stringBuilder.ToString()
 		End Function
 		Public Function inserirIntervalo() As String
 			Dim stringBuilder As New StringBuilder()
-            stringBuilder.Append(" Insert into MRT.CADIVLPODAGI (CODIVLPODAGI,NUMINIIVLPODAGI,NUMFIMIVLPODAGI,IDTSITIVLPODAGI,CODPODAGI) values (Nvl((select MAX(CODIVLPODAGI)+1 from MRT.CADIVLPODAGI),1),:inicio,:fim ,'1',:periodo)")
+            stringBuilder.Append(" Insert into MRT.CADIVLPODAGI (CODIVLPODAGI,NUMINIIVLPODAGI,NUMFIMIVLPODAGI,IDTSITIVLPODAGI,CODPODAGI) values (Nvl((select MAX(CODIVLPODAGI)+1 from MRT.CADIVLPODAGI),1),:inicio,:fim ,1,:periodo)")
             Return stringBuilder.ToString()
 		End Function
 	End Class

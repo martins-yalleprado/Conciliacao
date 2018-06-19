@@ -3,60 +3,96 @@ Imports System.Linq
 Imports System.Web
 
 Namespace Model
-	Public Class UnidadeModel
-		Public Property codUnidade() As Integer
-			Get
-				Return m_codUnidade
-			End Get
-			Set
-				m_codUnidade = Value
-			End Set
-		End Property
-		Private m_codUnidade As Integer
-		Public Property nomUnidade() As String
-			Get
-				Return m_nomUnidade
-			End Get
-			Set
-				m_nomUnidade = Value
-			End Set
-		End Property
-		Private m_nomUnidade As String
-		Public Property desUnidade() As String
-			Get
-				Return m_desUnidade
-			End Get
-			Set
-				m_desUnidade = Value
-			End Set
-		End Property
-		Private m_desUnidade As String
-		Public Property situacao() As String
-			Get
-				Return m_situacao
-			End Get
-			Set
-				m_situacao = Value
-			End Set
-		End Property
-		Private m_situacao As String
-		Public Property codFuncionario() As Integer
-			Get
-				Return m_codFuncionario
-			End Get
-			Set
-				m_codFuncionario = Value
-			End Set
-		End Property
-		Private m_codFuncionario As Integer
-		Public Property situacaoLabel() As String
-			Get
-				Return m_situacaoLabel
-			End Get
-			Set
-				m_situacaoLabel = Value
-			End Set
-		End Property
-		Private m_situacaoLabel As String
-	End Class
+  Public Class UnidadeModel
+    Private m_CodEmpresa As Integer
+    Private m_CodUnidade As Integer
+    Private m_DesUnidade As String
+    Private m_CodFilialCentroAdministrativo As Integer
+    Private m_CodFilialTituloPagamento As Integer
+    Private m_DataCadastro As DateTime
+    Private m_DataDesativacao As DateTime
+    Private m_CodLivroContabil As Integer
+    Private m_CodNumericosMaiores As Integer
+
+    Public Property CodEmpresa As Integer
+      Get
+        Return m_CodEmpresa
+      End Get
+      Set(value As Integer)
+        m_CodEmpresa = value
+      End Set
+    End Property
+
+    Public Property CodUnidade As Integer
+      Get
+        Return m_CodUnidade
+      End Get
+      Set(value As Integer)
+        m_CodUnidade = value
+      End Set
+    End Property
+
+    Public Property DesUnidade As String
+      Get
+        Return m_DesUnidade
+      End Get
+      Set(value As String)
+        m_DesUnidade = value
+      End Set
+    End Property
+
+    Public Property CodFilialCentroAdministrativo As Integer
+      Get
+        Return m_CodFilialCentroAdministrativo
+      End Get
+      Set(value As Integer)
+        m_CodFilialCentroAdministrativo = value
+      End Set
+    End Property
+
+    Public Property CodFilialTituloPagamento As Integer
+      Get
+        Return m_CodFilialTituloPagamento
+      End Get
+      Set(value As Integer)
+        m_CodFilialTituloPagamento = value
+      End Set
+    End Property
+
+    Public Property DataCadastro As Date
+      Get
+        Return m_DataCadastro
+      End Get
+      Set(value As Date)
+        m_DataCadastro = value
+      End Set
+    End Property
+
+    Public Property DataDesativacao As Date
+      Get
+        Return m_DataDesativacao
+      End Get
+      Set(value As Date)
+        m_DataDesativacao = value
+      End Set
+    End Property
+
+    Public Property CodLivroContabil As Integer
+      Get
+        Return m_CodLivroContabil
+      End Get
+      Set(value As Integer)
+        m_CodLivroContabil = value
+      End Set
+    End Property
+
+    Public Property CodNumericosMaiores As Integer
+      Get
+        Return m_CodNumericosMaiores
+      End Get
+      Set(value As Integer)
+        m_CodNumericosMaiores = value
+      End Set
+    End Property
+  End Class
 End Namespace

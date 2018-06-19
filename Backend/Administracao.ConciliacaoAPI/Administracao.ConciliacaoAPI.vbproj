@@ -13,8 +13,8 @@
     <ProjectGuid>{196A9A0F-DC26-4BEF-98D2-FC7C1DE12A63}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Martins.Conciliacao</RootNamespace>
-    <AssemblyName>Martins.Conciliacao</AssemblyName>
+    <RootNamespace>Administracao.ConciliacaoAPI</RootNamespace>
+    <AssemblyName>Administracao.ConciliacaoAPI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MyType>Custom</MyType>
     <UseIISExpress>true</UseIISExpress>
@@ -33,7 +33,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\</OutputPath>
-    <DocumentationFile>Martins.Conciliacao.xml</DocumentationFile>
+    <DocumentationFile>Administracao.ConciliacaoAPI.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -42,7 +42,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DocumentationFile>Martins.Conciliacao.xml</DocumentationFile>
+    <DocumentationFile>Administracao.ConciliacaoAPI.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -202,6 +202,9 @@
     <Compile Include="Code\Conta\ContaBLL.vb" />
     <Compile Include="Code\Conta\ContaDAL.vb" />
     <Compile Include="Code\Conta\ContaSQL.vb" />
+    <Compile Include="Code\Fechamento\FechamentoBLL.vb" />
+    <Compile Include="Code\Fechamento\FechamentoDAL.vb" />
+    <Compile Include="Code\Fechamento\FechamentoSQL.vb" />
     <Compile Include="Code\GestaoCarga\GestaoCargaBLL.vb" />
     <Compile Include="Code\GestaoCarga\GestaoCargaDAL.vb" />
     <Compile Include="Code\GestaoCarga\GestaoCargaSQL.vb" />
@@ -212,12 +215,24 @@
     <Compile Include="Code\Log\LogBLL.vb" />
     <Compile Include="Code\Log\LogDAL.vb" />
     <Compile Include="Code\Log\LogSQL.vb" />
+    <Compile Include="Code\MovimentoAcerto\MovimentoAcertoBLL.vb" />
+    <Compile Include="Code\MovimentoAcerto\MovimentoAcertoDAL.vb" />
+    <Compile Include="Code\MovimentoAcerto\MovimentoAcertoSQL.vb" />
+    <Compile Include="Code\MovimentoConciliacao\MovimentoConciliacaoBLL.vb" />
+    <Compile Include="Code\MovimentoConciliacao\MovimentoConciliacaoDAL.vb" />
+    <Compile Include="Code\MovimentoConciliacao\MovimentoConciliacaoSQL.vb" />
+    <Compile Include="Code\MovimentoContabil\MovimentoContabilBLL.vb" />
+    <Compile Include="Code\MovimentoContabil\MovimentoContabilDAL.vb" />
+    <Compile Include="Code\MovimentoContabil\MovimentoContabilSQL.vb" />
     <Compile Include="Code\Periodo\PeriodoBLL.vb" />
     <Compile Include="Code\Periodo\PeriodoDAL.vb" />
     <Compile Include="Code\Periodo\PeriodoSQL.vb" />
     <Compile Include="Code\Permissao\PermissaoBLL.vb" />
     <Compile Include="Code\Permissao\PermissaoDAL.vb" />
     <Compile Include="Code\Permissao\PermissaoSQL.vb" />
+    <Compile Include="Code\Saldo\SaldoBLL.vb" />
+    <Compile Include="Code\Saldo\SaldoDAL.vb" />
+    <Compile Include="Code\Saldo\SaldoSQL.vb" />
     <Compile Include="Code\UnidadeConta\UnidadeContaBLL.vb" />
     <Compile Include="Code\UnidadeConta\UnidadeContaDAL.vb" />
     <Compile Include="Code\UnidadeConta\UnidadeContaSQL.vb" />
@@ -225,10 +240,15 @@
     <Compile Include="Code\Unidade\UnidadeDAL.vb" />
     <Compile Include="Code\Unidade\UnidadeSQL.vb" />
     <Compile Include="Controllers\ContaController.vb" />
+    <Compile Include="Controllers\FechamentoController.vb" />
     <Compile Include="Controllers\GestaoCargaController.vb" />
     <Compile Include="Controllers\IntervaloController.vb" />
+    <Compile Include="Controllers\MovimentoAcertoController.vb" />
+    <Compile Include="Controllers\MovimentoConciliacaoController.vb" />
+    <Compile Include="Controllers\MovimentoContabilController.vb" />
     <Compile Include="Controllers\PeriodoController.vb" />
     <Compile Include="Controllers\PermissaoController.vb" />
+    <Compile Include="Controllers\SaldoController.vb" />
     <Compile Include="Controllers\TestController.vb" />
     <Compile Include="Controllers\UnidadeContaController.vb" />
     <Compile Include="Controllers\UnidadeController.vb" />
@@ -241,11 +261,18 @@
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Model\AuthenticateAdModel.vb" />
     <Compile Include="Model\ContaModel.vb" />
+    <Compile Include="Model\ErroModel.vb" />
+    <Compile Include="Model\FechamentoModel.vb" />
     <Compile Include="Model\GestaoCargaModel.vb" />
     <Compile Include="Model\GrupoModel.vb" />
     <Compile Include="Model\IntervaloModel.vb" />
+    <Compile Include="Model\MovimentoAcertoModel.vb" />
+    <Compile Include="Model\MovimentoConciliacaoModel.vb" />
+    <Compile Include="Model\MovimentoContabilModel.vb" />
     <Compile Include="Model\PeriodoModel.vb" />
     <Compile Include="Model\PermissaoModel.vb" />
+    <Compile Include="Model\ResultModel.vb" />
+    <Compile Include="Model\SaldoModel.vb" />
     <Compile Include="Model\TransactionInformation.vb" />
     <Compile Include="Model\UnidadeContaModel.vb" />
     <Compile Include="Model\UnidadeModel.vb" />

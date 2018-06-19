@@ -1,8 +1,17 @@
 Imports System.Data.Common
-Imports Martins.Conciliacao.Util
+Imports Administracao.ConciliacaoAPI.Util
 Imports Oracle.ManagedDataAccess.Client
 
 Public Class LogDAL
+  Private OracleConnection As OracleConnection
+  Public Sub New()
+    Try
+      OracleConnection = New OracleConnection(Utils.ORACLE_CONNECCAO)
+      OracleConnection.Open()
+    Catch ex As Exception
+      Throw New Exception("Erro ao conectar ao banco de dados.")
+    End Try
+  End Sub
   Public Function InsertLog(ByVal CODFNC As String, ByVal VLSTATEMENT As String) As Boolean
     Dim databaseCommand As DbCommand = Nothing
     Dim command As OracleCommand = Nothing
@@ -10,7 +19,7 @@ Public Class LogDAL
 
     Try
       Dim sqlCmd As LogSQL = New LogSQL()
-      command = New OracleCommand(sqlCmd.InsertLog(), New OracleConnection(Utils.ORACLE_CONNECCAO))
+      command = New OracleCommand(sqlCmd.InsertLog(), OracleConnection)
       command.Parameters.Add(New OracleParameter("CODFNC", CODFNC))
       command.Parameters.Add(New OracleParameter("VLSTATEMENT", VLSTATEMENT))
       command.Connection.Open()

@@ -7,7 +7,7 @@ Namespace Code.Periodo
     End Function
     Public Function selectPeriodo() As String
       Dim stringBuilder As New StringBuilder()
-            stringBuilder.Append("Select CODPODAGI,NOMPODAGI,IDTSITPODAGI from MRT.CADPODAGI where NVL(NOMPODAGI,:nome) like NVL(:nome,NOMPODAGI) and  NVL(IDTSITPODAGI,:situacao) =NVL(:situacao,IDTSITPODAGI)")
+            stringBuilder.Append("Select CODPODAGI,NOMPODAGI,IDTSITPODAGI from MRT.CADPODAGI where NVL(LOWER(NOMPODAGI),LOWER(:nome)) like NVL(LOWER(:nome),LOWER(NOMPODAGI)) and  NVL(IDTSITPODAGI,:situacao) =NVL(:situacao,IDTSITPODAGI)")
             Return stringBuilder.ToString()
     End Function
 
@@ -23,12 +23,12 @@ Namespace Code.Periodo
     End Function
     Public Function ativarPeriodo() As String
       Dim stringBuilder As New StringBuilder()
-            stringBuilder.Append("update MRT.CADPODAGI set IDTSITPODAGI='1' where CODPODAGI =:codigo")
+            stringBuilder.Append("update MRT.CADPODAGI set IDTSITPODAGI=1 where CODPODAGI =:codigo")
             Return stringBuilder.ToString()
     End Function
     Public Function desativarPeriodo() As String
       Dim stringBuilder As New StringBuilder()
-            stringBuilder.Append("update MRT.CADPODAGI set IDTSITPODAGI='0' where CODPODAGI =:codigo")
+            stringBuilder.Append("update MRT.CADPODAGI set IDTSITPODAGI=0 where CODPODAGI =:codigo")
             Return stringBuilder.ToString()
     End Function
     Public Function inserirPeriodo() As String

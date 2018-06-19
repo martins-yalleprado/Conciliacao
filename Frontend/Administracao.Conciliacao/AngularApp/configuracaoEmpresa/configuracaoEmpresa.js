@@ -2,6 +2,7 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
 
 
     function ($scope, $http, AppConstants) {
+      
 
         var vm = this;
         var unidadeSelecionada = null;
@@ -35,7 +36,7 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
                 })
                 .catch(function (ResData) {
                     debugger;
-                    swal({ title: 'Erro', text: ResData.error, type: 'error', confirmButtonText: 'Ok' });
+                    swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButtonText: 'Ok' });
                 });
         }
 
@@ -49,15 +50,8 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
                 })
                 .catch(function (ResData) {
                     debugger;
-                    swal({ title: 'Erro', text: ResData.error, type: 'error', confirmButtonText: 'Ok' });
+                    swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButtonText: 'Ok' });
                 });
-        }
-
-        $scope.setaCodigoUnidade = function (unidadeIndex, unidade) {
-
-            //this.unidadeSelecionada = unidade[unidadeIndex.selectedIndex - 1].CodUnidade
-
-            //vm.buscaContasUnidade(this.unidadeSelecionada);
         }
 
         $scope.pesquisar = function (unidade, conta) {
@@ -109,7 +103,7 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
                     retorno = ResData.data.Data.length;
                     if (retorno !== 0) {
                         debugger;
-                        swal({ title: 'Atenção', text: 'A Unidade de Negócio já está relacionada a conta', type: 'warning', confirmButtonText: 'Ok' });
+                        swal({ title: 'Atenção', text: 'A Unidade de Negócio já está relacionada a Conta', type: 'warning', confirmButtonText: 'Ok' });
                     }
                     else if (retorno == 0) {
                         debugger;
@@ -126,16 +120,17 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
                             .then(function (ResData) {
                                 debugger;
                                 $scope.UnidadesContas = ResData.data.Data;
+                                vm.buscaContasUnidade(unidade, conta);
                             })
                             .catch(function (ResData) {
                                 debugger;
-                                swal({ title: 'Erro', text: ResData.error, type: 'error', confirmButtonText: 'Ok' });
+                                swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButtonText: 'Ok' });
                             });
                     }
 
                 })
                 .catch(function (ResData) {
-                    swal({ title: 'Erro', text: ResData.error, type: 'error', confirmButtonText: 'Ok' });
+                    swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButtonText: 'Ok' });
                 });
 
 
@@ -168,7 +163,7 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
                 })
                 .catch(function (ResData) {
                     debugger;
-                    swal({ title: 'Erro', text: ResData.error, type: 'error', confirmButtonText: 'Ok' });
+                    swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButtonText: 'Ok' });
                 });
             return retorno;
         }
@@ -186,48 +181,8 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
             window.localStorage.setItem(CONTA_KEY, JSON.stringify(conta));
         }
 
-        $scope.ativarContaUniadde = function (unidadeConta) {
-            debugger;
-            swal({
-                title: 'Atenção',
-                text: 'Deseja ativar a relação Unidade - Conta?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Sim'
-            }).then((result) => {
-                if (result.value) {
 
-                    $http.put(AppConstants.API_ROOT + '/api/UnidadeConta/5', unidadeConta, "ativar")
-                        .then(function (resultado) {
-                            this.data = resultado.data.Data;
-                            swal(
-                                'Feito!',
-                                'A relação foi criada.',
-                                'success'
-                            );
-                            debugger;
-                            vm.buscaContasUnidade(unidadeConta.UnidadeModel, unidadeConta.ContaModel);
-
-                        })
-                        .catch(function (resultado) {
-                            if (resultado.data.ErroModel.ErroMensagem !== undefined) {
-                                swal({ title: 'Erro', text: ResData.data.ErroModel.ErroMensagem, type: 'error', confirmButtonText: 'Ok' });
-                            }
-                            else if (resultado.data.Message !== undefined) {
-                                swal({ title: 'Erro', text: resultado.data.Message, type: 'error', confirmButtonText: 'Ok' });
-                            }
-                            else {
-                                swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButtonText: 'Ok' });
-                            }
-                        });
-                }
-            });
-        }
-
-        $scope.desativarContaUniadde = function (unidadeConta) {
+        $scope.ativarDesativarContaUniadde = function (unidadeConta) {
             debugger;
             swal({
                 title: 'Atenção',
@@ -240,13 +195,14 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
                 confirmButtonText: 'Sim'
             }).then((result) => {
                 if (result.value) {
-
-                    $http.put(AppConstants.API_ROOT + '/api/UnidadeConta', unidadeConta, "inativar")
+                    debugger;
+                    $http.put(AppConstants.API_ROOT + '/api/UnidadeConta/' + unidadeConta.CodEmpresa + '/' + unidadeConta.ContaModel.CodContaContabil + '/' + unidadeConta.UnidadeModel.CodUnidade)
                         .then(function (resultado) {
+                            debugger;
                             this.data = resultado.data.Data;
                             swal(
                                 'Feito!',
-                                'A relação foi criada.',
+                                'A relação foi desativada.',
                                 'success'
                             );
                             debugger;
@@ -254,12 +210,10 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
 
                         })
                         .catch(function (resultado) {
-                            if (resultado.data.ErroModel.ErroMensagem !== undefined) {
-                                swal({ title: 'Erro', text: ResData.data.ErroModel.ErroMensagem, type: 'error', confirmButtonText: 'Ok' });
-                            }
-                            else if (resultado.data.Message !== undefined) {
-                                swal({ title: 'Erro', text: resultado.data.Message, type: 'error', confirmButtonText: 'Ok' });
-                            }
+                            debugger;
+                            if (resultado.data.Message !== null) {
+                                  swal({ title: 'Erro', text: resultado.data.Message, type: 'error', confirmButton: 'Ok' });
+                            }                           
                             else {
                                 swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButtonText: 'Ok' });
                             }

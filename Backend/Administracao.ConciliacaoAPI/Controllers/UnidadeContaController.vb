@@ -1,45 +1,67 @@
+Imports System.Net
+Imports System.Net.Http
 Imports System.Web.Http
-Imports Martins.Conciliacao.Code.UnidadeConta
-Imports Martins.Conciliacao.Model
+Imports Administracao.ConciliacaoAPI.Code.UnidadeConta
+Imports Administracao.ConciliacaoAPI.Model
 
-Namespace Controller
-  Public Class UnidadeContaController
-    Inherits ApiController
-    ' GET api/<controller>
-    Public Function [Get]() As IEnumerable(Of UnidadeContaModel)
-      Dim bll As New UnidadeContaBLL()
-      Return bll.SelectUnidadeConta()
-    End Function
+Namespace Controllers
+    Public Class UnidadeContaController
+        Inherits ApiController
+        ' GET api/<controller>
+        Public Function GetValues() As Object
+            Try
+                Dim bll As New UnidadeContaBLL()
+                Return New ResultModel(bll.SelectUnidadeConta())
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
 
-    ' GET api/<controller>/5
-    Public Function [Get](id As Integer) As String
-      ' UnidadeContaBLL bll = new UnidadeContaBLL();
-      Return "value"
-    End Function
+        ' GET api/<controller>/5
+        <HttpGet>
+        <Route("api/UnidadeConta/{codUnidade}/{codConta}")>
+        Public Function GetValues(CodUnidade As Integer, codConta As Integer) As Object
+            Try
+                Dim bll As New UnidadeContaBLL()
+                Return New ResultModel(bll.SelectUnidadeConta(CodUnidade, codConta))
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
 
-    ' POST api/<controller>
-    Public Sub Post(<FromBody> unidadeConta As UnidadeContaModel)
-      Dim bll As New UnidadeContaBLL()
+        ' POST api/<controller>
+        Public Function PostValue(<FromBody> unidadeConta As UnidadeContaModel) As Object
+            Try
+                Dim bll As New UnidadeContaBLL()
+                bll.InsertUnidadeConta(unidadeConta)
+                Return New ResultModel(Nothing)
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
 
-      bll.InsertUnidadeConta(unidadeConta)
-    End Sub
+        ' PUT api/<controller>/5
+        <HttpPut()>
+        <Route("api/UnidadeConta/{codEmpresa}/{codConta}/{codUnidade}")>
+        Public Function PutValue(codEmpresa As Integer, codConta As Integer, codUnidade As Integer, <FromBody> unidadeConta As UnidadeContaModel) As Object
+            Try
+                Dim bll As New UnidadeContaBLL()
 
-    ' PUT api/<controller>/5
-    Public Sub Put(<FromBody> unidadeConta As UnidadeContaModel, acao As String)
-      Dim bll As New UnidadeContaBLL()
-      If acao.ToLower().Equals("ativar") Then
-        bll.AtivarUnidadeConta(unidadeConta)
-      ElseIf acao.ToLower().Equals("inativar") Then
-        bll.InativarUnidadeConta(unidadeConta)
-      End If
+                unidadeConta = New UnidadeContaModel()
+                unidadeConta.ContaModel = New ContaModel()
+                unidadeConta.UnidadeModel = New UnidadeModel()
+                unidadeConta.CodEmpresa = codEmpresa
+                unidadeConta.UnidadeModel.CodUnidade = codUnidade
+                unidadeConta.ContaModel.CodContaContabil = codConta
 
-    End Sub
+                bll.AtivarInativarUnidadeConta(unidadeConta)
 
-    ' DELETE api/<controller>/5
-    Public Sub Delete(id As Integer)
-      'não realiza esta operacao
-      '  UnidadeContaBLL bll = new UnidadeContaBLL();
+                Return New ResultModel(Nothing)
 
-    End Sub
-  End Class
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
+
+    End Class
 End Namespace

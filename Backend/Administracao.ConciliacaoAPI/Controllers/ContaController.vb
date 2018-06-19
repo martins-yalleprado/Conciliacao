@@ -1,45 +1,52 @@
+Imports System.Net
+Imports System.Net.Http
 Imports System.Web.Http
-Imports Martins.Conciliacao.Code.Conta
-Imports Martins.Conciliacao.Model
+Imports System.Web.Services.Description
+Imports Administracao.ConciliacaoAPI.Code.Conta
+Imports Administracao.ConciliacaoAPI.Model
+Namespace Controllers
+    Public Class ContaController
+        Inherits ApiController
 
+        ' GET api/<controller>
+        Public Function GetValues() As Object
+            Try
+                Dim bll As New ContaBLL
+                Return New ResultModel(bll.SelectConta())
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
 
-Namespace Controller
-  Public Class ContaController
-    Inherits ApiController
-    Public Function [Get]() As IEnumerable(Of ContaModel)
-      Dim bll As New ContaBLL()
-      Return bll.SelectConta()
-    End Function
+        ' GET api/<controller>/5
+        Public Function GetValue(ByVal id As Integer) As Object
+            Try
+                Dim bll As New ContaBLL
+                Return New ResultModel(bll.SelectContaPorId(id))
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
 
-    ' GET api/<controller>/5
-    Public Function [Get](id As Integer) As String
-      ' ContaBLL bll = new ContaBLL();
-      Return "value"
-    End Function
+        ' POST api/<controller>
+        Public Function PostValue(<FromBody()> ByVal ContaModel As ContaModel) As Object
+            Try
+                Dim bll As New ContaBLL
+                bll.InsertConta(ContaModel)
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
 
-    ' POST api/<controller>
-    Public Sub Post(<FromBody> Conta As ContaModel)
-      Dim bll As New ContaBLL()
-
-      bll.InsertConta(Conta)
-    End Sub
-
-    ' PUT api/<controller>/5
-    Public Sub Put(<FromBody> Conta As ContaModel, acao As String)
-      Dim bll As New ContaBLL()
-      If acao.ToLower().Equals("ativar") Then
-        bll.AtivarConta(Conta)
-      ElseIf acao.ToLower().Equals("inativar") Then
-        bll.InativarConta(Conta)
-      End If
-
-    End Sub
-
-    ' DELETE api/<controller>/5
-    Public Sub Delete(id As Integer)
-      'não realiza esta operacao
-      '  ContaBLL bll = new ContaBLL();
-
-    End Sub
-  End Class
+        ' PUT api/<controller>/5
+        Public Function PutValue(<FromBody()> ByVal ContaModel As ContaModel, acao As String) As Object
+            Try
+                Dim bll As New ContaBLL
+                bll.UpdateConta(ContaModel, acao)
+                Return New ResultModel(Nothing)
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
+    End Class
 End Namespace

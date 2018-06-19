@@ -36,42 +36,43 @@
                  on-set="onSet()"
                  on-stop="onStop()" />
 
-          <label for="referenceDate">Data de referência</label>
+          <label for="referenceDate">Data Arquivo</label>
 
         </div>
-        <div class="margin-div col s4 m4 l4">
-          <form action="teste">
-            <input type="checkbox" id="titulo" value="TIT" name="titulo" #TIT ng-model="types.TIT" />
-            <label for="titulo">Título</label>
-            <input type="checkbox" id="contabil" value="CTB" name="contabil" #CTB ng-model="types.CTB" />
-            <label for="contabil">Contábil</label>
+        <div class="margin-div col s4 m4 l4" style="margin-top: 20px">
+          <form action="teste" ng-model="types">
+            <input type="checkbox" id="titulo" value="TIT" name="titulo" #TIT ng-model="types.TIT"/>
+            <label for="titulo" style="padding-left:23px; margin-right:14px">Título</label>
+            <input type="checkbox" id="contabil" value="CTB" name="contabil" #CTB ng-model="types.CTB"/>
+            <label for="contabil" style="padding-left:23px; margin-right:14px">Contábil</label>
             <input type="checkbox" id="aging" value="AGI" name="aging" #AGI ng-model="types.AGI" />
-            <label for="aging">Aging</label>
+            <label for="aging" style="padding-left:23px;">Aging</label>
           </form>
         </div>
-        <div class="col s5 m5 l5 button-search">
+        <div class="col s5 m5 l5 button-search" style="margin-top: 20px">
           <button class="btn waves-effect waves-light blue lighten-1 left" name="action" ng-click="searchChargeManagement(dataRef.value, types)">
 
             Pesquisar
             <i class="material-icons left">search</i>
           </button>
-          <div class="col s5 m5 l5 button-add_box">
-            <button class="btn waves-effect waves-light blue lighten-1 left" name="action" ng-click="gerarLote(dataRef.value, types)">
+          <div>
+            <button class="btn waves-effect waves-light blue lighten-1 left" style="margin-left:20px" name="action" ng-click="gerarLote(dataRef.value, types)">
               Gerar Lote
               <i class="material-icons left">add_box</i>
             </button>
-          </div>
+          </div>    
         </div>
         <table class="striped centered grid-border">
           <thead class="grid-background">
             <tr>
-              <th class="grid-border">Data</th>
+              <th class="grid-border">Data Arquivo</th>
               <th class="grid-border">Data Movimentação</th>
               <th class="grid-border">Qtd.</th>
               <th class="grid-border">Tipo</th>
               <th class="grid-border">Versão</th>
               <th class="grid-border">Versão Oficial</th>
-              <th class="grid-border">Valor</th>
+              <th class="grid-border tooltipped" data-html="true"
+                  data-tooltip="TIT - Soma(Valor título = 'VLRMOV') <br/> CTB - Soma(Valor crédito - Valor débito) <br/> AGI - Soma(Saldo do título)">Valor</th>
               <th class="grid-border" colspan="2">Ação</th>
             </tr>
           </thead>
@@ -98,7 +99,7 @@
               </td>
               <td class="grid-border">
                 <a ng-if="d.versaoOficialLabel == 'Não'" class="waves-effect waves-light" ng-click="removerVersao(d.codGestaoCarga)">
-                  <i class="material-icons left">delete</i>
+                  <i class="material-icons left">block</i>
                 </a>
               </td>
             </tr>

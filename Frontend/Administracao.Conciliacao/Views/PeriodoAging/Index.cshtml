@@ -1,8 +1,8 @@
-@Scripts.Render("~/AngularApp/periodoAging/periodoAging.js")
+﻿@Scripts.Render("~/AngularApp/periodoAging/periodoAging.js")
 @Styles.Render("~/Content/css/periodoAging.css")
 
 
-<div id="" ng-controller="PeriodoAging">
+<div style="padding:10px" id="" ng-controller="PeriodoAging">
   <div class="row">
     <div class="row">
       <!-- <div class="input-field col s4 m4 l4">
@@ -10,35 +10,9 @@
         <input id="term" type="text" [(ngModel)]="term">
         <label for="term">Digite um termo</label>
       </div> -->
-      <div class="input-field col s3 m3 l3">
+      <div class="input-field col s3 m3 l3" >
 
-        <label for="inputCreated">Período</label>
-        @*<input input-date
-    type="text"
-    name="created"
-    id="inputCreated"
-    ng-model="currentTime"
-    container=""
-    format="dd/mm/yyyy"
-    months-full="{{ month }}"
-    months-short="{{ monthShort }}"
-    weekdays-full="{{ weekdaysFull }}"
-    weekdays-short="{{ weekdaysShort }}"
-    weekdays-letter="{{ weekdaysLetter }}"
-    disable="disable"
-    min="{{ minDate }}"
-    max="{{ maxDate }}"
-    today="today"
-    first-day="1"
-    clear="clear"
-    close="close"
-    select-years="15"
-    on-start="onStart()"
-    on-render="onRender()"
-    on-open="onOpen()"
-    on-close="onClose()"
-    on-set="onSet()"
-    on-stop="onStop()" />*@
+        <label for="inputCreated">Descrição do Período</label>
         <input
                type="text"
                name="created"
@@ -46,14 +20,14 @@
                ng-model="datepicker"/>
 
       </div>
-      <div class="col s5 m5 l5 button-search">
+      <div class="col s5 m5 l5 button-search" style="margin-top:23px">
         <button class="btn waves-effect waves-light blue lighten-1 left" name="action" ng-click="getBuscaPeriodos()">
           Pesquisar
           <i class="material-icons left">search</i>
         </button>
         <div class="col s5 m5 l5 button-add_box">
           <a class="waves-effect waves-light modal-trigger" data-toggle="modal" data-target="novoPeriodo">
-            <button class="btn waves-effect waves-light blue lighten-1 right" name="action">
+            <button class="btn waves-effect waves-light blue lighten-1 right" name="action" ng-click="limpaPeriodo()">
               Novo Período
               <i class="material-icons right">add_box</i>
             </button>
@@ -84,9 +58,14 @@
           <td class="grid-border">{{ d.nome }}</td>
           <td class="grid-border">{{ d.situacaoLabel }}</td>
           <td class="grid-border">
-            <!-- <a class="waves-effect waves-light btn-small tooltipped" data-position="bottom" (click)="openDetails(d.id)"><i class="material-icons left">remove_red_eye</i></a> -->
-            <a class="waves-effect waves-light modal-trigger" href="#editarPeriodo"><i class="material-icons left">edit</i></a>
-            <a class="waves-effect waves-light modal-trigger" href="#ativarInativarPeriodo"><i class="material-icons left">delete</i></a>
+              <!-- <a class="waves-effect waves-light btn-small tooltipped" data-position="bottom" (click)="openDetails(d.id)"><i class="material-icons left">remove_red_eye</i></a> -->
+              <a class="waves-effect waves-light modal-trigger" href="#editarPeriodo"><i class="material-icons left">edit</i></a>
+              <a ng-if="d.situacaoLabel == 'Ativo'" href="#ativarInativarPeriodo" class="waves-effect waves-light">
+                  <i class="material-icons left">block</i>
+              </a>
+              <a ng-if="d.situacaoLabel == 'Inativo'" href="#ativarInativarPeriodo" class="waves-effect waves-light">
+                  <i class="material-icons left">check</i>
+              </a>
           </td>
         </tr>
       </tbody>
@@ -140,11 +119,16 @@
           <tr ng-repeat="i in dataIntervalo | filter:setAtivoIntervalo" ng-click="setClickedInterval(i)">
             <td class="grid-border">{{ i.inicio }} dias</td>
             <td class="grid-border">{{ i.fim }} dias</td>
-            <td class="grid-border">{{ i.situacao }}</td>
+            <td class="grid-border">{{ i.situacaoLabel }}</td>
             <td class="grid-border">
-              <!-- <a class="waves-effect waves-light btn-small tooltipped" data-position="bottom" (click)="openDetails(d.id)"><i class="material-icons left">remove_red_eye</i></a> -->
-              <a class="waves-effect waves-light modal-trigger" href="#editarIntervalo"><i class="material-icons left">edit</i></a>
-              <a class="waves-effect waves-light modal-trigger" href="#ativarInativarIntervalo"><i class="material-icons left">delete</i></a>
+                <!-- <a class="waves-effect waves-light btn-small tooltipped" data-position="bottom" (click)="openDetails(d.id)"><i class="material-icons left">remove_red_eye</i></a> -->
+                <a class="waves-effect waves-light modal-trigger" href="#editarIntervalo"><i class="material-icons left">edit</i></a>
+                <a ng-if="i.situacaoLabel == 'Ativo'" href="#ativarInativarIntervalo" class="waves-effect waves-light">
+                    <i class="material-icons left">block</i>
+                </a>
+                <a ng-if="i.situacaoLabel == 'Inativo'" href="#ativarInativarIntervalo" class="waves-effect waves-light">
+                    <i class="material-icons left">check</i>
+                </a>
             </td>
           </tr>
         </tbody>
@@ -172,8 +156,8 @@
       <label for="periodoReferencia">Nome do Período</label>
     </div>
     <div class="modal-footer">
-      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="salvarNovoPeriodo()">Salvar</a>
-      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" style="margin-left:10px" ng-click="salvarNovoPeriodo()">Salvar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1" ng-click="limpaPeriodo()">Cancelar</a>
     </div>
   </div>
   <div id="editarPeriodo" class="modal">
@@ -187,8 +171,8 @@
       <p>Você confirma a alteração do Período?</p>
     </div>
     <div class="modal-footer">
-      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="atualizaPeriodo()">Confirmar</a>
-      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" style="margin-left:10px" ng-click="atualizaPeriodo()">Confirmar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1" ng-click="limpaPeriodo()">Cancelar</a>
     </div>
   </div>
   <div id="ativarInativarPeriodo" class="modal">
@@ -197,11 +181,11 @@
       <span style="vertical-align: middle;">Remover Período</span>
     </div>
     <div class="modal-content">
-      <p>Você confirma a remoção deste período?</p>
+      <p>Você deseja realmente ativar/desativar este período?</p>
     </div>
     <div class="modal-footer">
-      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="removerPeriodo()">Confirmar</a>
-      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1" ng-click="buscaTodosPeriodos()">Cancelar</a>
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" style="margin-left:10px" ng-click="removerPeriodo()">Confirmar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1" ng-click="limpaPeriodo()">Cancelar</a>
     </div>
   </div>
   <div id="novoIntervalo" class="modal">
@@ -222,8 +206,8 @@
       </div>
     </div>
     <div class="modal-footer">
-      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="salvarNovoIntervalo()">Salvar</a>
-      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" style="margin-left:10px" ng-click="salvarNovoIntervalo()">Salvar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1" ng-click="limpaIntervalo()">Cancelar</a>
     </div>
   </div>
   <div id="editarIntervalo" class="modal">
@@ -245,8 +229,8 @@
       <p>Você confirma a alteração do intervalo?</p>
     </div>
     <div class="modal-footer">
-      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="atualizaIntervalo('alterar')">Confirmar</a>
-      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" style="margin-left:10px" ng-click="atualizaIntervalo('alterar')">Confirmar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1" ng-click="limpaIntervalo()">Cancelar</a>
     </div>
   </div>
 
@@ -256,11 +240,11 @@
       <span style="vertical-align: middle;">Remover Intervalo</span>
     </div>
     <div class="modal-content">
-      <p>Você confirma a remoção deste intervalo?</p>
+      <p>Você confirma a ativação/desativação deste intervalo?</p>
     </div>
     <div class="modal-footer">
-      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" ng-click="atualizaIntervalo('desativar')">Confirmar</a>
-      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+      <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" style="margin-left:10px" ng-click="atualizaIntervalo('desativar')">Confirmar</a>
+      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1" ng-click="limpaIntervalo()">Cancelar</a>
     </div>
   </div>
 </div>

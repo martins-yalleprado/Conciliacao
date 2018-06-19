@@ -1,0 +1,133 @@
+﻿@Scripts.Render("~/AngularApp/saldoConta/saldoContaSrv.js")
+@Scripts.Render("~/AngularApp/saldoConta/saldoConta.js")
+
+<div ng-controller="SaldoController">
+    <form name="pesquisaForm">
+
+        <div class="row">
+            <div class="input-field col s3 m3 l3">
+                <label for="datepicker">Data de referência</label>
+                <input input-date
+                       type="text"
+                       name="DataMovimentacao"
+                       id="datepicker"
+                       ng-model="saldoModel.DataMovimentacao"
+                       container=""
+                       format="dd/mm/yyyy"
+                       months-full="{{ month }}"
+                       months-short="{{ monthShort }}"
+                       weekdays-full="{{ weekdaysFull }}"
+                       weekdays-short="{{ weekdaysShort }}"
+                       weekdays-letter="{{ weekdaysLetter }}"
+                       disable="disable"
+                       min="{{ minDate }}"
+                       max="{{ maxDate }}"
+                       today="today"
+                       first-day="1"
+                       clear="clear"
+                       close="close"
+                       select-years="15"
+                       class="datepicker" />
+            </div>
+            <div class="col s5 m5 l5" style="padding-left: 0px; padding-top: 20px;">
+                <div class="col s5 m5 l5">
+                    <button type="button" class="btn waves-effect waves-light blue lighten-1 left" ng-click="getSaldo()">
+                        Pesquisar
+                        <i class="material-icons left">search</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s3 m3 l3">
+                <input id="conta" type="text" name="CodConta" ng-model="saldoModel.CodConta" readonly>
+                <label for="conta">Conta</label>
+            </div>
+            <div class="input-field col s3 m3 l3">
+                <input id="desConta" type="text" name="DescConta" ng-model="saldoModel.DescConta" readonly>
+                <label for="desConta">Descrição Conta</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s3 m3 l3">
+                <input id="un" type="text" name="CodUnidade" ng-model="saldoModel.CodUnidade" readonly>
+                <label for="un">Unidade</label>
+            </div>
+            <div class="input-field col s3 m3 l3">
+                <input id="desUnidade" type="text" name="DescUnidade" ng-model="saldoModel.DescUnidade" readonly>
+                <label for="desUnidade">Descrição Unidade</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">search</i>Lançamento
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="input-field col s2 m2 l2">
+                                <input id="vlrContabil" type="number" class="validate" name="VlrSaldoContabil" ng-model="saldoModel.VlrSaldoContabil"
+                                       placeholder="">
+                                <label for="vlrContabil">Saldo Contábil</label>
+                            </div>
+                            <div class="input-field col s2 m2 l2">
+                                <input id="vlrCobranca" type="number" class="validate" name="VlrSaldoCobranca" ng-model="saldoModel.VlrSaldoCobranca"
+                                       placeholder="">
+                                <label for="vlrCobranca">Saldo Cobrança</label>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6 m6 l6">
+                <input id="btnSalvar" type="button" class="btn btn-default btn-group" value="Salvar" ng-click="salvar(pesquisaForm)">
+                <input id="btnExcluir" type="button" class="btn btn-warning btn-group" value="Excluir" ng-click="excluir(pesquisaForm)">
+                <input id="btnNovo" type="button" class="btn btn-warning btn-group" value="Novo" ng-click="reset()">
+            </div>
+        </div>
+
+    </form>
+
+    <div ng-hide="_gridSize > 0" class="row">
+        Nenhum registro encontrado
+    </div>
+    <div ng-hide="_gridSize == 0" class="row">
+        <table class="striped centered grid-border">
+            <thead class="grid-background">
+                <tr>
+                    <th class="grid-border">Data</th>
+                    <th class="grid-border">UN</th>
+                    <th class="grid-border">Conta</th>
+                    @*<th class="grid-border">Descrição Conta</th>*@
+                    <th class="grid-border">Saldo Contábil Inf.</th>
+                    <th class="grid-border">Saldo Cobrança Inf.</th>
+                    <th class="grid-border">Saldo Contábil</th>
+                    <th class="grid-border">Saldo Cobrança</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- | async | paginate: { itemsPerPage: 20, currentPage: p } -->
+                <tr ng-repeat="d in _dataGrid" ng-click="editForm(d)">
+                    <td class="grid-border">{{ d.DataMovimentacao | date: 'dd/MM/yyyy'}}</td>
+                    <td class="grid-border">{{ d.CodUnidade }}</td>
+                    <td class="grid-border">{{ d.CodConta }}</td>
+                    @*<td class="grid-border">{{ d.DescConta }}</td>*@
+                    <td class="grid-border">{{ d.VlrSaldoContabilInf }}</td>
+                    <td class="grid-border">{{ d.VlrSaldoCobrancaInf }}</td>
+                    <td class="grid-border">{{ d.VlrSaldoContabil }}</td>
+                    <td class="grid-border">{{ d.VlrSaldoCobranca }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+        </pagination-controls>
+    </div>
+
+    @*div controller*@
+</div>
+

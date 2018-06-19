@@ -1,285 +1,286 @@
+@Scripts.Render("~/AngularApp/movimentacaoAcerto/movimentacaoAcertoSrv.js")
 @Scripts.Render("~/AngularApp/movimentacaoAcerto/movimentacaoAcerto.js")
 
 <div ng-controller="MovimentacaoAcertoController">
-  <form name="pesquisaForm" ng-submit="onSubmit(pesquisaForm)">
+    <form name="pesquisaForm" ng-submit="onSubmit(pesquisaForm)">
 
-    <div class="row">
-      <div class="input-field col s3 m3 l3">
-        <label for="datepicker">Data de referência</label>
-        <input input-date
-               type="text"
-               name="DataMovimento"
-               id="datepicker"
-               ng-model="pesquisaModel.DataMovimento"
-               container=""
-               format="dd/mm/yyyy"
-               months-full="{{ month }}"
-               months-short="{{ monthShort }}"
-               weekdays-full="{{ weekdaysFull }}"
-               weekdays-short="{{ weekdaysShort }}"
-               weekdays-letter="{{ weekdaysLetter }}"
-               disable="disable"
-               min="{{ minDate }}"
-               max="{{ maxDate }}"
-               today="today"
-               first-day="1"
-               clear="clear"
-               close="close"
-               select-years="15"
-               class="datepicker" />
-      </div>
-      <div class="col s5 m5 l5" style="padding-left: 0px; padding-top: 20px;">
-        <div class="col s5 m5 l5">
-          <button type="button" class="btn waves-effect waves-light blue lighten-1 left" ng-click="getMovimentacaoAcertoPorData(); reset();">
-            Pesquisar
-            <i class="material-icons left">search</i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <ul class="collapsible">
-        <li>
-          <div class="collapsible-header">
-            <i class="material-icons">search</i>Parâmetros Contábeis
-          </div>
-          <div class="collapsible-body">
-
-            <div class="row">
-              <div class="input-field col s3 m3 l3">
-                <input id="idt" type="text" placeholder="" name="CodIdentidadeContabil" #CodIdentidadeContabil="ngModel" ng-model="pesquisaModel.CodIdentidadeContabil" readonly>
-                <label for="idt">IDT</label>
-              </div>
-              <div class="col s3 m3 l3" style="padding-left: 0px; padding-top: 20px;">
-                <div class="col s5 m5 l5 button-add_box">
-                  <a class="btn waves-effect waves-light blue lighten-1 modal-trigger" href="#paramContabil" ng-disabled="_gridModalSize == 0" ng-click="resetModal()">
-                    ...
-                  </a>
+        <div class="row">
+            <div class="input-field col s3 m3 l3">
+                <label for="datepicker">Data de referência</label>
+                <input input-date
+                       type="text"
+                       name="DataMovimento"
+                       id="datepicker"
+                       ng-model="pesquisaModel.DataMovimento"
+                       container=""
+                       format="dd/mm/yyyy"
+                       months-full="{{ month }}"
+                       months-short="{{ monthShort }}"
+                       weekdays-full="{{ weekdaysFull }}"
+                       weekdays-short="{{ weekdaysShort }}"
+                       weekdays-letter="{{ weekdaysLetter }}"
+                       disable="disable"
+                       min="{{ minDate }}"
+                       max="{{ maxDate }}"
+                       today="today"
+                       first-day="1"
+                       clear="clear"
+                       close="close"
+                       select-years="15"
+                       class="datepicker" />
+            </div>
+            <div class="col s5 m5 l5" style="padding-left: 0px; padding-top: 20px;">
+                <div class="col s5 m5 l5">
+                    <button type="button" class="btn waves-effect waves-light blue lighten-1 left" ng-click="getMovimentacaoAcertoPorData(); reset();">
+                        Pesquisar
+                        <i class="material-icons left">search</i>
+                    </button>
                 </div>
-              </div>
-              <div class="col s6 m6 l6"></div>
             </div>
-
-            <div class="row">
-              <div class="input-field col s3 m3 l3">
-                <input id="un" type="text" name="CodUnidadeNegocio" ng-model="pesquisaModel.MovimentoContabilModel.CodUnidadeNegocio" readonly>
-                <label for="un">UN</label>
-              </div>
-              <div class="input-field col s3 m3 l3">
-                <input id="conta" type="text" name="CodContaContabil" ng-model="pesquisaModel.MovimentoContabilModel.CodContaContabil" readonly>
-                <label for="conta">Conta</label>
-              </div>
-              <div class="input-field col s3 m3 l3">
-                <input id="sis" type="text" name="NomSistemaInformacao" ng-model="pesquisaModel.MovimentoContabilModel.NomSistemaInformacao" readonly>
-                <label for="sis">SI</label>
-              </div>
-              <div class="input-field col s3 m3 l3"></div>
-            </div>
-
-            <div class="row">
-              <div class="input-field col s3 m3 l3">
-                <input id="codEvento" type="text" name="CodEventoContabil" ng-model="pesquisaModel.MovimentoContabilModel.CodEventoContabil" readonly>
-                <label for="codEvento">Evento</label>
-              </div>
-              <div class="input-field col s3 m3 l3">
-                <input id="descricaoEvento" type="text" name="DesEventoContabil" ng-model="pesquisaModel.MovimentoContabilModel.DesEventoContabil" readonly>
-                <label for="descricaoEvento">Descrição Evento</label>
-              </div>
-              <div class="input-field col s3 m3 l3">
-                <input id="codFato" type="text" name="CodFatoContabil" ng-model="pesquisaModel.MovimentoContabilModel.CodFatoContabil" readonly>
-                <label for="codFato">Fato</label>
-              </div>
-              <div class="input-field col s3 m3 l3">
-                <input id="descricaoFato" type="text" name="DesFatoContabil" ng-model="pesquisaModel.MovimentoContabilModel.DesFatoContabil" readonly>
-                <label for="descricaoFato">Descrição Fato</label>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="row">
-      <ul class="collapsible">
-        <li>
-          <div class="collapsible-header">
-            <i class="material-icons">search</i>Lançamento
-          </div>
-          <div class="collapsible-body">
-            <div class="row">
-              <div class="input-field col s2 m2 l2">
-                <input id="numSequencia" type="text" class="validate" name="NumSequenciaLancamento" ng-model="pesquisaModel.NumSequenciaLancamento"
-                       ng-keyup="sequencia(pesquisaForm)" placeholder="">
-                <label for="numSequencia">Sequência</label>
-              </div>
-              <div class="col s1 m1 l1" style="padding-left: 0px; padding-top: 20px;">
-                <span class="input-group-btn">
-                  <input type="button" class="btn btn-default btn-group" value="+" ng-click="proximaSequencia(pesquisaForm)">
-                </span>
-              </div>
-              <div class="input-field col s2 m2 l2">
-                <input id="vlrContabil" type="number" class="validate" name="VlrMovimentoContabil" ng-model="pesquisaModel.VlrMovimentoContabil"
-                       placeholder="">
-                <label for="vlrContabil">Valor Contábil</label>
-              </div>
-              <div class="input-field col s2 m2 l2">
-                <input id="vlrCobranca" type="number" class="validate" name="VlrMovimentoCobranca" ng-model="pesquisaModel.VlrMovimentoCobranca"
-                       placeholder="">
-                <label for="vlrCobranca">Valor Cobrança</label>
-              </div>
-              <div class="input-field col s5 m5 l5">
-                <input id="descricao" type="text" class="validate" name="DesAcertoConciliacaoBancaria"
-                       ng-model="pesquisaModel.DesAcertoConciliacaoBancaria" placeholder="">
-                <label for="descricao">Descrição</label>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="row">
-      <div class="input-field col s6 m6 l6">
-        <input id="btnInserir" type="submit" class="btn btn-default btn-group" value="Inserir">
-        <input id="btnAlterar" type="submit" class="btn btn-warning btn-group" value="Alterar">
-        <input id="btnExcluir" type="button" class="btn btn-warning btn-group" value="Excluir" ng-click="excluir(pesquisaForm)">
-      </div>
-    </div>
-
-  </form>
-
-  <div ng-hide="_gridModalSize > 0" class="row">
-    Nenhum registro encontrado
-  </div>
-  <div ng-hide="_gridModalSize == 0" class="row">
-    <table class="striped centered grid-border">
-      <thead class="grid-background">
-        <tr>
-          <th class="grid-border">IDT</th>
-          <th class="grid-border">SEQ</th>
-          <th class="grid-border">Data</th>
-          <th class="grid-border">UN</th>
-          <th class="grid-border">Conta</th>
-          <th class="grid-border">SI</th>
-          <th class="grid-border">EV</th>
-          <th class="grid-border">Descrição Evento</th>
-          <th class="grid-border">FTO</th>
-          <th class="grid-border">Descrição Fato</th>
-          <th class="grid-border">Valor Contábil</th>
-          <th class="grid-border">Valor Cobrança</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- | async | paginate: { itemsPerPage: 20, currentPage: p } -->
-        <tr ng-repeat="d in _dataGrid" ng-click="editForm(d)">
-          <td class="grid-border">{{ d.MovimentoContabilModel.CodIdentidadeContabil }}</td>
-          <td class="grid-border">{{ d.NumSequenciaLancamento }}</td>
-          <td class="grid-border">{{ d.DataMovimento | date: 'dd/MM/yyyy'}}</td>
-          <td class="grid-border">{{ d.MovimentoContabilModel.CodUnidadeNegocio }}</td>
-          <td class="grid-border">{{ d.MovimentoContabilModel.CodContaContabil }}</td>
-          <td class="grid-border">{{ d.MovimentoContabilModel.NomSistemaInformacao }}</td>
-          <td class="grid-border">{{ d.MovimentoContabilModel.CodEventoContabil }}</td>
-          <td class="grid-border">{{ d.MovimentoContabilModel.DesEventoContabil }}</td>
-          <td class="grid-border">{{ d.MovimentoContabilModel.CodFatoContabil }}</td>
-          <td class="grid-border">{{ d.MovimentoContabilModel.DesFatoContabil }}</td>
-          <td class="grid-border">{{ d.VlrMovimentoContabil }}</td>
-          <td class="grid-border">{{ d.VlrMovimentoCobranca }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
-    </pagination-controls>
-  </div>
-
-  <div id="paramContabil" class="modal">
-    <div class="modal-header">
-      <i class="material-icons icons"></i>
-      <span style="vertical-align: middle;">Parâmetro Contábil</span>
-    </div>
-    <div class="modal-content">
-      <!-- <form #pesquisaForm="ngForm" (ngSubmit)="onSubmit(pesquisaForm)"> -->
-      <form name="pesquisaModalForm" ng-submit="onSearch(pesquisaModalForm)">
-        <div class="row">
-          <div class="input-field col s3 m3 l3">
-            <input id="un" type="number" name="CodUnidadeNegocio" ng-model="pesquisaModalModel.MovimentoContabilModel.CodUnidadeNegocio">
-            <label for="un">UN</label>
-          </div>
-          <div class="input-field col s3 m3 l3">
-            <input id="conta" type="number" name="CodContaContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodContaContabil">
-            <label for="conta">Conta</label>
-          </div>
-          <div class="input-field col s3 m3 l3">
-            <input id="sis" type="text" name="NomSistemaInformacao" ng-model="pesquisaModalModel.MovimentoContabilModel.NomSistemaInformacao">
-            <label for="sis">SI</label>
-          </div>
-          <div class="input-field col s3 m3 l3"></div>
         </div>
 
         <div class="row">
-          <div class="input-field col s3 m3 l3">
-            <input id="codEvento" type="number" name="CodEventoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodEventoContabil">
-            <label for="codEvento">Evento</label>
-          </div>
-          <div class="input-field col s3 m3 l3">
-            <input id="descricaoEvento" type="text" name="DesEventoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.DesEventoContabil">
-            <label for="descricaoEvento">Descrição Evento</label>
-          </div>
-          <div class="input-field col s3 m3 l3">
-            <input id="codFato" type="number" name="CodFatoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodFatoContabil">
-            <label for="codFato">Fato</label>
-          </div>
-          <div class="input-field col s3 m3 l3">
-            <input id="descricaoFato" type="text" name="DesFatoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.DesFatoContabil">
-            <label for="descricaoFato">Descrição Fato</label>
-          </div>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">search</i>Parâmetros Contábeis
+                    </div>
+                    <div class="collapsible-body">
+
+                        <div class="row">
+                            <div class="input-field col s3 m3 l3">
+                                <input id="idt" type="text" placeholder="" name="CodIdentidadeContabil" #CodIdentidadeContabil="ngModel" ng-model="pesquisaModel.CodIdentidadeContabil" readonly>
+                                <label for="idt">IDT</label>
+                            </div>
+                            <div class="col s3 m3 l3" style="padding-left: 0px; padding-top: 20px;">
+                                <div class="col s5 m5 l5 button-add_box">
+                                    <a class="btn waves-effect waves-light blue lighten-1 modal-trigger" href="#paramContabil" ng-disabled="_gridModalSize == 0" ng-click="resetModal()">
+                                        ...
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col s6 m6 l6"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s3 m3 l3">
+                                <input id="un" type="number" name="CodUnidadeNegocio" ng-model="pesquisaModel.MovimentoContabilModel.CodUnidadeNegocio" readonly>
+                                <label for="un">UN</label>
+                            </div>
+                            <div class="input-field col s3 m3 l3">
+                                <input id="conta" type="number" name="CodContaContabil" ng-model="pesquisaModel.MovimentoContabilModel.CodContaContabil" readonly>
+                                <label for="conta">Conta</label>
+                            </div>
+                            <div class="input-field col s3 m3 l3">
+                                <input id="sis" type="text" name="NomSistemaInformacao" ng-model="pesquisaModel.MovimentoContabilModel.NomSistemaInformacao" readonly>
+                                <label for="sis">SI</label>
+                            </div>
+                            <div class="input-field col s3 m3 l3"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s3 m3 l3">
+                                <input id="codEvento" type="text" name="CodEventoContabil" ng-model="pesquisaModel.MovimentoContabilModel.CodEventoContabil" readonly>
+                                <label for="codEvento">Evento</label>
+                            </div>
+                            <div class="input-field col s3 m3 l3">
+                                <input id="descricaoEvento" type="text" name="DesEventoContabil" ng-model="pesquisaModel.MovimentoContabilModel.DesEventoContabil" readonly>
+                                <label for="descricaoEvento">Descrição Evento</label>
+                            </div>
+                            <div class="input-field col s3 m3 l3">
+                                <input id="codFato" type="text" name="CodFatoContabil" ng-model="pesquisaModel.MovimentoContabilModel.CodFatoContabil" readonly>
+                                <label for="codFato">Fato</label>
+                            </div>
+                            <div class="input-field col s3 m3 l3">
+                                <input id="descricaoFato" type="text" name="DesFatoContabil" ng-model="pesquisaModel.MovimentoContabilModel.DesFatoContabil" readonly>
+                                <label for="descricaoFato">Descrição Fato</label>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
+
         <div class="row">
-          <div class="input-field col s3 m3 l3">
-            <!-- <input id="btnPesquisar" type="submit" class="btn btn-default btn-group" value="Pesquisar"> -->
-            <button type="submit" class="btn btn-sm btn-block btn-primary">Pesquisar</button>
-          </div>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">search</i>Lançamento
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="input-field col s2 m2 l2">
+                                <input id="numSequencia" type="text" class="validate" name="NumSequenciaLancamento" ng-model="pesquisaModel.NumSequenciaLancamento"
+                                       ng-keyup="sequencia(pesquisaForm)" placeholder="">
+                                <label for="numSequencia">Sequência</label>
+                            </div>
+                            <div class="col s1 m1 l1" style="padding-left: 0px; padding-top: 20px;">
+                                <span class="input-group-btn">
+                                    <input type="button" class="btn btn-default btn-group" value="+" ng-click="proximaSequencia(pesquisaForm)">
+                                </span>
+                            </div>
+                            <div class="input-field col s2 m2 l2">
+                                <input id="vlrContabil" type="number" class="validate" name="VlrMovimentoContabil" ng-model="pesquisaModel.VlrMovimentoContabil"
+                                       placeholder="">
+                                <label for="vlrContabil">Valor Contábil</label>
+                            </div>
+                            <div class="input-field col s2 m2 l2">
+                                <input id="vlrCobranca" type="number" class="validate" name="VlrMovimentoCobranca" ng-model="pesquisaModel.VlrMovimentoCobranca"
+                                       placeholder="">
+                                <label for="vlrCobranca">Valor Cobrança</label>
+                            </div>
+                            <div class="input-field col s5 m5 l5">
+                                <input id="descricao" type="text" class="validate" name="DesAcertoConciliacaoBancaria"
+                                       ng-model="pesquisaModel.DesAcertoConciliacaoBancaria" placeholder="">
+                                <label for="descricao">Descrição</label>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-      </form>
 
-      <table class="striped centered grid-border">
-        <thead class="grid-background">
-          <tr>
-            <th class="grid-border">IDT</th>
-            <th class="grid-border">UN</th>
-            <th class="grid-border">Conta</th>
-            <th class="grid-border">SI</th>
-            <th class="grid-border">Evento</th>
-            <th class="grid-border">Descrição Evento</th>
-            <th class="grid-border">Fato</th>
-            <th class="grid-border">Descrição Fato</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- | filter : CodEventoContabil  -->
-          <tr ng-repeat="d in _dataGridModal" ng-click="selectForm(d)" class="modal-action modal-close">
-            <td class="grid-border">{{ d.CodIdentidadeContabil }}</td>
-            <td class="grid-border">{{ d.CodUnidadeNegocio }}</td>
-            <td class="grid-border">{{ d.CodContaContabil }}</td>
-            <td class="grid-border">{{ d.NomSistemaInformacao }}</td>
-            <td class="grid-border">{{ d.CodEventoContabil }}</td>
-            <td class="grid-border">{{ d.DesEventoContabil }}</td>
-            <td class="grid-border">{{ d.CodFatoContabil }}</td>
-            <td class="grid-border">{{ d.DesFatoContabil }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
-      </pagination-controls>
-    </div>
-    <div class="modal-footer">
-      <button ng-disabled="_gridModalSize != 1" ng-click="selecionarMovimentoContabil()" type="button" class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue"
-              data-dismiss="modal">
-        Selecionar
-      </button>
-      <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
-    </div>
-  </div>
+        <div class="row">
+            <div class="input-field col s6 m6 l6">
+                <input id="btnInserir" type="submit" class="btn btn-default btn-group" value="Inserir">
+                <input id="btnAlterar" type="submit" class="btn btn-warning btn-group" value="Alterar">
+                <input id="btnExcluir" type="button" class="btn btn-warning btn-group" value="Excluir" ng-click="excluir(pesquisaForm)">
+            </div>
+        </div>
 
-  @*div controller*@
+    </form>
+
+    <div ng-hide="_gridModalSize > 0" class="row">
+        Nenhum registro encontrado
+    </div>
+    <div ng-hide="_gridModalSize == 0" class="row">
+        <table class="striped centered grid-border">
+            <thead class="grid-background">
+                <tr>
+                    <th class="grid-border">IDT</th>
+                    <th class="grid-border">SEQ</th>
+                    <th class="grid-border">Data</th>
+                    <th class="grid-border">UN</th>
+                    <th class="grid-border">Conta</th>
+                    <th class="grid-border">SI</th>
+                    <th class="grid-border">EV</th>
+                    <th class="grid-border">Descrição Evento</th>
+                    <th class="grid-border">FTO</th>
+                    <th class="grid-border">Descrição Fato</th>
+                    <th class="grid-border">Valor Contábil</th>
+                    <th class="grid-border">Valor Cobrança</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- | async | paginate: { itemsPerPage: 20, currentPage: p } -->
+                <tr ng-repeat="d in _dataGrid" ng-click="editForm(d)">
+                    <td class="grid-border">{{ d.MovimentoContabilModel.CodIdentidadeContabil }}</td>
+                    <td class="grid-border">{{ d.NumSequenciaLancamento }}</td>
+                    <td class="grid-border">{{ d.DataMovimento | date: 'dd/MM/yyyy'}}</td>
+                    <td class="grid-border">{{ d.MovimentoContabilModel.CodUnidadeNegocio }}</td>
+                    <td class="grid-border">{{ d.MovimentoContabilModel.CodContaContabil }}</td>
+                    <td class="grid-border">{{ d.MovimentoContabilModel.NomSistemaInformacao }}</td>
+                    <td class="grid-border">{{ d.MovimentoContabilModel.CodEventoContabil }}</td>
+                    <td class="grid-border">{{ d.MovimentoContabilModel.DesEventoContabil }}</td>
+                    <td class="grid-border">{{ d.MovimentoContabilModel.CodFatoContabil }}</td>
+                    <td class="grid-border">{{ d.MovimentoContabilModel.DesFatoContabil }}</td>
+                    <td class="grid-border">{{ d.VlrMovimentoContabil }}</td>
+                    <td class="grid-border">{{ d.VlrMovimentoCobranca }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+        </pagination-controls>
+    </div>
+
+    <div id="paramContabil" class="modal">
+        <div class="modal-header">
+            <i class="material-icons icons"></i>
+            <span style="vertical-align: middle;">Parâmetro Contábil</span>
+        </div>
+        <div class="modal-content">
+            <!-- <form #pesquisaForm="ngForm" (ngSubmit)="onSubmit(pesquisaForm)"> -->
+            <form name="pesquisaModalForm" ng-submit="onSearch(pesquisaModalForm)">
+                <div class="row">
+                    <div class="input-field col s3 m3 l3">
+                        <input id="un" type="number" name="CodUnidadeNegocio" ng-model="pesquisaModalModel.MovimentoContabilModel.CodUnidadeNegocio" readonly>
+                        <label for="un">UN</label>
+                    </div>
+                    <div class="input-field col s3 m3 l3">
+                        <input id="conta" type="number" name="CodContaContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodContaContabil" readonly>
+                        <label for="conta">Conta</label>
+                    </div>
+                    <div class="input-field col s3 m3 l3">
+                        <input id="sis" type="text" name="NomSistemaInformacao" ng-model="pesquisaModalModel.MovimentoContabilModel.NomSistemaInformacao">
+                        <label for="sis">SI</label>
+                    </div>
+                    <div class="input-field col s3 m3 l3"></div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s3 m3 l3">
+                        <input id="codEvento" type="number" name="CodEventoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodEventoContabil">
+                        <label for="codEvento">Evento</label>
+                    </div>
+                    <div class="input-field col s3 m3 l3">
+                        <input id="descricaoEvento" type="text" name="DesEventoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.DesEventoContabil">
+                        <label for="descricaoEvento">Descrição Evento</label>
+                    </div>
+                    <div class="input-field col s3 m3 l3">
+                        <input id="codFato" type="number" name="CodFatoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodFatoContabil">
+                        <label for="codFato">Fato</label>
+                    </div>
+                    <div class="input-field col s3 m3 l3">
+                        <input id="descricaoFato" type="text" name="DesFatoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.DesFatoContabil">
+                        <label for="descricaoFato">Descrição Fato</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s3 m3 l3">
+                        <!-- <input id="btnPesquisar" type="submit" class="btn btn-default btn-group" value="Pesquisar"> -->
+                        <button type="submit" class="btn btn-sm btn-block btn-primary">Pesquisar</button>
+                    </div>
+                </div>
+            </form>
+
+            <table class="striped centered grid-border">
+                <thead class="grid-background">
+                    <tr>
+                        <th class="grid-border">IDT</th>
+                        <th class="grid-border">UN</th>
+                        <th class="grid-border">Conta</th>
+                        <th class="grid-border">SI</th>
+                        <th class="grid-border">Evento</th>
+                        <th class="grid-border">Descrição Evento</th>
+                        <th class="grid-border">Fato</th>
+                        <th class="grid-border">Descrição Fato</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- | filter : CodEventoContabil  -->
+                    <tr ng-repeat="d in _dataGridModal" ng-click="selectForm(d)" class="modal-action modal-close">
+                        <td class="grid-border">{{ d.CodIdentidadeContabil }}</td>
+                        <td class="grid-border">{{ d.CodUnidadeNegocio }}</td>
+                        <td class="grid-border">{{ d.CodContaContabil }}</td>
+                        <td class="grid-border">{{ d.NomSistemaInformacao }}</td>
+                        <td class="grid-border">{{ d.CodEventoContabil }}</td>
+                        <td class="grid-border">{{ d.DesEventoContabil }}</td>
+                        <td class="grid-border">{{ d.CodFatoContabil }}</td>
+                        <td class="grid-border">{{ d.DesFatoContabil }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+            </pagination-controls>
+        </div>
+        <div class="modal-footer">
+            <button ng-disabled="_gridModalSize != 1" ng-click="selecionarMovimentoContabil()" type="button" class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue"
+                    data-dismiss="modal">
+                Selecionar
+            </button>
+            <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1">Cancelar</a>
+        </div>
+    </div>
+
+    @*div controller*@
 </div>

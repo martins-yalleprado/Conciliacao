@@ -1,45 +1,70 @@
+Imports System.Net
+Imports System.Net.Http
 Imports System.Web.Http
-Imports Martins.Conciliacao.Code.Unidade
-Imports Martins.Conciliacao.Model
+Imports Administracao.ConciliacaoAPI.Code.Unidade
+Imports Administracao.ConciliacaoAPI.Model
 
-Namespace Controller
-  Public Class UnidadeController
-    Inherits ApiController
-    ' GET api/<controller>
-    Public Function [Get]() As IEnumerable(Of UnidadeModel)
-      Dim bll As New UnidadeBLL()
-      Return bll.SelectUnidade()
-    End Function
+Namespace Controllers
+    Public Class UnidadeController
+        Inherits ApiController
+        ' GET api/<controller>
+        Public Function GetValues() As Object
+            Try
+                Dim bll As New UnidadeBLL()
+                Return New ResultModel(bll.SelectUnidade())
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
 
-    ' GET api/<controller>/5
-    Public Function [Get](id As Integer) As String
-      ' UnidadeBLL bll = new UnidadeBLL();
-      Return "value"
-    End Function
+        ' GET api/<controller>/5
+        Public Function GetValue(id As Integer) As Object
+            Try
+                Dim bll As New UnidadeBLL()
+                Return New ResultModel(bll.SelectUnidadePorId(id))
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
 
-    ' POST api/<controller>
-    Public Sub Post(<FromBody> Unidade As UnidadeModel)
-      Dim bll As New UnidadeBLL()
+        ' POST api/<controller>
+        Public Function PostValue(<FromBody> Unidade As UnidadeModel) As Object
+            Try
+                Dim bll As New UnidadeBLL()
 
-      bll.InsertUnidade(Unidade)
-    End Sub
+                bll.InsertUnidade(Unidade)
+                Return New ResultModel(Nothing)
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
 
-    ' PUT api/<controller>/5
-    Public Sub Put(<FromBody> Unidade As UnidadeModel, acao As String)
-      Dim bll As New UnidadeBLL()
-      If acao.ToLower().Equals("ativar") Then
-        bll.AtivarUnidade(Unidade)
-      ElseIf acao.ToLower().Equals("inativar") Then
-        bll.InativarUnidade(Unidade)
-      End If
 
-    End Sub
+        ' PUT api/<controller>/5
+        Public Function PutValue(<FromBody> Unidade As UnidadeModel, acao As String) As Object
+            Try
+                Dim bll As New UnidadeBLL()
+                If acao.ToLower().Equals("ativar") Then
+                    bll.AtivarUnidade(Unidade)
+                ElseIf acao.ToLower().Equals("inativar") Then
+                    bll.InativarUnidade(Unidade)
+                End If
+                Return New ResultModel(Nothing)
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
 
-    ' DELETE api/<controller>/5
-    Public Sub Delete(id As Integer)
-      'não realiza esta operacao
-      '  UnidadeBLL bll = new UnidadeBLL();
+        ' DELETE api/<controller>/5
+        Public Function DeleteValue(id As Integer) As Object
+            Try
+                'não realiza esta operacao
+                '  UnidadeBLL bll = new UnidadeBLL();
 
-    End Sub
-  End Class
+                Return New ResultModel(Nothing)
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
+    End Class
 End Namespace

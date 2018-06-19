@@ -1,6 +1,6 @@
 Imports Oracle.ManagedDataAccess.Client
-Imports Martins.Conciliacao.Model
-Imports Martins.Conciliacao.Util
+Imports Administracao.ConciliacaoAPI.Model
+Imports Administracao.ConciliacaoAPI.Util
 
 Namespace Code.Unidade
   Public Class UnidadeDAL
@@ -8,8 +8,12 @@ Namespace Code.Unidade
 
     Public oracleConnection As OracleConnection
     Public Sub New()
-      oracleConnection = New OracleConnection(Utils.ORACLE_CONNECCAO)
-      oracleConnection.Open()
+      Try
+        oracleConnection = New OracleConnection(Utils.ORACLE_CONNECCAO)
+        oracleConnection.Open()
+      Catch ex As Exception
+        Throw New Exception("Erro ao conectar ao banco de dados.")
+      End Try
     End Sub
     Public Function SelectUnidade() As List(Of UnidadeModel)
       Dim sql As New UnidadeSQL()
@@ -20,23 +24,27 @@ Namespace Code.Unidade
       command.CommandText = sql.SelectUnidade()
       command.CommandType = System.Data.CommandType.Text
       Dim reader As OracleDataReader = command.ExecuteReader()
-      Dim Unidade As New List(Of UnidadeModel)()
+      Dim list As New List(Of UnidadeModel)()
 
       Try
 
         While reader.Read()
-          Unidade.Add(New UnidadeModel() With {
-                         .codUnidade = reader.GetInt32(0),
-                         .nomUnidade = reader.GetString(1),
-                         .desUnidade = reader.GetString(2),
-                         .situacao = reader.GetString(3),
-                         .codFuncionario = reader.GetInt32(4),
-                         .situacaoLabel = If(reader.GetString(3) = "1", "ativo", "Inativo")
-                    })
+
+          Dim unidadeModel As New UnidadeModel()
+          unidadeModel.CodEmpresa = reader.GetInt32(0)
+          unidadeModel.CodUnidade = reader.GetInt32(1)
+          unidadeModel.DesUnidade = reader.GetString(2)
+          unidadeModel.CodFilialCentroAdministrativo = reader.GetInt32(3)
+          unidadeModel.CodFilialTituloPagamento = reader.GetInt32(4)
+          unidadeModel.DataCadastro = reader.GetDateTime(5)
+          If Not IsDBNull(reader.GetValue(6)) Then
+            unidadeModel.DataDesativacao = reader.GetDateTime(6)
+          End If
+          unidadeModel.CodLivroContabil = reader.GetInt32(7)
+          unidadeModel.CodNumericosMaiores = reader.GetInt32(8)
+          list.Add(UnidadeModel)
         End While
-
-
-        Return Unidade
+        Return list
       Catch ex As Exception
         Throw ex
       Finally
@@ -46,33 +54,36 @@ Namespace Code.Unidade
         End If
       End Try
     End Function
-    Public Function SelectUnidadePorId(unidade__1 As Integer) As List(Of UnidadeModel)
+    Public Function SelectUnidadePorId(codUnidade As Integer) As UnidadeModel
       Dim sql As New UnidadeSQL()
 
 
       Dim command As New OracleCommand()
       command.Connection = oracleConnection
       command.CommandText = sql.SelectUnidadePorId()
-      command.Parameters.Add("CODEMP", unidade__1)
+      command.Parameters.Add("CODUNDNGC", codUnidade)
       command.CommandType = System.Data.CommandType.Text
       Dim reader As OracleDataReader = command.ExecuteReader()
-      Dim Unidade__2 As New List(Of UnidadeModel)()
+      Dim unidade As UnidadeModel = Nothing
 
       Try
 
-        While reader.Read()
-          Unidade__2.Add(New UnidadeModel() With {
-                         .codUnidade = reader.GetInt32(0),
-                         .nomUnidade = reader.GetString(1),
-                         .desUnidade = reader.GetString(2),
-                         .situacao = reader.GetString(3),
-                         .codFuncionario = reader.GetInt32(4),
-                         .situacaoLabel = If(reader.GetString(3) = "1", "ativo", "Inativo")
-                    })
-        End While
+                If reader.Read() Then
+                    unidade = New UnidadeModel()
+                    unidade.CodEmpresa = reader.GetInt32(0)
+                    unidade.CodUnidade = reader.GetInt32(1)
+                    unidade.DesUnidade = reader.GetString(2)
+                    unidade.CodFilialCentroAdministrativo = reader.GetInt32(3)
+                    unidade.CodFilialTituloPagamento = reader.GetInt32(4)
+                    unidade.DataCadastro = reader.GetDateTime(5)
+                    If Not IsDBNull(reader.GetValue(6)) Then
+                        unidade.DataDesativacao = reader.GetDateTime(6)
+                    End If
+                    unidade.CodLivroContabil = reader.GetInt32(7)
+                    unidade.CodNumericosMaiores = reader.GetInt32(8)
+                End If
 
-
-        Return Unidade__2
+                Return unidade
       Catch ex As Exception
         Throw ex
       Finally
@@ -141,10 +152,17 @@ Namespace Code.Unidade
       transaction = oracleConnection.BeginTransaction()
       ' Assign transaction object for a pending local transaction
       command.Transaction = transaction
-
       Try
         command.CommandText = sql.InsertUnidade()
-        command.Parameters.Clear()
+        command.Parameters.Add("CodEmpresa", Unidade.CodEmpresa)
+        command.Parameters.Add("CodUnidade", Unidade.CodUnidade)
+        command.Parameters.Add("DesUnidade", Unidade.DesUnidade)
+        command.Parameters.Add("CodFilialCentroAdministrativo", Unidade.CodFilialCentroAdministrativo)
+        command.Parameters.Add("CodFilialTituloPagamento", Unidade.CodFilialTituloPagamento)
+        command.Parameters.Add("DataCadastro", Unidade.DataCadastro)
+        command.Parameters.Add("DataDesativacao", Unidade.DataDesativacao)
+        command.Parameters.Add("CodLivroContabil", Unidade.CodLivroContabil)
+        command.Parameters.Add("CodNumericosMaiores", Unidade.CodNumericosMaiores)
         command.ExecuteNonQuery()
         transaction.Commit()
       Catch ex As Exception

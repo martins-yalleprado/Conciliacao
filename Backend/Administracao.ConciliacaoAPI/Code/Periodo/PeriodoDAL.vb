@@ -1,6 +1,6 @@
 Imports Oracle.ManagedDataAccess.Client
-Imports Martins.Conciliacao.Model
-Imports Martins.Conciliacao.Util
+Imports Administracao.ConciliacaoAPI.Model
+Imports Administracao.ConciliacaoAPI.Util
 
 Namespace Code.Periodo
 	Public Class PeriodoDAL
@@ -8,10 +8,13 @@ Namespace Code.Periodo
 		Public oracleConnection As OracleConnection
 
 		Public Sub New()
-			oracleConnection = New OracleConnection(Utils.ORACLE_CONNECCAO)
-
-			oracleConnection.Open()
-		End Sub
+      Try
+        oracleConnection = New OracleConnection(Utils.ORACLE_CONNECCAO)
+        oracleConnection.Open()
+      Catch ex As Exception
+        Throw New Exception("Erro ao conectar ao banco de dados.")
+      End Try
+    End Sub
 		Public Function selectPeriodoPorId(id As Integer) As PeriodoModel
 			If True Then
 
@@ -29,13 +32,13 @@ Namespace Code.Periodo
 
 				Try
 					If reader.Read() Then
-						Periodo = New PeriodoModel() With { _
-							.codPeriodo = reader.GetInt32(0), _
-							.nome = reader.GetString(1), _
-							.situacao = reader.GetString(2), _
-							.situacaoLabel = If(reader.GetString(2) = "1", "Ativo", "Inativo") _
-						}
-					End If
+                        Periodo = New PeriodoModel() With {
+                            .codPeriodo = reader.GetInt32(0),
+                            .nome = reader.GetString(1),
+                            .situacao = reader.GetInt32(2),
+                            .situacaoLabel = If(reader.GetInt32(2) = "1", "Ativo", "Inativo")
+                        }
+                    End If
 
 					Return Periodo
 				Catch ex As Exception
@@ -79,21 +82,21 @@ Namespace Code.Periodo
 
 			command.Parameters.Add("nome", nome)
 			command.Parameters.Add("nome", nome)
-			command.Parameters.Add("situacao", situacao)
-			command.Parameters.Add("situacao", situacao)
-			command.CommandType = System.Data.CommandType.Text
+      command.Parameters.Add("situacao", situacao)
+      command.Parameters.Add("situacao", situacao)
+      command.CommandType = System.Data.CommandType.Text
 			Dim reader As OracleDataReader = command.ExecuteReader()
-			Dim Periodo As New List(Of PeriodoModel)()
+            Dim Periodo As New List(Of PeriodoModel)()
 
-			Try
-				While reader.Read()
-					Periodo.Add(New PeriodoModel() With { _
-						.codPeriodo = reader.GetInt32(0), _
-						.nome = reader.GetString(1), _
-						.situacao = reader.GetString(2), _
-						.situacaoLabel = If(reader.GetString(2) = "1", "Ativo", "Inativo") _
-					})
-				End While
+            Try
+                While reader.Read()
+                    Periodo.Add(New PeriodoModel() With {
+                        .codPeriodo = reader.GetInt32(0),
+                        .nome = reader.GetString(1),
+                        .situacao = reader.GetInt32(2),
+                        .situacaoLabel = If(reader.GetInt32(2) = 1, "Ativo", "Inativo")
+                    })
+                End While
 
 				Return Periodo
 			Catch ex As Exception
@@ -115,8 +118,8 @@ Namespace Code.Periodo
 				Dim sql As New PeriodoSQL()
 				command.CommandText = sql.inserirPeriodo()
 				command.Parameters.Add("nome", Periodo.nome)
-				command.Parameters.Add("situacao", "1")
-				command.ExecuteNonQuery()
+                command.Parameters.Add("situacao", 1)
+                command.ExecuteNonQuery()
 				transaction.Commit()
 			Catch ex As Exception
 				transaction.Rollback()

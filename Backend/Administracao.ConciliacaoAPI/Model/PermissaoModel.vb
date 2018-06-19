@@ -22,32 +22,23 @@ Namespace Model
 			End Set
 		End Property
 		Private m_CODACSFUN As Long
-		Public Property NOMACSFUN() As String
-			Get
-				Return m_NOMACSFUN
-			End Get
-			Set
-				m_NOMACSFUN = Value
-			End Set
-		End Property
-		Private m_NOMACSFUN As String
-		Public Property DESACSFUN() As String
-			Get
-				Return m_DESACSFUN
-			End Get
-			Set
-				m_DESACSFUN = Value
-			End Set
-		End Property
-		Private m_DESACSFUN As String
-		Public Property CODFNC() As Long
-			Get
-				Return m_CODFNC
-			End Get
-			Set
-				m_CODFNC = Value
-			End Set
-		End Property
-		Private m_CODFNC As Long
+    Public Property DESACSFUN() As String
+      Get
+        Return m_DESACSFUN
+      End Get
+      Set
+        m_DESACSFUN = Value
+      End Set
+    End Property
+    Private m_DESACSFUN As String
+    Public Property CODFNC() As Long
+      Get
+        Return m_CODFNC
+      End Get
+      Set
+        m_CODFNC = Value
+      End Set
+    End Property
+    Private m_CODFNC As Long
 	End Class
 End Namespace

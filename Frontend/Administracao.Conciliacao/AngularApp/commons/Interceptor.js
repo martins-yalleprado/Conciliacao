@@ -1,15 +1,19 @@
-﻿angular.module('MartinsApp').factory('sessionInjector', function (AppConstants) {
+﻿angular.module('MartinsApp').factory('sessionInjector', function (AppConstants, LocalStorageService) {
     var sessionInjector = {
-        request: function(config) {
-            if (!AppConstants.TOKEN != undefined) {
-                config.headers['x-session-token'] = AppConstants.TOKEN;
-            }
+        request: function (config) {
+            //if (!AppConstants.TOKEN != undefined) {
+                config.headers['Access-Control-Allow-Origin'] = '*';
+                config.headers['x-session-token'] = LocalStorageService.getToken();
+                config.headers['x-codigo-conta'] = LocalStorageService.getCodConta();
+                config.headers['x-codigo-unidade'] = LocalStorageService.getCodUnidade();
+                config.headers['x-descricao-conta'] = LocalStorageService.getDescricaoConta();
+                config.headers['x-descricao-unidade'] = LocalStorageService.getDescricaoUnidade();
+            //}
             return config;
         }
     };
     return sessionInjector;
 });
-
 //angular.module("MartinsApp").factory("loadingInterceptor", function ($q, $rootScope, $timeout) {
 //    return {
 //        request: function (config) {

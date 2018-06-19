@@ -1,6 +1,6 @@
 Imports Oracle.ManagedDataAccess.Client
-Imports Martins.Conciliacao.Model
-Imports Martins.Conciliacao.Util
+Imports Administracao.ConciliacaoAPI.Model
+Imports Administracao.ConciliacaoAPI.Util
 
 Namespace Code.Intervalo
 	Public Class IntervaloDAL
@@ -8,10 +8,13 @@ Namespace Code.Intervalo
 		Public oracleConnection As OracleConnection
 
 		Public Sub New()
-			oracleConnection = New OracleConnection(Utils.ORACLE_CONNECCAO)
-
-			oracleConnection.Open()
-		End Sub
+      Try
+        oracleConnection = New OracleConnection(Utils.ORACLE_CONNECCAO)
+        oracleConnection.Open()
+      Catch ex As Exception
+        Throw New Exception("Erro ao conectar ao banco de dados.")
+      End Try
+    End Sub
 		Public Function selectIntervaloPorId(id As Integer) As IntervaloModel
 			If True Then
 
@@ -33,9 +36,9 @@ Namespace Code.Intervalo
                             .codIntervalo = reader.GetInt32(0),
                             .inicio = reader.GetInt32(1),
                             .fim = reader.GetInt32(2),
-                            .situacao = reader.GetString(3),
+                            .situacao = reader.GetInt32(3),
                             .codPeriodo = reader.GetInt32(4),
-                            .situacaoLabel = If(reader.GetString(3) = "1", "Ativo", "Inativo")
+                            .situacaoLabel = If(reader.GetInt32(3) = "1", "Ativo", "Inativo")
                         }
                     End If
 
@@ -60,10 +63,11 @@ Namespace Code.Intervalo
             Try
                 Dim sql As New IntervaloSQL()
                 command.CommandText = sql.updateIntervalo()
-                command.Parameters.Add("codigo", intervalo.codIntervalo)
                 command.Parameters.Add("inicio", intervalo.inicio)
                 command.Parameters.Add("fim", intervalo.fim)
                 command.Parameters.Add("periodo", intervalo.codPeriodo)
+                command.Parameters.Add("codigo", intervalo.codIntervalo)
+
                 command.ExecuteNonQuery()
                 transaction.Commit()
             Catch ex As Exception
@@ -92,63 +96,97 @@ Namespace Code.Intervalo
             End Try
         End Sub
 
-        Public Function selectIntervalo(periodo As Integer) As List(Of IntervaloModel)
+    Public Function selectIntervalo(periodo As Integer, situacao As String) As List(Of IntervaloModel)
 
-            Dim sql As New IntervaloSQL()
+      Dim sql As New IntervaloSQL()
 
 
-            Dim command As New OracleCommand()
-            command.Connection = oracleConnection
-            command.CommandText = sql.selectIntervalo()
+      Dim command As New OracleCommand()
+      command.Connection = oracleConnection
+      command.CommandText = sql.selectIntervalo()
 
-            command.Parameters.Add("periodo", periodo)
-            command.CommandType = System.Data.CommandType.Text
-            Dim reader As OracleDataReader = command.ExecuteReader()
-            Dim Intervalo As New List(Of IntervaloModel)()
+      command.Parameters.Add("periodo", periodo)
+      command.Parameters.Add("situacao", situacao)
+      command.CommandType = System.Data.CommandType.Text
+      Dim reader As OracleDataReader = command.ExecuteReader()
+      Dim Intervalo As New List(Of IntervaloModel)()
 
-            Try
-                While reader.Read()
-                    Intervalo.Add(New IntervaloModel() With {
+      Try
+        While reader.Read()
+          Intervalo.Add(New IntervaloModel() With {
                         .codIntervalo = reader.GetInt32(0),
                         .inicio = reader.GetInt32(1),
                         .fim = reader.GetInt32(2),
-                        .situacao = reader.GetString(3),
-                        .codPeriodo = reader.GetInt32(4)
+                        .situacao = reader.GetInt32(3),
+                        .codPeriodo = reader.GetInt32(4),
+                        .situacaoLabel = If(reader.GetInt32(3) = "1", "Ativo", "Inativo")
                     })
-                End While
+        End While
 
-				Return Intervalo
-			Catch ex As Exception
-				Throw ex
-			Finally
+        Return Intervalo
+      Catch ex As Exception
+        Throw ex
+      Finally
 
-				If oracleConnection IsNot Nothing Then
-					oracleConnection.Close()
-				End If
-			End Try
-		End Function
-		Public Sub inserirIntervalo(intervalo As IntervaloModel)
-			Dim command As New OracleCommand()
-			Dim transaction As OracleTransaction = oracleConnection.BeginTransaction()
-			' Assign transaction object for a pending local transaction
-			command.Connection = oracleConnection
-			command.Transaction = transaction
-			Try
-				Dim sql As New IntervaloSQL()
-				command.CommandText = sql.inserirIntervalo()
+        If oracleConnection IsNot Nothing Then
+          oracleConnection.Close()
+        End If
+      End Try
+    End Function
+        Public Sub inserirIntervalo(intervalo As IntervaloModel)
+            Dim command As New OracleCommand()
+            Dim transaction As OracleTransaction = oracleConnection.BeginTransaction()
+            ' Assign transaction object for a pending local transaction
+            command.Connection = oracleConnection
+            command.Transaction = transaction
+            Try
+                Dim sql As New IntervaloSQL()
+                command.CommandText = sql.inserirIntervalo()
 
-				command.Parameters.Add("inicio", intervalo.inicio)
-				command.Parameters.Add("fim", intervalo.fim)
-				command.Parameters.Add("periodo", intervalo.codPeriodo)
-				command.ExecuteNonQuery()
-				transaction.Commit()
-			Catch ex As Exception
-				transaction.Rollback()
+                command.Parameters.Add("inicio", intervalo.inicio)
+                command.Parameters.Add("fim", intervalo.fim)
+                command.Parameters.Add("periodo", intervalo.codPeriodo)
+                command.ExecuteNonQuery()
+                transaction.Commit()
+            Catch ex As Exception
+                transaction.Rollback()
 
-				Throw ex
-			End Try
-		End Sub
-		Public Sub ativarIntervalo(codigo As Integer)
+                Throw ex
+            End Try
+        End Sub
+
+        Public Function selectIntervaloDeAte(inicio As Integer, fim As Integer, periodo As Integer) As Integer
+            Dim sql As New IntervaloSQL()
+            Dim command As New OracleCommand()
+            command.Connection = oracleConnection
+            command.CommandText = sql.selectIntervaloDeAte()
+
+            command.Parameters.Add("periodo", periodo)
+            command.Parameters.Add("inicio", inicio)
+            command.Parameters.Add("fim", fim)
+            command.CommandType = System.Data.CommandType.Text
+            Dim reader As OracleDataReader = command.ExecuteReader()
+            Dim Intervalo As IntervaloModel = Nothing
+
+            Try
+                If reader.Read() Then
+                    Return 1
+                Else
+                    Return 0
+                End If
+
+            Catch ex As Exception
+                Throw ex
+            Finally
+
+                If oracleConnection IsNot Nothing Then
+                    oracleConnection.Close()
+                End If
+            End Try
+        End Function
+
+
+        Public Sub ativarIntervalo(codigo As Integer)
 			Dim command As New OracleCommand()
 			Dim transaction As OracleTransaction = oracleConnection.BeginTransaction()
 			' Assign transaction object for a pending local transaction

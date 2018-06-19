@@ -31,16 +31,16 @@ Namespace Model
 			End Set
 		End Property
 		Private m_fim As Integer
-		Public Property situacao() As String
-			Get
-				Return m_situacao
-			End Get
-			Set
-				m_situacao = Value
-			End Set
-		End Property
-		Private m_situacao As String
-		Public Property codPeriodo() As Integer
+        Public Property situacao() As Integer
+            Get
+                Return m_situacao
+            End Get
+            Set
+                m_situacao = Value
+            End Set
+        End Property
+        Private m_situacao As Integer
+        Public Property codPeriodo() As Integer
 			Get
 				Return m_codPeriodo
 			End Get

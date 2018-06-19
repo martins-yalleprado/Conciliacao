@@ -1,4 +1,4 @@
-Imports Martins.Conciliacao.Model
+Imports Administracao.ConciliacaoAPI.Model
 
 Namespace Code.Permissao
   Public Class PermissaoBLL

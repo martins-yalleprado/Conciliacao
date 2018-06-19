@@ -1,0 +1,246 @@
+﻿@Scripts.Render("~/AngularApp/fechamentoPeriodo/fechamentoPeriodoSrv.js")
+@Scripts.Render("~/AngularApp/fechamentoPeriodo/fechamentoPeriodo.js")
+
+<div ng-controller="FechamentoPeriodoController">
+    <form name="pesquisaForm">        
+        <div class="row">
+            <div class="input-field col s3 m3 l3">
+                <input id="conta" type="text" name="CodConta" ng-model="fechamentoModel.CodConta" readonly>
+                <label for="conta">Conta</label>
+            </div>
+            <div class="input-field col s3 m3 l3">
+                <input id="desConta" type="text" name="DescConta" ng-model="fechamentoModel.DescConta" readonly>
+                <label for="desConta">Descrição Conta</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s3 m3 l3">
+                <input id="un" type="text" name="CodUnidade" ng-model="fechamentoModel.CodUnidade" readonly>
+                <label for="un">Unidade</label>
+            </div>
+            <div class="input-field col s3 m3 l3">
+                <input id="desUnidade" type="text" name="DescUnidade" ng-model="fechamentoModel.DescUnidade" readonly>
+                <label for="desUnidade">Descrição Unidade</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6 m6 l6">
+                <ul class="collapsible">
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons">search</i>Período Vigente
+                        </div>
+                        <div class="collapsible-body">
+
+                            <div class="row">
+                                <div class="input-field col s3 m3 l3">
+                                    @*<input type="radio" name="gender" value="mensal" checked>Mensal
+                                        <input type="radio" name="gender" value="anual">Anual*@
+
+                                    <input type="radio" id="titulo" name="tipo" value="mensal" ng-model="fechamentoModel.TipoFechamento" />
+                                    <label for="titulo" style="padding-left:23px; margin-right:14px">Mensal</label>
+                                    <input type="radio" id="contabil" name="tipo" value="anual" ng-model="fechamentoModel.TipoFechamento" />
+                                    <label for="contabil" style="padding-left:23px; margin-right:14px">Contábil</label>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="input-field col s6 m6 l6">
+                <div class="input-field col s2 m2 l2">
+                    <input id="diaPadrao" type="number" name="DiaFechamentoPadrao" placeholder="" readonly>
+                    <label for="diaPadrao">Dia Fechamento Padrão</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6 m6 l6">
+                <ul class="collapsible">
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons">search</i>Período Vigente
+                        </div>
+                        <div class="collapsible-body">
+
+                            <div class="row">
+                                <div class="input-field col s3 m3 l3">
+                                    <label for="datepicker">Início</label>
+                                    <input input-date
+                                           type="text"
+                                           name="DataInicioPeriodo"
+                                           id="datepicker"
+                                           ng-model="fechamentoModel.DataInicioPeriodo"
+                                           container=""
+                                           format="dd/mm/yyyy"
+                                           months-full="{{ month }}"
+                                           months-short="{{ monthShort }}"
+                                           weekdays-full="{{ weekdaysFull }}"
+                                           weekdays-short="{{ weekdaysShort }}"
+                                           weekdays-letter="{{ weekdaysLetter }}"
+                                           disable="disable"
+                                           min="{{ minDate }}"
+                                           max="{{ maxDate }}"
+                                           today="today"
+                                           first-day="1"
+                                           clear="clear"
+                                           close="close"
+                                           select-years="15"
+                                           class="datepicker" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s3 m3 l3">
+                                    <label for="datepicker">Fim</label>
+                                    <input input-date
+                                           type="text"
+                                           name="DataFimPeriodo"
+                                           id="datepicker"
+                                           ng-model="fechamentoModel.DataFimPeriodo"
+                                           container=""
+                                           format="dd/mm/yyyy"
+                                           months-full="{{ month }}"
+                                           months-short="{{ monthShort }}"
+                                           weekdays-full="{{ weekdaysFull }}"
+                                           weekdays-short="{{ weekdaysShort }}"
+                                           weekdays-letter="{{ weekdaysLetter }}"
+                                           disable="disable"
+                                           min="{{ minDate }}"
+                                           max="{{ maxDate }}"
+                                           today="today"
+                                           first-day="1"
+                                           clear="clear"
+                                           close="close"
+                                           select-years="15"
+                                           class="datepicker" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="input-field col s6 m6 l6">
+                <ul class="collapsible">
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons">search</i>Próximo Período
+                        </div>
+                        <div class="collapsible-body">
+
+                            <div class="row">
+                                <div class="input-field col s3 m3 l3">
+                                    <label for="datepicker">Início</label>
+                                    <input input-date
+                                           type="text"
+                                           name="DataInicioPeriodoPrev"
+                                           id="datepicker"
+                                           ng-model="DataInicioPeriodoPrev"
+                                           container=""
+                                           format="dd/mm/yyyy"
+                                           months-full="{{ month }}"
+                                           months-short="{{ monthShort }}"
+                                           weekdays-full="{{ weekdaysFull }}"
+                                           weekdays-short="{{ weekdaysShort }}"
+                                           weekdays-letter="{{ weekdaysLetter }}"
+                                           disable="disable"
+                                           min="{{ minDate }}"
+                                           max="{{ maxDate }}"
+                                           today="today"
+                                           first-day="1"
+                                           clear="clear"
+                                           close="close"
+                                           select-years="15"
+                                           class="datepicker" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s3 m3 l3">
+                                    <label for="datepicker">Fim</label>
+                                    <input input-date
+                                           type="text"
+                                           name="DataFimPeriodoPrev"
+                                           id="datepicker"
+                                           ng-model="DataFimPeriodoPrev"
+                                           container=""
+                                           format="dd/mm/yyyy"
+                                           months-full="{{ month }}"
+                                           months-short="{{ monthShort }}"
+                                           weekdays-full="{{ weekdaysFull }}"
+                                           weekdays-short="{{ weekdaysShort }}"
+                                           weekdays-letter="{{ weekdaysLetter }}"
+                                           disable="disable"
+                                           min="{{ minDate }}"
+                                           max="{{ maxDate }}"
+                                           today="today"
+                                           first-day="1"
+                                           clear="clear"
+                                           close="close"
+                                           select-years="15"
+                                           class="datepicker" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6 m6 l6">
+                <input id="btnConfirmar" type="button" class="btn btn-default btn-group" value="Confirmar" ng-click="salvar(pesquisaForm)">
+            </div>
+        </div>
+
+    </form>
+
+    <div ng-hide="_gridSize > 0" class="row">
+        Nenhum registro encontrado
+    </div>
+    <div ng-hide="_gridSize == 0" class="row">
+        <table class="striped centered grid-border">
+            <thead class="grid-background">
+                <tr>
+                    <th class="grid-border">Tipo Fechamento</th>
+                    <th class="grid-border">Período Fechamento</th>
+                    <th class="grid-border">Usuário</th>
+                    <th class="grid-border">Data Inclusão</th>
+                    <th class="grid-border">Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- | async | paginate: { itemsPerPage: 20, currentPage: p } -->
+                <tr ng-repeat="d in _dataGrid" ng-click="editForm(d)">
+                    <td class="grid-border">{{ d.TipoFechamento }}</td>
+                    <td class="grid-border">{{ d.DataInclusao | date: 'dd/MM/yyyy'}}</td>
+                    <td class="grid-border">{{ d.Usuario }}</td>
+                    <td class="grid-border">{{ d.DataInclusao | date: 'dd/MM/yyyy' }}</td>
+                    <td class="grid-border">
+                        <a class="waves-effect waves-light modal-trigger" href="#ativarInativarPeriodo"><i class="material-icons left">delete</i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+        </pagination-controls>
+    </div>
+
+    <div id="ativarInativarIntervalo" class="modal">
+        <div class="modal-header">
+            <i class="material-icons icons">delete</i>
+            <span style="vertical-align: middle;">Remover Intervalo</span>
+        </div>
+        <div class="modal-content">
+            <p>Você confirma a ativação/desativação deste intervalo?</p>
+        </div>
+        <div class="modal-footer">
+            <a class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue" style="margin-left:10px" ng-click="atualizaIntervalo('desativar')">Confirmar</a>
+            <a class="btn-cancel modal-action modal-close waves-effect waves-orange btn orange lighten-1" ng-click="limpaIntervalo()">Cancelar</a>
+        </div>
+    </div>
+
+    @*div controller*@
+</div>

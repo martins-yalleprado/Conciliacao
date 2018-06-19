@@ -12,7 +12,7 @@ Namespace Model
       End Set
     End Property
     Private m_codGestaoCarga As Integer
-    Public Property data() As DateTime
+    Public Property data() As DateTime?
       Get
         Return m_data
       End Get
@@ -20,7 +20,7 @@ Namespace Model
         m_data = Value
       End Set
     End Property
-    Private m_data As DateTime
+    Private m_data As DateTime?
     Public Property dataMovimentacao() As DateTime
       Get
         Return m_dataMovimentacao
@@ -93,5 +93,14 @@ Namespace Model
       End Set
     End Property
     Private m_codUnidade As Integer
+    Public Property CodConta() As Integer
+      Get
+        Return m_CodConta
+      End Get
+      Set
+        m_CodConta = Value
+      End Set
+    End Property
+    Private m_CodConta As Integer
   End Class
 End Namespace
