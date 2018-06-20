@@ -16,12 +16,20 @@ angular.module("MartinsApp").controller('Login',
            
             $http.get(AppConstants.API_FRONT + '/Login?user=' + user.username)
                 .then(function (data) {
-                    $window.location.assign("/ADMINISTRACAO.CONCILIACAO/SelecionaUnidade");
+                    $window.location.assign("/SelecionaUnidade");
                 });
 
           })
-          .catch(function (data) {
-            swal({ title: 'Atenção!', text: 'Erro ao tentar autenticar:' + data.Message, type: 'error', confirmButtonText: 'Ok' });
+              .catch(function (data) {
+                  if (data.Error !== undefined) {
+                      swal({ title: 'Erro', text: 'Erro ao tentar autenticar:' + data.Error, type: 'error', confirmButtonText: 'Ok' });
+                  }
+                  else if (data.Message !== undefined) {
+                      swal({ title: 'Atenção!', text: 'Erro ao tentar autenticar:' + data.Message, type: 'error', confirmButtonText: 'Ok' });
+                  } 
+                  else {
+                      swal({ title: 'Erro', text: 'Erro no servidor de autenticação. Tente novamente', type: 'error', confirmButtonText: 'Ok' });
+                  }
           });
 
       }
