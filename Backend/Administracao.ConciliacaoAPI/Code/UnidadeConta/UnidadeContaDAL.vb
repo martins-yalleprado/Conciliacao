@@ -96,8 +96,8 @@ Namespace Code.UnidadeConta
 
                     unidadeConta.CodEmpresa = reader.GetInt32(0)
                     unidadeConta.FLAG = reader.GetString(1)
-                    unidadeConta.FlagLabel = If(reader.GetString(1) = "1", "Ativo", "Inativo")
-                    Dim unidadeModel As New UnidadeModel()
+					unidadeConta.FlagLabel = If(IsDBNull(reader.GetValue(1)), "Vazio", If(reader.GetString(1) = "1", "Ativo", "Inativo"))
+					Dim unidadeModel As New UnidadeModel()
                     unidadeModel.CodEmpresa = reader.GetInt32(2)
                     unidadeModel.CodUnidade = reader.GetInt32(3)
                     unidadeModel.DesUnidade = reader.GetString(4)
@@ -114,10 +114,10 @@ Namespace Code.UnidadeConta
                     conta.DescricaoDaContaContabil = reader.GetString(13)
                     conta.DataCadastro = If(IsDBNull(reader.GetValue(14)), Nothing, reader.GetDateTime(14))
                     conta.DataDesativacao = If(IsDBNull(reader.GetValue(15)), Nothing, reader.GetDateTime(15))
-                    conta.Flag = reader.GetString(16)
-                    conta.Flaglabel = If(reader.GetString(16) = "1", "ativo", "Inativo")
+					conta.Flag = reader.GetString(1)
+					conta.Flaglabel = If(IsDBNull(reader.GetValue(16)), "Vazio", If(reader.GetString(16) = "1", "Ativo", "Inativo"))
 
-                    unidadeConta.ContaModel = conta
+					unidadeConta.ContaModel = conta
                     list.Add(unidadeConta)
                 End While
 

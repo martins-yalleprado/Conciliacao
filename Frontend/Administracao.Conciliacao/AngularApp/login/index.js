@@ -34,7 +34,7 @@ angular.module("MartinsApp").controller('Login',
         menu: '',
         quantidade_avisos: '4'
       };
-
+      window.localStorage.removeItem('MENU');
       window.localStorage.setItem('jwt_token', token);
       window.localStorage.setItem('user', JSON.stringify(usuarioObj));
     };

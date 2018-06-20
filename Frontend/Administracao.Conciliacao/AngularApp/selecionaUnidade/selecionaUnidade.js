@@ -63,10 +63,12 @@ angular.module('MartinsApp').controller('SelecionaUnidade',
             window.localStorage.setItem(DESC_UNIDADE, unidade.DesUnidade);
             window.localStorage.setItem(CONTA_KEY, conta.ContaModel.CodContaContabil);
             window.localStorage.setItem(DESC_CONTA, conta.ContaModel.DescricaoDaContaContabil);
-            $(window.document.location).attr('href', '/ADMINISTRACAO.CONCILIACAO/home');
+            window.localStorage.setItem('MENU', 'Página Inicial');
+           $(window.document.location).attr('href', '/ADMINISTRACAO.CONCILIACAO/home');
         }
 
         $scope.cancelar = function () {
+            window.localStorage.setItem('MENU', 'Página Inicial');
             $(window.document.location).attr('href', '/ADMINISTRACAO.CONCILIACAO/home');
         }
 

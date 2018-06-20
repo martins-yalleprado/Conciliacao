@@ -136,6 +136,7 @@ angular.module('MartinsApp').controller('PeriodoAging',
                     .then(function (ResData) {
                         swal('Feito!', 'Intervalo criado com sucesso.', 'success');
                         $scope.buscaIntervalos($scope.agingPeriod.codPeriodo);
+                       
                     })
                     .catch(function (ResData) {
                         if (ResData.data.Message !== undefined) {

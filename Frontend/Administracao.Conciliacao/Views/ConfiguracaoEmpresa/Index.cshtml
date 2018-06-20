@@ -9,6 +9,7 @@
         <div class="section col s4">
             <div input-field>
                 <select id="unidadeSelecionada" ng-model="selectedUnidade" material-select>
+                    <option value="">Selecione uma unidade</option>
                     <option ng-repeat="value in unidades" value="{{value.CodUnidade}}">{{value.DesUnidade}}</option>
                 </select>
                 <label>Unidade de Negócio</label>
@@ -18,6 +19,7 @@
         <div class="section col s4">
             <div input-field>
                 <select id="contaSelecionada" ng-model="selectedConta" material-select>
+                    <option value="">Selecione uma conta</option>
                     <option ng-repeat="conta in contas" value="{{conta.CodContaContabil}}">{{conta.DescricaoDaContaContabil}}</option>
                 </select>
                 <label>Conta</label>

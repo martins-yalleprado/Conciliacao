@@ -3,8 +3,8 @@ Namespace Code.Conta
     Public Function SelectConta() As String
       Dim stringBuilder As New StringBuilder()
       stringBuilder.Append(" Select   CODCNTCTB,NUMGRACNTCTB,DESCNTCTB,DATCAD,DATDST,FLGATVCLOCOB ")
-      stringBuilder.Append(" from MRT.T0123566 ")
-      Return stringBuilder.ToString()
+			stringBuilder.Append(" from MRT.T0123566")
+			Return stringBuilder.ToString()
     End Function
     Public Function SelectContaPorId() As String
       Dim stringBuilder As New StringBuilder()

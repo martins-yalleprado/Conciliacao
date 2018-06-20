@@ -1,8 +1,8 @@
 angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
 
 
-    function ($scope, $http, AppConstants) {
-      
+    function ($scope, $http, AppConstants, $timeout) {
+
 
         var vm = this;
         var unidadeSelecionada = null;
@@ -56,11 +56,24 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
 
         $scope.pesquisar = function (unidade, conta) {
             debugger;
+
             var auxUnidade = document.getElementById("unidadeSelecionada");
-            unidade = unidade[auxUnidade.selectedIndex];
+            if (auxUnidade.selectedIndex !== 0) {
+                unidade = unidade[auxUnidade.selectedIndex - 1];
+            }
+            else {
+                unidade = undefined;
+            }
+
 
             var auxConta = document.getElementById("contaSelecionada");
-            conta = conta[auxConta.selectedIndex];
+            if (auxConta.selectedIndex !== 0) {
+                conta = conta[auxConta.selectedIndex - 1];
+            }
+            else {
+                conta = undefined;
+            }
+
 
             if (unidade === undefined && conta === undefined) {
                 swal({ title: 'Erro', text: 'Ao menos uma unidade de negócio ou conta deve ser selecionada', type: 'error', confirmButtonText: 'Ok' });
@@ -76,10 +89,10 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
             debugger;
 
             var auxUnidade = document.getElementById("unidadeSelecionada");
-            unidade = unidade[auxUnidade.selectedIndex];
+            unidade = unidade[auxUnidade.selectedIndex - 1];
 
             var auxConta = document.getElementById("contaSelecionada");
-            conta = conta[auxConta.selectedIndex];
+            conta = conta[auxConta.selectedIndex - 1];
 
             debugger;
             if (unidade === undefined) {
@@ -120,6 +133,11 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
                             .then(function (ResData) {
                                 debugger;
                                 $scope.UnidadesContas = ResData.data.Data;
+                                swal(
+                                    'Feito!',
+                                    'A associação foi realizada com sucesso.',
+                                    'success'
+                                );
                                 vm.buscaContasUnidade(unidade, conta);
                             })
                             .catch(function (ResData) {
@@ -212,8 +230,8 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
                         .catch(function (resultado) {
                             debugger;
                             if (resultado.data.Message !== null) {
-                                  swal({ title: 'Erro', text: resultado.data.Message, type: 'error', confirmButton: 'Ok' });
-                            }                           
+                                swal({ title: 'Erro', text: resultado.data.Message, type: 'error', confirmButton: 'Ok' });
+                            }
                             else {
                                 swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButtonText: 'Ok' });
                             }

@@ -110,7 +110,7 @@ angular.module('MartinsApp').controller('GestaoCarga',
                             })
                             .catch(function (resultado) {
                                 if (resultado.data.Message !== undefined) {
-                                    swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButtonText: 'Ok' });
+                                    swal({ title: 'Erro', text: resultado.data.Message, type: 'error', confirmButtonText: 'Ok' });
                                 }
                                 else {
                                     swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButtonText: 'Ok' });
@@ -151,7 +151,7 @@ angular.module('MartinsApp').controller('GestaoCarga',
                         })
                         .catch(function (resultado) {
                             if (resultado.data.Message !== undefined) {
-                                swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButtonText: 'Ok' });
+                                swal({ title: 'Erro', text: resultado.data.Message, type: 'error', confirmButtonText: 'Ok' });
                             }
                             else {
                                 swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButtonText: 'Ok' });
@@ -209,7 +209,7 @@ angular.module('MartinsApp').controller('GestaoCarga',
                             })
                             .catch(function (objeto) {
                                 if (objeto.data.Message !== undefined) {
-                                    swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButtonText: 'Ok' });
+                                    swal({ title: 'Erro', text: objeto.data.Message, type: 'error', confirmButtonText: 'Ok' });
                                 }
                                 else {
                                     swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButtonText: 'Ok' });
