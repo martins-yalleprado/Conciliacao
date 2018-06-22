@@ -10,13 +10,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Administracao.ConciliacaoAPI.dll">
-      <publishTime>06/18/2018 15:57:30</publishTime>
+      <publishTime>06/22/2018 14:23:12</publishTime>
     </File>
     <File Include="bin/Administracao.ConciliacaoAPI.pdb">
-      <publishTime>06/18/2018 15:57:29</publishTime>
+      <publishTime>06/22/2018 14:23:12</publishTime>
     </File>
     <File Include="bin/Administracao.ConciliacaoAPI.xml">
-      <publishTime>06/18/2018 15:57:30</publishTime>
+      <publishTime>06/22/2018 14:23:12</publishTime>
     </File>
     <File Include="bin/Martins.Conciliacao.dll">
       <publishTime>06/13/2018 09:23:09</publishTime>
@@ -163,7 +163,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/05/2018 11:39:57</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/18/2018 12:52:49</publishTime>
+      <publishTime>06/22/2018 14:23:14</publishTime>
     </File>
   </ItemGroup>
 </Project>

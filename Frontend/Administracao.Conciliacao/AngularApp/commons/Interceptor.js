@@ -1,7 +1,7 @@
-﻿angular.module('MartinsApp').factory('sessionInjector', function (AppConstants, LocalStorageService) {
+﻿angular.module('MartinsApp').factory('sessionInjector', function (LocalStorageService) {
     var sessionInjector = {
         request: function (config) {
-            //if (!AppConstants.TOKEN != undefined) {
+            //if (!LocalStorageService.TOKEN != undefined) {
                 config.headers['Access-Control-Allow-Origin'] = '*';
                 config.headers['x-session-token'] = LocalStorageService.getToken();
                 config.headers['x-codigo-conta'] = LocalStorageService.getCodConta();
@@ -14,25 +14,3 @@
     };
     return sessionInjector;
 });
-//angular.module("MartinsApp").factory("loadingInterceptor", function ($q, $rootScope, $timeout) {
-//    return {
-//        request: function (config) {
-//            $rootScope.loading = true;
-//            return config;
-//        },
-//        requestError: function (rejection) {
-//            $rootScope.loading = false;
-//            return $q.reject(rejection);
-//        },
-//        response: function (response) {
-//            $timeout(function () {
-//                $rootScope.loading = false;
-//            }, 500);
-//            return response;
-//        },
-//        responseError: function (rejection) {
-//            $rootScope.loading = false;
-//            return $q.reject(rejection);
-//        }
-//    };
-//});

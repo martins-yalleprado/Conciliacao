@@ -16,6 +16,10 @@
     @Scripts.Render("~/Content/js/materialize.min.js")
     @Scripts.Render("~/Content/js/angular-materialize.min.js")
 
+    @Scripts.Render("~/assets/js/perfect-scrollbar.min.js")
+    @Scripts.Render("~/assets/js/plugins.js")
+    @Scripts.Render("~/assets/js/prism.js")
+
     @*Iniciando Angular e Componentes*@
     @Scripts.Render("~/Scripts/angular-locale_pt-br.js")
 
@@ -23,7 +27,6 @@
 
     @Scripts.Render("~/AngularApp/layout/MartinsApp.js")
     @Scripts.Render("~/AngularApp/commons/LocalStorageService.js")
-    @Scripts.Render("~/AngularApp/AppConstants.js")
 
     @Scripts.Render("~/AngularApp/commons/DataService.js")
     @Scripts.Render("~/AngularApp/commons/ModuloService.js")
@@ -44,6 +47,10 @@
     @Scripts.Render("~/AngularApp/layout/Header.js")
     @Styles.Render("~/Content/css/DatePicker.css")
     @Styles.Render("~/Content/css/MaterialIcons.css")
+
+    @Styles.Render("~/assets/css/themes/perfect-scrollbar.css")
+    @Styles.Render("~/assets/css/themes/prism.css")
+    @Styles.Render("~/assets/css/themes/style.css")
     <script>
         $(document).ready(function () {
             $('.modal').modal();
@@ -64,21 +71,24 @@
 
 </head>
 <body>
-  <div ng-app="MartinsApp">
+    <span ng-app="MartinsApp">
 
-    @RenderPage("_header.cshtml")
+        @RenderPage("_header.cshtml")
+        <div id="main" class="main-full">
+            <!-- START WRAPPER -->
+            <div class="wrapper">
+                @RenderPage("_menu.cshtml")
+                
+                <section id="content">
+                    <div class="container">
+                      
+                        @RenderBody()
+                    </div>
+                </section>
+            </div>
+        </div>
+            @RenderSection("Scripts", required: false)
 
-    <div class="row">
-      @RenderPage("_menu.cshtml")
-      <div class="col s12 m12 l12">
-        <router-outlet> </router-outlet>
-      </div>
-
-      @RenderBody()
-    </div>
-
-    @RenderSection("Scripts", required: false)
-
-  </div>
+        </span>
 </body>
 </html>

@@ -37,8 +37,8 @@ Namespace Code.Fechamento
                     Fechamento.DataInclusao = reader.GetDateTime(3)
                     Fechamento.TipoFechamento = reader.GetString(4)
                     Fechamento.Usuario = reader.GetString(5)
-                    Fechamento.SaldoFechamento = reader.GetDecimal(7)
-                    Fechamento.StatusFechamento = reader.GetString(8)
+                    Fechamento.SaldoFechamento = reader.GetDecimal(6)
+                    Fechamento.StatusFechamento = reader.GetString(7)
                     list.Add(Fechamento)
                 End While
         Return list
@@ -92,8 +92,8 @@ Namespace Code.Fechamento
                     Fechamento.DataInclusao = reader.GetDateTime(3)
                     Fechamento.TipoFechamento = reader.GetString(4)
                     Fechamento.Usuario = reader.GetString(5)
-                    Fechamento.SaldoFechamento = reader.GetDecimal(7)
-                    Fechamento.StatusFechamento = reader.GetString(8)
+                    Fechamento.SaldoFechamento = reader.GetDecimal(6)
+                    Fechamento.StatusFechamento = reader.GetString(7)
                     list.Add(Fechamento)
                 End While
                 Return list

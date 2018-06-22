@@ -1,17 +1,127 @@
-﻿<div class="col s12 m4 l3" ng-controller="HeaderController">
-  <div>
-      <ul class="side-nav" id="mobile-demo">
-          <li><a href="/ADMINISTRACAO.CONCILIACAO/GestaoCarga" ng-click="atualizaMenu('Movimentos de cobrança e contábil')">Movimentos de cobrança e contábil</a></li>
-          <li><a href="/ADMINISTRACAO.CONCILIACAO/ConciliacaoPendente" ng-click="atualizaMenu('Controle de pendências de conciliação')">Conciliação de Pendências</a></li>
-          <li><a href="/ADMINISTRACAO.CONCILIACAO/PeriodoAging" ng-click="atualizaMenu('Períodos - Aging')">Períodos - Aging</a></li>
-          <li><a href="/ADMINISTRACAO.CONCILIACAO/ConfiguracaoEmpresa" ng-click="atualizaMenu('Configuracao Empresa')">Configuração Unidade Negócio</a></li>
+﻿<aside id="left-sidebar-nav" ng-controller="HeaderController" class="nav-collapsible nav-collapsed" ng-controller="HeaderController">
+    <div class="brand-sidebar">
+        <h1 class="logo-wrapper">
+            <a href="index.html" class=" brand-logo darken-2" >
+                <img src="../../assets/images/logo.png" alt="materialize logo">
+                <span class="logo-text"></span>
+            </a>
+            <a href="#" class="navbar-toggler">
+                <i class="material-icons">radio_button_unchecked</i>
+            </a>
+        </h1>
+    </div>
+    <ul id="slide-out" class="side-nav fixed leftside-navigation ps-container ps-active-y" style="transform: translateX(0px);">
+        <li class="no-padding">
+            <ul class="collapsible" data-collapsible="accordion">
+                <li class="bold">
+                    <a class="collapsible-header waves-effect waves-cyan">
+                        <i class="material-icons">library_add</i>
+                        <span class="nav-text">Cadastros</span>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="/ADMINISTRACAO.CONCILIACAO/TiposMovimentacoes" ng-click="atualizaMenu('Tipos de Movimentações')">
+                                    <i class="material-icons">keyboard_arrow_right</i>
+                                    <span>Tipos de Movimentações</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/ADMINISTRACAO.CONCILIACAO/PeriodoAging" ng-click="atualizaMenu('Períodos - Aging')">
+                                    <i class="material-icons">keyboard_arrow_right</i>
+                                    <span>Períodos Aging</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/ADMINISTRACAO.CONCILIACAO/ConfiguracaoEmpresa" ng-click="atualizaMenu('Configuração Unidade Negócio')">
+                                    <i class="material-icons">keyboard_arrow_right</i>
+                                    <span>Configuração Unidade Negócio</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="bold">
+                    <a class="collapsible-header waves-effect waves-cyan">
+                        <i class="material-icons">dvr</i>
+                        <span class="nav-text">Conciliação</span>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="/ADMINISTRACAO.CONCILIACAO/ConciliacaoPendente" ng-click="atualizaMenu('Controle de Pendências de Conciliação')">
+                                    <i class="material-icons">keyboard_arrow_right</i>
+                                    <span> Conciliação de Pendências</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
-          <li><a href="/ADMINISTRACAO.CONCILIACAO/TiposMovimentacoes" ng-click="atualizaMenu('Tipos Movimentações')">Tipos movimentações</a></li>
-          <li><a href="/ADMINISTRACAO.CONCILIACAO/MovimentacaoAcerto" ng-click="atualizaMenu('Movimentação Acerto')">Movimentação de Acerto</a></li>
-          <li><a href="/ADMINISTRACAO.CONCILIACAO/SaldoConta" ng-click="atualizaMenu('Saldo Contas')">Saldo de Contas</a></li>
-          <li><a href="/ADMINISTRACAO.CONCILIACAO/FechamentoPeriodo" ng-click="atualizaMenu('Fechamento Período')">Fechamento de Período</a></li>
-          <li> <a href="/ADMINISTRACAO.CONCILIACAO/SelecionaUnidade"><i class="material-icons left">autorenew</i>Alterar Unidade Negócio</a> </li>
-          <li> <a  ng-click="logout()" style="cursor:pointer"><i class="material-icons left">exit_to_app</i>Sair</a> </li>
-      </ul>
-  </div>
-</div>
+                <li class="bold">
+                    <a class="collapsible-header waves-effect waves-cyan">
+                        <i class="material-icons">pie_chart_outlined</i>
+                        <span class="nav-text">Fechamento</span>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="/ADMINISTRACAO.CONCILIACAO/FechamentoPeriodo" ng-click="atualizaMenu('Fechamento Período')">
+                                    <i class="material-icons">keyboard_arrow_right</i>
+                                    <span>Fechamento de Período</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/ADMINISTRACAO.CONCILIACAO/SaldoConta" ng-click="atualizaMenu('Saldo de Contas')">
+                                    <i class="material-icons">keyboard_arrow_right</i>
+                                    <span>Saldo de Contas</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="bold">
+                    <a class="collapsible-header waves-effect waves-cyan">
+                        <i class="material-icons">pie_chart_outlined</i>
+                        <span class="nav-text">Movimentos</span>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="/ADMINISTRACAO.CONCILIACAO/GestaoCarga" ng-click="atualizaMenu('Movimentos de Cobrança e Contábil')">
+                                    <i class="material-icons">keyboard_arrow_right</i>
+                                    <span>Movimentos de Cobrança e Contábil</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/ADMINISTRACAO.CONCILIACAO/MovimentacaoAcerto" ng-click="atualizaMenu('Movimentação de Acerto')">
+                                    <i class="material-icons">keyboard_arrow_right</i>
+                                    <span >Movimentação de Acerto</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="bold">
+                    <a href="/ADMINISTRACAO.CONCILIACAO/SelecionaUnidade" class="waves-effect waves-cyan">
+                        <i class="material-icons">autorenew</i>
+                        <span class="nav-text">Alterar Unidade de Negócio</span>
+                    </a>
+                </li>
+                <li class="bold">
+                    <a ng-click="logout()" style="cursor:pointer" class="waves-effect waves-cyan">
+                        <i class="material-icons">exit_to_app</i>
+                        <span class="nav-text">Sair</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;"><div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div></div>
+        <div class="ps-scrollbar-y-rail" style="top: 0px; height: 602px; right: 3px;"><div class="ps-scrollbar-y" style="top: 0px; height: 274px;"></div></div>
+    </ul>
+    <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan">
+        <i class="material-icons">menu</i>
+    </a>
+</aside>

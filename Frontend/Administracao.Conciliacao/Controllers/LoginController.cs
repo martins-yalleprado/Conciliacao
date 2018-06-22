@@ -7,9 +7,11 @@ using System.Web.Security;
 
 namespace Administracao.Conciliacao.Controllers
 {
+    [Authorize]
     public class LoginController : Controller
     {
         // GET: Login
+       [AllowAnonymous]
         public ActionResult Index(string user)
         {
             if (user == null || user.Equals(""))
@@ -22,7 +24,8 @@ namespace Administracao.Conciliacao.Controllers
             }
             return null;
         }
-
+   
+        [AllowAnonymous]
         public ActionResult Loggout()
         {
             FormsAuthentication.SignOut();

@@ -1,9 +1,11 @@
 angular.module('MartinsApp').controller('GestaoCarga',
 
 
-    function ($scope, $http, AppConstants, DataService, ModuloService) {
+    function ($scope, $http,  DataService, ModuloService, LocalStorageService) {
         $scope.currentUser = [];
-        
+        $scope.selectedMov = undefined;
+        $scope.movimentos = undefined;
+        $scope.menu = LocalStorageService.getMenu();
         var vm = this;
         // ModuloService.atualizaMenu('Movimentos de cobrança e contábil');
 
@@ -22,6 +24,28 @@ angular.module('MartinsApp').controller('GestaoCarga',
 
             /*Tradução datePicker*/
             DataService.TraduzData($scope);
+        }
+
+        $scope.carregaDetalhes = function (movimento) {
+            $scope.selectedMov = movimento;
+            if ($scope.selectedMov.tipo === 'TIT') {
+                $scope.carregaDetalhesTitulo($scope.selectedMov.codGestaoCarga);
+            }
+        }
+
+        $scope.carregaDetalhesTitulo = function (codigo) {
+            $http.get(LocalStorageService.getUrlBack() + '/api/MovimentoTitulo/' + codigo)
+                .then(function (ResData) {
+                    $scope.movimentos = ResData.data.Data;
+                })
+                .catch(function (ResData) {
+                    if (ResData.data.Message !== undefined) {
+                        swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButtonText: 'Ok' });
+                    }
+                    else {
+                        swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButtonText: 'Ok' });
+                    }
+                });
         }
 
         $scope.searchChargeManagement = function (dataref, tipo) {
@@ -53,7 +77,7 @@ angular.module('MartinsApp').controller('GestaoCarga',
                 tipo: lista
             };
             debugger;
-            $http.get(AppConstants.API_ROOT + '/api/GestaoCarga', { params: data })
+            $http.get(LocalStorageService.getUrlBack() + '/api/GestaoCarga', { params: data })
                 .then(function (ResData) {
                     $scope.data = ResData.data.Data;
                 })
@@ -95,7 +119,7 @@ angular.module('MartinsApp').controller('GestaoCarga',
                     confirmButtonText: 'Sim'
                 }).then((result) => {
                     if (result.value) {
-                        $http.delete(AppConstants.API_ROOT + '/api/GestaoCarga?id=' + id)
+                        $http.delete(LocalStorageService.getUrlBack() + '/api/GestaoCarga?id=' + id)
                             .then(function (resultado) {
                                 this.data = resultado.data.Data;
                                 swal(
@@ -135,7 +159,7 @@ angular.module('MartinsApp').controller('GestaoCarga',
                 confirmButtonText: 'Sim'
             }).then((result) => {
                 if (result.value) {
-                    $http.put(AppConstants.API_ROOT + '/api/GestaoCarga', objeto)
+                    $http.put(LocalStorageService.getUrlBack() + '/api/GestaoCarga', objeto)
                         .then(function (resultado) {
                             this.data = resultado.data.Data;
                             swal(
@@ -193,7 +217,7 @@ angular.module('MartinsApp').controller('GestaoCarga',
                 }).then((result) => {
                     if (result.value) {
 
-                        $http.post(AppConstants.API_ROOT + '/api/GestaoCarga?' + 'dataref=' + dados.dataref + '&tipo=' + dados.tipo +
+                        $http.post(LocalStorageService.getUrlBack() + '/api/GestaoCarga?' + 'dataref=' + dados.dataref + '&tipo=' + dados.tipo +
                             '&codUnidade=0' + '&codConta=0', dados)
                             .then(function (objeto) {
                                 this.data = objeto.data.Data;
@@ -219,6 +243,8 @@ angular.module('MartinsApp').controller('GestaoCarga',
                 });
             }
         }
+
+        
     });
 
 

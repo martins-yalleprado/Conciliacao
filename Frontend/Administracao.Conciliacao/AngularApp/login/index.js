@@ -1,6 +1,6 @@
 angular.module("MartinsApp").controller('Login',
 
-  function ($scope, $http, AppConstants, $location, $window) {
+  function ($scope, $http, $location, $window) {
       var user = [];
       var userString = "";
     var resultok = false;
@@ -10,12 +10,27 @@ angular.module("MartinsApp").controller('Login',
         swal({ title: 'Atenção!', text: 'Login ou senha inválidos', type: 'error', confirmButtonText: 'Ok' });
       } else {
           userString = 'username=' + user.username + '&password=' + user.password + '&grant_type=password';
-          $http.post(AppConstants.API_ROOT + '/oauth2/token', userString)
+          $http.post('http://localhost:1741/oauth2/token', userString)
           .then(function (data) {
             $scope.setToken(data['data']['access_token']);
            
-            $http.get(AppConstants.API_FRONT + '/Login?user=' + user.username)
+              $http.get($location.$$absUrl + '?user=' + user.username)
                 .then(function (data) {
+                    var baseUrl = new $window.URL($location.absUrl()).origin;
+                    $http.get(baseUrl + '/Home/UrlBack')
+                        .success(function (data) {
+                            var teste = data;
+
+                            window.localStorage.setItem('URL_BACK', data);
+                        });
+
+                    $http.get(baseUrl + '/Home/UrlFront')
+                        .success(function (data) {
+                            var teste = data;
+
+                            window.localStorage.setItem('URL_FRONT', data);
+                        });
+
                     $window.location.assign("/SelecionaUnidade");
                 });
 
@@ -38,7 +53,7 @@ angular.module("MartinsApp").controller('Login',
     $scope.setToken = function (token) {
 
       const usuarioObj = {
-        firstName: 'Usuario teste',
+        firstName: 'PKYR0004',
         menu: '',
         quantidade_avisos: '4'
       };

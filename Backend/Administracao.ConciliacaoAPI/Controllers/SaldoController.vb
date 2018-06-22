@@ -6,6 +6,7 @@ Imports Administracao.ConciliacaoAPI.Filters
 Imports Administracao.ConciliacaoAPI.Model
 Imports Administracao.ConciliacaoAPI.Util
 
+
 <HeaderFilter>
 Public Class SaldoController
     Inherits ApiController
@@ -34,6 +35,7 @@ Public Class SaldoController
     End Function
 
     <HttpPost>
+    <Route("api/Saldo")>
     Public Function PostValue(<FromBody()> ByVal SaldoModel As SaldoModel) As Object
         Try
             Dim bll As New SaldoBLL
@@ -45,7 +47,7 @@ Public Class SaldoController
     End Function
 
     <HttpPut>
-    <Route("api/Saldo/{SaldoModel}")>
+    <Route("api/Saldo")>
     Public Function PutValue(<FromBody()> ByVal SaldoModel As SaldoModel) As Object
         Try
             Dim bll As New SaldoBLL
@@ -58,10 +60,12 @@ Public Class SaldoController
 
     <HttpDelete>
     <Route("api/Saldo/{DataMov}")>
-    Public Function DeleteValue(ByVal DataMov As DateTime) As Object
+    Public Function DeleteValue(ByVal Data As String) As Object
         Try
+            Dim dataF As DateTime = Convert.ToDateTime(Data.Replace(";", ":"))
+
             Dim bll As New SaldoBLL
-            bll.DeleteSaldo(Utils.CodigoUnidade, Utils.CodigoConta, DataMov)
+            bll.DeleteSaldo(Utils.CodigoUnidade, Utils.CodigoConta, Data)
             Return New ResultModel(Nothing)
         Catch ex As Exception
             Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)

@@ -151,6 +151,7 @@
     <Compile Include="Controllers\GestaoCargaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\rptAgingCarteiraSinteticoController.cs" />
     <Compile Include="Controllers\SaldoContaController.cs" />
     <Compile Include="Controllers\MovimentacaoAcertoController.cs" />
     <Compile Include="Controllers\NotFoundController.cs" />
@@ -175,7 +176,6 @@
     <Content Include="AngularApp\fechamentoPeriodo\fechamentoPeriodo.js" />
     <Content Include="AngularApp\fechamentoPeriodo\fechamentoPeriodoSrv.js" />
     <Content Include="AngularApp\gestaoCarga\gestaoCarga.js" />
-    <Content Include="AngularApp\home\home.js" />
     <Content Include="AngularApp\layout\Header.js" />
     <Content Include="AngularApp\layout\MartinsApp.js" />
     <Content Include="AngularApp\layout\Menu.js" />
@@ -184,6 +184,7 @@
     <Content Include="AngularApp\movimentacaoAcerto\movimentacaoAcerto.js" />
     <Content Include="AngularApp\movimentacaoAcerto\movimentacaoAcertoSrv.js" />
     <Content Include="AngularApp\periodoAging\periodoAging.js" />
+    <Content Include="AngularApp\rptAgingCarteiraSintetico\rptAgingCarteiraSintetico.js" />
     <Content Include="AngularApp\saldoConta\saldoContaSrv.js" />
     <Content Include="AngularApp\selecionaUnidade\selecionaUnidade.js" />
     <Content Include="AngularApp\saldoConta\saldoConta.js" />
@@ -200,6 +201,7 @@
     <Content Include="Content\css\login.css" />
     <Content Include="Content\css\MaterialIcons.css" />
     <Content Include="Content\css\periodoAging.css" />
+    <Content Include="Content\css\rptAgingCarteiraSintetico.css" />
     <Content Include="Content\css\selecionaUnidade.css" />
     <Content Include="Content\css\tiposMovimentacoes.css" />
     <Content Include="favicon.ico" />
@@ -258,6 +260,7 @@
     <Content Include="Views\TiposMovimentacoes\Index.cshtml" />
     <Content Include="Views\SaldoConta\Index.cshtml" />
     <Content Include="Views\FechamentoPeriodo\Index.cshtml" />
+    <Content Include="Views\rptAgingCarteiraSintetico\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AngularApp\notFound\" />
@@ -280,7 +283,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AngularApp\AppConstants.js" />
     <TypeScriptCompile Include="AngularApp\models\user.ts" />
   </ItemGroup>
   <PropertyGroup>
@@ -302,7 +304,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5000</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:5000/</IISUrl>
+          <IISUrl>http://localhost:49952/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

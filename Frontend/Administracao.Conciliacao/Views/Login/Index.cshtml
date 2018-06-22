@@ -17,68 +17,46 @@
     @Scripts.Render("~/Content/js/angular-materialize.min.js")
 
     @Scripts.Render("~/Scripts/angular-locale_pt-br.js")
-
-    @*@Scripts.Render("~/Scripts/hammerjs/hammer.js")*@
-
     @Scripts.Render("~/AngularApp/layout/MartinsApp.js")
-    @Scripts.Render("~/AngularApp/AppConstants.js")
-    @*@Scripts.Render("~/AngularApp/commons/LocalStorageService.js")*@
-    @*@Scripts.Render("~/AngularApp/commons/DataService.js")*@
-    @* @Scripts.Render("~/AngularApp/commons/ModuloService.js")*@
-    @* @Scripts.Render("~/Scripts/sweetalert2.all.js")*@
-
-
-    @* @Scripts.Render("~/bundles/modernizr")*@
-    @* @Scripts.Render("~/Scripts/hammerjs/hammer.js")*@
-    @*@Scripts.Render("~/AngularApp/layout/Menu.js")*@
-
     @Scripts.Render("~/Scripts/sweetalert2.all.js")
-    @* @Scripts.Render("~/AngularApp/commons/Commons.js")*@
-
-    @* @Scripts.Render("~/AngularApp/commons/Interceptor.js")*@
-    @*@Scripts.Render("~/AngularApp/commons/Config.js")*@
-
     @Styles.Render("~/Content/css/MaterialIcons.css")
-
-    @*  <script src="@Url.Content("~/AngularApp/commons/Http.js")"></script>*@
-
     <script src="@Url.Content("~/AngularApp/login/authService.js")"></script>
     <script src="@Url.Content("~/AngularApp/login/index.js")"></script>
-    @*<script src="@Url.Content("~/Scripts/toPromise.js")"></script>*@
 
     <link rel="stylesheet" type="text/css" href="../../Content/css/login.css">
 
 </head>
 <body>
-    <html ng-app="MartinsApp">
-    <div ng-controller="Login" id="main">
-        <div class="content-page" style="height: 100vh;">
-            <div class="row login-page">
-                <div class="col s12 card-panel">
-                    <div class="login-form">
-                        <div class="row">
-                            <div class="input-field col s12 center">
-                                <img src="../../assets/images/logo.png" alt="" class="responsive-img valign profile-image-login icone">
+    <div ng-app="MartinsApp">
+        <div ng-controller="Login" id="main">
+            <div class="content-page" style="height: 100vh;">
+                <div class="row login-page">
+                    <div class="col s12 card-panel">
+                        <div class="login-form">
+                            <div class="row">
+                                <div class="input-field col s12 center">
+                                    <img src="../../assets/images/logo.png" alt="" class="responsive-img valign profile-image-login icone">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row margin">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">person_pin</i>
-                                <input id="username" type="text" ng-model="user.username" required="" aria-required="true">
-                                <label for="username" >Usuário</label>
+                            <div class="row margin">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">person_pin</i>
+                                    <input id="username" type="text" ng-model="user.username" required="" aria-required="true">
+                                    <label for="username">Usuário</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row margin">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">lock_outline</i>
-                                <input id="password" type="password" ng-model="user.password" required="" aria-required="true">
-                                <label for="password">Senha</label>
+                            <div class="row margin">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">lock_outline</i>
+                                    <input id="password" type="password" ng-model="user.password" required="" aria-required="true">
+                                    <label for="password">Senha</label>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <button class="btn waves-effect waves-light col s12 botton" ng-click="login(user)">Login</button>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <button class="btn waves-effect waves-light col s12 botton" ng-click="login(user)">Login</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -86,7 +64,5 @@
             </div>
         </div>
     </div>
-
-</html>
 </body>
 </html>

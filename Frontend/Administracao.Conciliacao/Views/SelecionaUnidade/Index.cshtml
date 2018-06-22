@@ -3,21 +3,25 @@
     ViewBag.Title = "Index";
 }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>
-
-@Scripts.Render("~/AngularApp/layout/MartinsApp.js")
-@Scripts.Render("~/AngularApp/AppConstants.js")
-@Styles.Render("~/Content/css/selecionaUnidade.css")
-@Scripts.Render("~/Scripts/sweetalert2.all.js")
-<script src="@Url.Content("~/AngularApp/selecionaUnidade/selecionaUnidade.js")"></script>
-
 <!DOCTYPE html>
 
 <html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <title>Administração Financeira</title>
+    @Styles.Render("~/Content/css/materialize.min.css")
+    @Scripts.Render("~/Content/js/jquery-3.1.1.min.js")
+    @Scripts.Render("~/Content/js/angular.min.js")
+    @Scripts.Render("~/Content/js/materialize.min.js")
+    @Scripts.Render("~/Content/js/angular-materialize.min.js")
+
+    @Scripts.Render("~/AngularApp/layout/MartinsApp.js")
+    @Scripts.Render("~/AngularApp/commons/LocalStorageService.js")
+    @Styles.Render("~/Content/css/selecionaUnidade.css")
+    @Scripts.Render("~/Scripts/sweetalert2.all.js")
+    <script src="@Url.Content("~/AngularApp/selecionaUnidade/selecionaUnidade.js")"></script>
+</head>
 <body ng-app="MartinsApp" ng-controller="SelecionaUnidade">
     <main>
         <div class="container">
@@ -30,7 +34,7 @@
                 <div class="section col s4">
                     <div input-field>
                         <select id="unidadeSelecionada" ng-model="selectedUnidade" ng-change="setaCodigoUnidade(selectedUnidade)" material-select>
-                            <option ng-repeat="value in unidades" value="{{value.CodUnidade}}">{{value.DesUnidade}}</option>
+                            <option ng-repeat="value in unidades" value="{{value.CodUnidade}}">{{value.CodUnidade}} - {{value.DesUnidade}}</option>
                         </select>
                         <label>Unidade de Negócio</label>
                     </div>
@@ -38,8 +42,8 @@
 
                 <div @*ng-if="contas"*@ class="section col s4">
                     <div input-field>
-                        <select id="contaSelecionada" ng-model="selectedConta" material-select>
-                            <option ng-repeat="conta in contas" value="{{conta.ContaModel.CodContaContabil}}">{{conta.ContaModel.DescricaoDaContaContabil}}</option>
+                        <select ng-disabled="contas === undefined" id="contaSelecionada" ng-model="selectedConta" material-select>
+                            <option ng-repeat="conta in contas" value="{{conta.ContaModel.CodContaContabil}}">{{conta.ContaModel.CodContaContabil}} - {{conta.ContaModel.DescricaoDaContaContabil}}</option>
                         </select>
                         <label>Conta</label>
                     </div>
@@ -56,5 +60,5 @@
             </div>
         </div>
     </main>
-    </body">
+</body>
 </html>

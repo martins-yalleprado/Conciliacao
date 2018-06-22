@@ -1,30 +1,37 @@
-﻿
+﻿<style>
+    span.badge.new::after {
+        content: " Alertas"!important;
+    }
+</style>
 
-<div class="navbar-fixed" ng-app="MartinsApp"  ng-controller="HeaderController" >
+<header id="header" class="page-topbar">
+    <div class="navbar-fixed" ng-app="MartinsApp" ng-controller="HeaderController">
+        <nav class="navbar-color">
+            <div class="nav-wrapper " style="background-color: #00447d">
 
-  <nav>
-      <div class="nav-wrapper" style="background-color: #00447d">
-          <a href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
-          <a href="#" class="brand-logo header-martins">  {{menu}}  </a>
-    
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-              <li>
+                <div class="header-search-wrapper hide-on-med-and-down sideNav-lock">
+                    <a href="#" class="brand-logo header-martins">  Administração Financeira </a>
 
-                  <a class="header-content" [routerLink]="['/']">
+                    <div class="right" style="margin:-10px auto 0 260px">
+                        <span class="row">
+                            Unidade: {{codUnidade}}  - {{descUnidade}}  | Conta: {{ codConta }}  - {{descConta}}
+                        </span>
+                    </div>
 
-                      <span class="row">
-                          Bem vindo , {{ usuario.firstName }}             <span class="new badge red">{{ usuario.quantidade_avisos }}</span>
-                      </span>
-                      
-                  </a>
-              </li>
+                </div>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li>
+                        <a class="header-content" [routerLink]="['/']">
+                            <span class="row">
+                                Bem vindo, {{ usuario.firstName }}             <span class="new badge red">{{ usuario.quantidade_avisos }}</span>
+                            </span>
+                        </a>
+                    </li>
 
-              <li>
-                  Unidade: {{ $scope.codUnidade }}  - {{descUnidade}}  | Conta: {{ codConta }}  - {{descConta}}
-              </li>
-              <li><a class="logout-header tooltipped" ng-click="trocarUnidade()" data-tooltip="Alterar Un. Negócio"><i class="material-icons left" >autorenew</i></a></li>
+                    <li><a class="logout-header tooltipped" ng-click="trocarUnidade()" data-tooltip="Alterar Un. Negócio"><i class="material-icons left">autorenew</i></a></li>
 
-          </ul>
-</div>
-  </nav>
-</div>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>

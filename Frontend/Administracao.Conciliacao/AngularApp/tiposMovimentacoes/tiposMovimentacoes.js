@@ -1,7 +1,7 @@
 angular.module('MartinsApp').controller('TiposMovimentacoes',
 
 
-  function ($scope, $http, AppConstants) {
+  function ($scope, $http, LocalStorageService) {
     var contabil = [];
     var conciliacoes = [];
     var conciliacao = {};
@@ -18,7 +18,7 @@ angular.module('MartinsApp').controller('TiposMovimentacoes',
     $scope.filterConciliacao = {};
 
     $scope.getMovimentoContabil = function () {
-      $http.get(AppConstants.API_ROOT + '/api/MovimentoContabil')
+      $http.get(LocalStorageService.getUrlBack() + '/api/MovimentoContabil')
         .then(function (ResData) {
           $scope.contabil = ResData.data.Data;
         })
@@ -32,7 +32,7 @@ angular.module('MartinsApp').controller('TiposMovimentacoes',
     }
 
     $scope.getMovimentoConciliacao = function (codIdentidadeContabil) {
-      $http.get(AppConstants.API_ROOT + '/api/MovimentoConciliacao/' + codIdentidadeContabil)
+      $http.get(LocalStorageService.getUrlBack() + '/api/MovimentoConciliacao/' + codIdentidadeContabil)
         .then(function (ResData) {
           $scope.conciliacoes = ResData.data.Data;
         })
@@ -47,7 +47,7 @@ angular.module('MartinsApp').controller('TiposMovimentacoes',
 
       $scope.salvaAtualizaConciliacao = function () {
           if ($scope.atualizar) {
-            $http.put(AppConstants.API_ROOT + '/api/MovimentoConciliacao', $scope.conciliacao)
+            $http.put(LocalStorageService.getUrlBack() + '/api/MovimentoConciliacao', $scope.conciliacao)
               .then(function (ResData) {
                   swal('Feito!', 'Conciliacao foi atualizada com sucesso.', 'success');
                   $scope.getMovimentoConciliacao($scope.conciliacao.CodIdentidadeContabil);
@@ -61,7 +61,7 @@ angular.module('MartinsApp').controller('TiposMovimentacoes',
               });
           } else {
               $scope.conciliacao.MarcacaoRegistroMovimentoConciliacao = 1;
-              $http.post(AppConstants.API_ROOT + '/api/MovimentoConciliacao', $scope.conciliacao)      
+              $http.post(LocalStorageService.getUrlBack() + '/api/MovimentoConciliacao', $scope.conciliacao)      
               .then(function (ResData) {
                   swal('Feito!', 'Conciliacao foi criada com sucesso.', 'success');
                   $scope.getMovimentoConciliacao($scope.conciliacao.CodIdentidadeContabil);

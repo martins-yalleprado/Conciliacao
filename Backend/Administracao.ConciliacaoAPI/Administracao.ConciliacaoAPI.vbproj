@@ -224,15 +224,27 @@
     <Compile Include="Code\MovimentoContabil\MovimentoContabilBLL.vb" />
     <Compile Include="Code\MovimentoContabil\MovimentoContabilDAL.vb" />
     <Compile Include="Code\MovimentoContabil\MovimentoContabilSQL.vb" />
+    <Compile Include="Code\MovimentoTitulo\MovimentoTituloBLL.vb" />
+    <Compile Include="Code\MovimentoTitulo\MovimentoTituloDAL.vb" />
+    <Compile Include="Code\MovimentoTitulo\MovimentoTituloSQL.vb" />
     <Compile Include="Code\Periodo\PeriodoBLL.vb" />
     <Compile Include="Code\Periodo\PeriodoDAL.vb" />
     <Compile Include="Code\Periodo\PeriodoSQL.vb" />
     <Compile Include="Code\Permissao\PermissaoBLL.vb" />
     <Compile Include="Code\Permissao\PermissaoDAL.vb" />
     <Compile Include="Code\Permissao\PermissaoSQL.vb" />
+    <Compile Include="Code\RelatorioAging\RelatorioAgingBLL.vb" />
+    <Compile Include="Code\RelatorioAging\RelatorioAgingDAL.vb" />
+    <Compile Include="Code\RelatorioAging\RelatorioAgingSQL.vb" />
+    <Compile Include="Code\Relatorio\RelatorioBLL.vb" />
+    <Compile Include="Code\Relatorio\RelatorioDAL.vb" />
+    <Compile Include="Code\Relatorio\RelatorioSQL.vb" />
     <Compile Include="Code\Saldo\SaldoBLL.vb" />
     <Compile Include="Code\Saldo\SaldoDAL.vb" />
     <Compile Include="Code\Saldo\SaldoSQL.vb" />
+    <Compile Include="Code\TipoRelatorio\TipoRelatorioBLL.vb" />
+    <Compile Include="Code\TipoRelatorio\TipoRelatorioDAL.vb" />
+    <Compile Include="Code\TipoRelatorio\TipoRelatorioSQL.vb" />
     <Compile Include="Code\UnidadeConta\UnidadeContaBLL.vb" />
     <Compile Include="Code\UnidadeConta\UnidadeContaDAL.vb" />
     <Compile Include="Code\UnidadeConta\UnidadeContaSQL.vb" />
@@ -246,10 +258,12 @@
     <Compile Include="Controllers\MovimentoAcertoController.vb" />
     <Compile Include="Controllers\MovimentoConciliacaoController.vb" />
     <Compile Include="Controllers\MovimentoContabilController.vb" />
+    <Compile Include="Controllers\MovimentoTituloController.vb" />
     <Compile Include="Controllers\PeriodoController.vb" />
     <Compile Include="Controllers\PermissaoController.vb" />
+    <Compile Include="Controllers\RelatorioAgingController.vb" />
     <Compile Include="Controllers\SaldoController.vb" />
-    <Compile Include="Controllers\TestController.vb" />
+    <Compile Include="Controllers\TipoRelatorioController.vb" />
     <Compile Include="Controllers\UnidadeContaController.vb" />
     <Compile Include="Controllers\UnidadeController.vb" />
     <Compile Include="Controllers\ValuesController.vb" />
@@ -259,6 +273,7 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
+    <Compile Include="Model\ArquivoModel.vb" />
     <Compile Include="Model\AuthenticateAdModel.vb" />
     <Compile Include="Model\ContaModel.vb" />
     <Compile Include="Model\ErroModel.vb" />
@@ -269,10 +284,15 @@
     <Compile Include="Model\MovimentoAcertoModel.vb" />
     <Compile Include="Model\MovimentoConciliacaoModel.vb" />
     <Compile Include="Model\MovimentoContabilModel.vb" />
+    <Compile Include="Model\MovimentoTituloModel.vb" />
     <Compile Include="Model\PeriodoModel.vb" />
     <Compile Include="Model\PermissaoModel.vb" />
+    <Compile Include="Controllers\RelatorioController.vb" />
+    <Compile Include="Model\RelatorioAgingModel.vb" />
+    <Compile Include="Model\RelatorioModel.vb" />
     <Compile Include="Model\ResultModel.vb" />
     <Compile Include="Model\SaldoModel.vb" />
+    <Compile Include="Model\TipoRelatorioModel.vb" />
     <Compile Include="Model\TransactionInformation.vb" />
     <Compile Include="Model\UnidadeContaModel.vb" />
     <Compile Include="Model\UnidadeModel.vb" />
@@ -335,6 +355,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\MovimentoTitulo\" />
+    <Folder Include="Views\RelatorioAging\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

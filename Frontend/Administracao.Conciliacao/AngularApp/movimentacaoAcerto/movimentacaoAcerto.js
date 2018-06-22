@@ -1,4 +1,4 @@
-angular.module('MartinsApp').controller('MovimentacaoAcertoController', function ($scope, $http, AppConstants, MovimentacaoAcertoService, DataService) {
+angular.module('MartinsApp').controller('MovimentacaoAcertoController', function ($scope, $http, LocalStorageService, MovimentacaoAcertoService, DataService) {
 
     class MovimentoContabilModel {
         get CodContaContabil() { return this._codContaContabil; }
@@ -27,10 +27,6 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
     }
 
     class MovimentacaoAcerto {
-        //constructor(dataMovimento) {
-        //  this._dataMovimento = dataMovimento;
-        //}
-
         get VlrMovimentoCobranca() { return this._vlrMovimentoCobranca; }
         set VlrMovimentoCobranca(value) { this._vlrMovimentoCobranca = value; }
 
@@ -104,11 +100,8 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
         $scope.pesquisaModel = mov1;
         $scope.pesquisaModalModel = mov2;
 
-        $scope.pesquisaModel.MovimentoContabilModel.CodUnidadeNegocio = AppConstants.COD_UNIDADE === undefined ? 0 : parseInt(AppConstants.COD_UNIDADE);
-        $scope.pesquisaModel.MovimentoContabilModel.CodContaContabil = AppConstants.COD_CONTA === undefined ? 0 : parseInt(AppConstants.COD_CONTA);
-
-        $scope.pesquisaModalModel.MovimentoContabilModel.CodUnidadeNegocio = AppConstants.COD_UNIDADE === undefined ? 0 : parseInt(AppConstants.COD_UNIDADE);
-        $scope.pesquisaModalModel.MovimentoContabilModel.CodContaContabil = AppConstants.COD_CONTA === undefined ? 0 : parseInt(AppConstants.COD_CONTA);
+        $scope.pesquisaModel.MovimentoContabilModel.CodUnidadeNegocio = LocalStorageService.COD_UNIDADE === undefined ? 0 : parseInt(LocalStorageService.COD_UNIDADE);
+        $scope.pesquisaModel.MovimentoContabilModel.CodContaContabil = LocalStorageService.COD_CONTA === undefined ? 0 : parseInt(LocalStorageService.COD_CONTA);
 
         _btnInserir = document.getElementById('btnInserir');
         _btnAlterar = document.getElementById('btnAlterar');
@@ -153,17 +146,41 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
 
         MovimentacaoAcertoService.getMovimentacaoAcertoPorData(dataPsq)
             .then(function (ResData) {
-                $scope._dataGrid = ResData.data.Data;
+                $scope._dataGrid = [];
+
+                if (ResData.data === null) {
+                    swal(
+                        'Alerta!',
+                        'Sem resposta. Tente novamente!',
+                        'warning'
+                    );
+                } else if (!ResData.data.ErroModel.Sucesso) {
+                    swal(
+                        'Alerta!',
+                        'Não foi possível buscar a informação neste momento, tente novamente',
+                        'warning'
+                    );
+                } else {
+                    $scope._dataGrid = ResData.data.Data;
+                }
 
                 if ($scope._dataGrid.length > 0) {
                     bindGridModal(dataPsq);
                 }
                 else {
                     $scope._gridModalSize = 0;
+
+                    swal(
+                        'Alerta!',
+                        'Nenhum registro encontrado!',
+                        'warning'
+                    );
                 }
 
             }).catch(function (ResData) {
-                if (ResData.data.Message !== undefined) {
+                if (ResData.data === null || ResData.data === undefined) {
+                    swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
+                } else if (ResData.data.Message !== undefined) {
                     swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButton: 'Ok' });
                 } else {
                     swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
@@ -193,11 +210,6 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
 
     $scope.editForm = function (mov) {
         $scope.pesquisaModel = angular.copy(mov); // JSON.parse(JSON.stringify(mov)); // copy object
-        // mod  
-        var str = $scope.pesquisaModel.DataMovimento;
-
-        $scope.pesquisaModel.DataMovimento = str;
-
         controledisponibilidade(ModoOperacao.edicao);
     }
 
@@ -238,11 +250,11 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
         var numSeq = 0;
 
         $scope._dataGrid.forEach(i => {
-            if (i.CodIdentidadeContabil === form.CodIdentidadeContabil.$viewValue)
+            if (i.CodIdentidadeContabil == form.CodIdentidadeContabil.$viewValue)
                 numSeq = i.NumSequenciaLancamento;
         });
 
-        if (form.NumSequenciaLancamento.$viewValue === numSeq) {
+        if (form.NumSequenciaLancamento.$viewValue == numSeq) {
 
             // alterar
             if (!validaCampos(form))
@@ -256,13 +268,16 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
                             'Sem resposta. Tente novamente!',
                             'warning'
                         );
-                    } else if (!ResData.data.Data.ErroModel.Sucesso) {
+                    } else if (!ResData.data.ErroModel.Sucesso) {
                         swal(
                             'Alerta!',
                             'Não foi possível atualizar a informação neste momento, tente novamente',
                             'warning'
                         );
                     } else {
+                        // bind grid                        
+                        $scope.getMovimentacaoAcertoPorData();
+
                         swal(
                             'Feito!',
                             'Registro alterado com sucesso',
@@ -271,7 +286,9 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
                     }
 
                 }).catch(function (ResData) {
-                    if (ResData.data.Message !== undefined) {
+                    if (ResData.data === null || ResData.data === undefined) {
+                        swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
+                    } else if (ResData.data.Message !== undefined) {
                         swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButton: 'Ok' });
                     } else {
                         swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
@@ -301,6 +318,9 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
                         );
                     }
                     else {
+                        // bind grid                        
+                        $scope.getMovimentacaoAcertoPorData();
+
                         swal(
                             'Feito!',
                             'Registro incluído com sucesso.',
@@ -309,7 +329,9 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
                     }
 
                 }).catch(function (ResData) {
-                    if (ResData.data.Message !== undefined) {
+                    if (ResData.data === null || ResData.data === undefined) {
+                        swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
+                    } else if (ResData.data.Message !== undefined) {
                         swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButton: 'Ok' });
                     } else {
                         swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
@@ -325,9 +347,10 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
 
         var mensagem = "";
 
-        if (vlrMovimentoContabil === "")
+
+        if (vlrMovimentoContabil === "" || vlrMovimentoContabil == 0)
             mensagem = "Campo Valor Contábil é obrigatório e deve ser preenchido";
-        else if (vlrMovimentoCobranca === "")
+        else if (vlrMovimentoCobranca === "" || vlrMovimentoCobranca == 0)
             mensagem = "Campo Valor Cobrança é obrigatório e deve ser preenchido";
         else if (desAcertoConciliacaoBancaria === "")
             mensagem = "Campo Descrição é obrigatório e deve ser preenchido";
@@ -375,23 +398,6 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
         if (dataPsq == "")
             return
 
-        // let codUnidade: string = form.value.CodUnidadeNegocio === undefined || form.value.CodUnidadeNegocio == "" ? "" : form.value.CodUnidadeNegocio;
-        // let codConta: string = form.value.CodContaContabil === undefined || form.value.CodContaContabil == "" ? "" : form.value.CodContaContabil;
-
-        // this.service.getMovimentacaoContabilPorData(codUnidade, codConta)
-        //   .subscribe(data => {
-        //     console.log("pesquisa modal");
-        //     console.log(data["Data"]);
-
-        //     this._dataGridModal = data["Data"];
-        //     this._gridModalSize = this._dataGridModal == null ? 0 : this._dataGridModal.length;
-        //   },
-        //     (error) => {
-        //       console.error("exceção - getMovimentacaoAcerto");
-        //       console.error(error);
-        //     }
-        //   )
-
         var dataGridTemp = [];
         $scope._dataGridModal = angular.copy(_dataGridModalBackup); // <MovimentoContabilModel[] > JSON.parse(JSON.stringify(this._dataGridModalBackup)); // copy
 
@@ -438,6 +444,13 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
 
         $scope._dataGridModal = dataGridTemp;
         $scope._gridModalSize = $scope._dataGridModal == null ? 0 : $scope._dataGridModal.length;
+
+        if ($scope._gridModalSize == 0)
+            swal(
+                'Alerta!',
+                'Nenhum registro encontrado!',
+                'warning'
+            );
     }
 
     $scope.excluir = function (form) {
@@ -445,7 +458,7 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
             return;
 
         var numSequenciaLancamento = form.NumSequenciaLancamento.$viewValue === undefined ? "" : form.NumSequenciaLancamento.$viewValue;
-        var dataMovimento = form.DataMovimento.$viewValue === undefined ? "" : form.DataMovimento.$viewValue;
+        var dataMovimento = form.DataMovimento.$viewValue === undefined ? "" : formataData(form.DataMovimento.$viewValue);
         var codIdentidadeContabil = form.CodIdentidadeContabil.$viewValue === undefined ? "" : form.CodIdentidadeContabil.$viewValue;
 
         if (numSequenciaLancamento == "" || dataMovimento == "" || codIdentidadeContabil == "")
@@ -453,7 +466,9 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
 
         if (confirm('Tem certeza que deseja cancelar esse registro ?') == true) {
 
-            MovimentacaoAcertoService.deleteMovimentoAcerto(numSequenciaLancamento, dataMovimento, codIdentidadeContabil)
+            var data = $scope.pesquisaModel.DataMovimento.replace(/\:/g, ";");
+
+            MovimentacaoAcertoService.deleteMovimentoAcerto(numSequenciaLancamento, data, codIdentidadeContabil)
                 .then(function (ResData) {
                     if (ResData.data === null) {
                         swal(
@@ -462,6 +477,9 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
                             'warning'
                         );
                     } else {
+                        // bind grid
+                        $scope.getMovimentacaoAcertoPorData();
+
                         swal(
                             'Feito!',
                             'Registro removido com sucesso.',
@@ -470,7 +488,9 @@ angular.module('MartinsApp').controller('MovimentacaoAcertoController', function
                     }
 
                 }).catch(function (ResData) {
-                   if (ResData.data.Message !== undefined) {
+                    if (ResData.data === null || ResData.data === undefined) {
+                        swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
+                    } else if (ResData.data.Message !== undefined) {
                         swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButton: 'Ok' });
                     } else {
                         swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });

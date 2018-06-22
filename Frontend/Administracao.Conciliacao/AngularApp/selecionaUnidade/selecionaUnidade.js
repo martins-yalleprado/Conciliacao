@@ -1,8 +1,9 @@
 angular.module('MartinsApp').controller('SelecionaUnidade',
 
 
-    function ($scope, $http, AppConstants) {
+    function ($scope, $http, LocalStorageService) {
 
+        
 
         var vm = this;
         var unidadeSelecionada = null;
@@ -12,7 +13,7 @@ angular.module('MartinsApp').controller('SelecionaUnidade',
         var DESC_UNIDADE = 'DESC_UNIDADE';
         var DESC_CONTA = 'DESC_CONTA';
         var selectedUnidade = null;
-        var selectedConta = null;
+        var selectedConta = undefined;
 
 
         this.$onInit = function () {
@@ -20,10 +21,10 @@ angular.module('MartinsApp').controller('SelecionaUnidade',
         }
 
         vm.getUnidade = function () {
-            $http.get(AppConstants.API_ROOT + '/api/Unidade')
-                .then(function (ResData) {
-                    $scope.selectedUnidade = ResData.data.Data;
-                    $scope.unidades = ResData.data.Data;
+            $http.get(LocalStorageService.getUrlBack() + '/api/Unidade')
+                .success(function (ResData) {
+                    $scope.selectedUnidade = ResData.Data;
+                    $scope.unidades = ResData.Data;
                 })
                 .catch(function (ResData) {
                     swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButtonText: 'Ok' });
@@ -31,7 +32,7 @@ angular.module('MartinsApp').controller('SelecionaUnidade',
         }
 
         $scope.setaCodigoUnidade = function (unidade) {
-            AppConstants.COD_UNIDADE = unidade;
+            LocalStorageService.COD_UNIDADE = unidade;
 
             vm.buscaContasUnidade(unidade);
         }
@@ -40,10 +41,10 @@ angular.module('MartinsApp').controller('SelecionaUnidade',
         vm.buscaContasUnidade = function (id) {
             $scope.contas = null;
             debugger;
-            $http.get(AppConstants.API_ROOT + '/api/UnidadeConta/' + id + '/0')
-                .then(function (ResData) {
-                    $scope.selectedConta = ResData.data.Data;
-                    $scope.contas = ResData.data.Data;
+            $http.get(LocalStorageService.getUrlBack() + '/api/UnidadeConta/' + id + '/0')
+                .success(function (ResData) {
+                    $scope.contas = ResData.Data;
+                    $scope.selectedConta = ResData.Data;
                 })
                 .catch(function (ResData) {
                     swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButtonText: 'Ok' });
@@ -63,13 +64,21 @@ angular.module('MartinsApp').controller('SelecionaUnidade',
             window.localStorage.setItem(DESC_UNIDADE, unidade.DesUnidade);
             window.localStorage.setItem(CONTA_KEY, conta.ContaModel.CodContaContabil);
             window.localStorage.setItem(DESC_CONTA, conta.ContaModel.DescricaoDaContaContabil);
-            window.localStorage.setItem('MENU', 'Página Inicial');
-           $(window.document.location).attr('href', '/ADMINISTRACAO.CONCILIACAO/home');
+            window.localStorage.setItem('MENU', 'Inicio');
+            $(window.document.location).attr('href', '/home');
         }
 
         $scope.cancelar = function () {
-            window.localStorage.setItem('MENU', 'Página Inicial');
-            $(window.document.location).attr('href', '/ADMINISTRACAO.CONCILIACAO/home');
+            var unidade = window.localStorage.getItem('EMPRESA_KEY');
+            var conta = window.localStorage.getItem('CONTA_KEY');
+
+            if (unidade == undefined || conta == undefined)
+            {
+                $(window.document.location).attr('href', '/login/loggout');
+            }
+
+            window.localStorage.setItem('MENU', 'Inicio');
+            $(window.document.location).attr('href', '/home');
         }
 
     }

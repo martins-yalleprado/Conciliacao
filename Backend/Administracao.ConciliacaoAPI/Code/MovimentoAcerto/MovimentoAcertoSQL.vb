@@ -44,8 +44,8 @@ Namespace Code.MovimentoAcerto
 
     Public Function DeleteMovimentoAcerto() As String
       Dim stringBuilder As New StringBuilder()
-      stringBuilder.Append("   Delete MRT.MOVACECLO where CODIDTCTB=:CODIDTCTB and Datmov =:Datmov and Numseqlmt=:Numseqlmt ")
-      Return stringBuilder.ToString()
+            stringBuilder.Append("   Delete MRT.MOVACECLO where CODIDTCTB=:CODIDTCTB and Datmov =:DATMOV and Numseqlmt=:NUMSEQLMT ")
+            Return stringBuilder.ToString()
     End Function
 
     Public Function SelectMovimentoAcertoPorId() As String

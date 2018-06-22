@@ -1,4 +1,4 @@
-﻿angular.module('MartinsApp').controller('SaldoController', function ($scope, $http, AppConstants, SaldoService, DataService) {
+﻿angular.module('MartinsApp').controller('SaldoController', function ($scope, $http, LocalStorageService, SaldoService, DataService) {
 
     class SaldoModel {
         get CodConta() { return this._codConta; }
@@ -37,6 +37,8 @@
     var btnSalvar;
     var btnExcluir;
 
+    var saldoInsert;
+
     $scope.reset = function () {
         $scope.saldoModel.DataMovimentacao = undefined;
         $scope.saldoModel.VlrSaldoCobranca = undefined;
@@ -56,26 +58,41 @@
         controledisponibilidade(ModoOperacao.novo);
 
         $scope.saldoModel.DataMovimentacao = new Date();
-        $scope.saldoModel.CodConta = AppConstants.COD_CONTA === undefined ? 0 : parseInt(AppConstants.COD_CONTA);
-        $scope.saldoModel.CodUnidade = AppConstants.COD_UNIDADE === undefined ? 0 : parseInt(AppConstants.COD_UNIDADE);
-        $scope.saldoModel.DescConta = AppConstants.DESC_CONTA;
-        $scope.saldoModel.DescUnidade = AppConstants.DESC_UNIDADE;
+        $scope.saldoModel.CodConta = LocalStorageService.COD_CONTA === undefined ? 0 : parseInt(LocalStorageService.COD_CONTA);
+        $scope.saldoModel.CodUnidade = LocalStorageService.COD_UNIDADE === undefined ? 0 : parseInt(LocalStorageService.COD_UNIDADE);
+        $scope.DescConta = LocalStorageService.DESC_CONTA;
+        $scope.DescUnidade = LocalStorageService.DESC_UNIDADE;
 
         $scope.getSaldo();
     });
 
     $scope.getSaldo = function () {
         var dataPsq = formataData($scope.saldoModel.DataMovimentacao);
-        var codConta = $scope.saldoModel.CodConta === undefined ? "" : $scope.saldoModel.CodConta;
-        var codUnidade = $scope.saldoModel.CodUnidade === undefined ? "" : $scope.saldoModel.CodUnidade;
 
-        if (dataPsq === null || codConta === "" || codUnidade === "")
+        if (dataPsq === null)
             return
 
-        SaldoService.getSaldo(codUnidade, codConta, dataPsq)
+        SaldoService.getSaldo(dataPsq)
             .then(function (ResData) {
 
-                $scope._dataGrid = ResData.data.Data;
+                $scope._dataGrid = [];
+
+                if (ResData.data === null) {
+                    swal(
+                        'Alerta!',
+                        'Sem resposta. Tente novamente!',
+                        'warning'
+                    );
+                } else if (!ResData.data.ErroModel.Sucesso) {
+                    swal(
+                        'Alerta!',
+                        'Não foi possível buscar a informação neste momento, tente novamente',
+                        'warning'
+                    );
+                } else {
+                    $scope._dataGrid = ResData.data.Data;
+                }
+
                 $scope._gridSize = $scope._dataGrid == null ? 0 : $scope._dataGrid.length;
 
                 if ($scope._gridSize == 0)
@@ -86,7 +103,9 @@
                     );
 
             }).catch(function (data) {
-                if (ResData.data.Message !== undefined) {
+                if (ResData.data === null || ResData.data === undefined) {
+                    swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
+                } else if (ResData.data.Message !== undefined) {
                     swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButton: 'Ok' });
                 } else {
                     swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
@@ -133,7 +152,13 @@
 
         if (btnSalvar.value == "Inserir") {
 
-            SaldoService.postSaldo($scope.saldoModel)
+            var saldo = angular.copy($scope.saldoModel);
+            saldo.CodConta = 0;
+            saldo.CodUnidade = 0;
+            saldo.VlrSaldoCobrancaInf = 0;
+            saldo.VlrSaldoContabilInf = 0;
+
+            SaldoService.postSaldo(saldo)
                 .then(function (ResData) {
 
                     if (ResData.data === null) {
@@ -151,6 +176,9 @@
                         );
                     }
                     else {
+                        // bind grid
+                        $scope.getSaldo();
+
                         swal(
                             'Feito!',
                             'Registro incluído com sucesso.',
@@ -159,7 +187,9 @@
                     }
 
                 }).catch(function (ResData) {
-                     if (ResData.data.Message !== undefined) {
+                    if (ResData.data === null || ResData.data === undefined) {
+                        swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
+                    } else if (ResData.data.Message !== undefined) {
                         swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButton: 'Ok' });
                     } else {
                         swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
@@ -177,6 +207,9 @@
                             'warning'
                         );
                     } else {
+                        // bind grid
+                        $scope.getSaldo();
+
                         swal(
                             'Feito!',
                             'Registro alterado com sucesso.',
@@ -185,7 +218,9 @@
                     }
 
                 }).catch(function (ResData) {
-                    if (ResData.data.Message !== undefined) {
+                    if (ResData.data === null || ResData.data === undefined) {
+                        swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
+                    } else if (ResData.data.Message !== undefined) {
                         swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButton: 'Ok' });
                     } else {
                         swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
@@ -199,7 +234,9 @@
 
     $scope.excluir = function (form) {
 
-        SaldoService.deleteSaldo($scope.saldoModel)
+        var data = $scope.saldoModel.DataMovimentacao.replace(/\:/g, ";");
+
+        SaldoService.deleteSaldo(data)
             .then(function (ResData) {
                 if (ResData.Message === null) {
                     swal(
@@ -208,6 +245,9 @@
                         'warning'
                     );
                 } else {
+                    // bind grid
+                    $scope.getSaldo();
+
                     swal(
                         'Feito!',
                         'Registro removido com sucesso.',
@@ -216,7 +256,9 @@
                 }
 
             }).catch(function (ResData) {
-                 if (ResData.data.Message !== undefined) {
+                if (ResData.data === null || ResData.data === undefined) {
+                    swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });
+                } else if (ResData.data.Message !== undefined) {
                     swal({ title: 'Erro', text: ResData.data.Message, type: 'error', confirmButton: 'Ok' });
                 } else {
                     swal({ title: 'Erro', text: 'Server Error', type: 'error', confirmButton: 'Ok' });

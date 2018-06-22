@@ -16,13 +16,14 @@
               window.localStorage.removeItem('DESC_CONTA');
               window.localStorage.removeItem('jwt_token');
               window.localStorage.removeItem('user');
-
-              window.location.assign("/ADMINISTRACAO.CONCILIACAO/Login");
+              window.localStorage.removeItem('URL_FRONT');
+              window.localStorage.removeItem('URL_BACK');
+              window.location.assign("/Login");
           }
 
 
           $scope.trocarUnidade = function () {
-              window.location.assign("/ADMINISTRACAO.CONCILIACAO/SelecionaUnidade");
+              window.location.assign("/SelecionaUnidade");
           }
 
           $scope.atualizaMenu = function (valor) {

@@ -2,12 +2,17 @@
 Imports System.Net.Http
 Imports System.Web.Http
 Imports Administracao.ConciliacaoAPI.Code.Fechamento
+Imports Administracao.ConciliacaoAPI.Filters
 Imports Administracao.ConciliacaoAPI.Model
+Imports Administracao.ConciliacaoAPI.Util
 
 Namespace Controllers
+
+    <HeaderFilter>
     Public Class FechamentoController
         Inherits ApiController
         ' GET api/<controller>
+        <Route("api/Fechamento/all")>
         Public Function GetValues() As Object
             Try
                 Dim bll As New FechamentoBLL()
@@ -18,16 +23,20 @@ Namespace Controllers
         End Function
 
         ' GET api/<controller>/5
-        Public Function GetValue(tipo As String, CodFechamento As Integer, CodUnidade As Integer, CodConta As Integer) As Object
+        <HttpGet>
+        <Route("api/Fechamento/{tipo}/{CodFechamento}")>
+        Public Function GetValue(tipo As String, CodFechamento As Integer) As Object
             Try
                 Dim bll As New FechamentoBLL()
-                Return New ResultModel(bll.SelectFechamentoPorTipoID(tipo, CodFechamento, CodUnidade, CodConta))
+                Return New ResultModel(bll.SelectFechamentoPorTipoID(tipo, CodFechamento, Utils.CodigoUnidade, Utils.CodigoConta))
             Catch ex As Exception
                 Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
             End Try
         End Function
 
         ' POST api/<controller>
+        <HttpPost>
+        <Route("api/Fechamento/{tipo}/{FechamentoModel}")>
         Public Function PostValue(<FromBody> Fechamento As FechamentoModel) As Object
             Try
                 Dim bll As New FechamentoBLL()
@@ -41,6 +50,8 @@ Namespace Controllers
 
 
         ' PUT api/<controller>/5
+        <HttpPut>
+        <Route("api/Fechamento/{FechamentoModel}/{acao}")>
         Public Function PutValue(<FromBody> Fechamento As FechamentoModel, acao As String) As Object
             Try
                 Dim bll As New FechamentoBLL()
@@ -56,6 +67,8 @@ Namespace Controllers
         End Function
 
         ' DELETE api/<controller>/5
+        <HttpDelete>
+        <Route("api/Fechamento/{id}")>
         Public Function DeleteValue(id As Integer) As Object
             Try
                 'não realiza esta operacao

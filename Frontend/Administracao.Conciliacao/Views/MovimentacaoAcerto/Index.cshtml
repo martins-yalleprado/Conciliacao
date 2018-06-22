@@ -26,7 +26,7 @@
                        first-day="1"
                        clear="clear"
                        close="close"
-                       select-years="15"
+                       select-years="40"
                        class="datepicker" />
             </div>
             <div class="col s5 m5 l5" style="padding-left: 0px; padding-top: 20px;">
@@ -119,13 +119,13 @@
                                     <input type="button" class="btn btn-default btn-group" value="+" ng-click="proximaSequencia(pesquisaForm)">
                                 </span>
                             </div>
-                            <div class="input-field col s2 m2 l2">
-                                <input id="vlrContabil" type="number" class="validate" name="VlrMovimentoContabil" ng-model="pesquisaModel.VlrMovimentoContabil"
+                            <div class="input-field col s2 m2 l2">                                
+                                <input id="vlrContabil" type="number" step="0.01" class="validate" name="VlrMovimentoContabil" ng-model="pesquisaModel.VlrMovimentoContabil"
                                        placeholder="">
                                 <label for="vlrContabil">Valor Contábil</label>
                             </div>
                             <div class="input-field col s2 m2 l2">
-                                <input id="vlrCobranca" type="number" class="validate" name="VlrMovimentoCobranca" ng-model="pesquisaModel.VlrMovimentoCobranca"
+                                <input id="vlrCobranca" type="number" step="0.01" class="validate" name="VlrMovimentoCobranca" ng-model="pesquisaModel.VlrMovimentoCobranca"
                                        placeholder="">
                                 <label for="vlrCobranca">Valor Cobrança</label>
                             </div>
@@ -203,15 +203,15 @@
             <form name="pesquisaModalForm" ng-submit="onSearch(pesquisaModalForm)">
                 <div class="row">
                     <div class="input-field col s3 m3 l3">
-                        <input id="un" type="number" name="CodUnidadeNegocio" ng-model="pesquisaModalModel.MovimentoContabilModel.CodUnidadeNegocio" readonly>
+                        <input id="un" type="number" name="CodUnidadeNegocio" ng-model="pesquisaModalModel.MovimentoContabilModel.CodUnidadeNegocio" placeholder="">
                         <label for="un">UN</label>
                     </div>
                     <div class="input-field col s3 m3 l3">
-                        <input id="conta" type="number" name="CodContaContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodContaContabil" readonly>
+                        <input id="conta" type="number" name="CodContaContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodContaContabil" placeholder="">
                         <label for="conta">Conta</label>
                     </div>
                     <div class="input-field col s3 m3 l3">
-                        <input id="sis" type="text" name="NomSistemaInformacao" ng-model="pesquisaModalModel.MovimentoContabilModel.NomSistemaInformacao">
+                        <input id="sis" type="text" name="NomSistemaInformacao" ng-model="pesquisaModalModel.MovimentoContabilModel.NomSistemaInformacao" placeholder="">
                         <label for="sis">SI</label>
                     </div>
                     <div class="input-field col s3 m3 l3"></div>
@@ -219,19 +219,19 @@
 
                 <div class="row">
                     <div class="input-field col s3 m3 l3">
-                        <input id="codEvento" type="number" name="CodEventoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodEventoContabil">
+                        <input id="codEvento" type="number" min="1" name="CodEventoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodEventoContabil" placeholder="">
                         <label for="codEvento">Evento</label>
                     </div>
                     <div class="input-field col s3 m3 l3">
-                        <input id="descricaoEvento" type="text" name="DesEventoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.DesEventoContabil">
+                        <input id="descricaoEvento" type="text" name="DesEventoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.DesEventoContabil" placeholder="">
                         <label for="descricaoEvento">Descrição Evento</label>
                     </div>
                     <div class="input-field col s3 m3 l3">
-                        <input id="codFato" type="number" name="CodFatoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodFatoContabil">
+                        <input id="codFato" type="number" min="1" name="CodFatoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.CodFatoContabil" placeholder="">
                         <label for="codFato">Fato</label>
                     </div>
-                    <div class="input-field col s3 m3 l3">
-                        <input id="descricaoFato" type="text" name="DesFatoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.DesFatoContabil">
+                    <div class="input-field col s3 m3 l3">                        
+                        <input id="descricaoFato" type="text" name="DesFatoContabil" ng-model="pesquisaModalModel.MovimentoContabilModel.DesFatoContabil" placeholder="">
                         <label for="descricaoFato">Descrição Fato</label>
                     </div>
                 </div>
@@ -243,35 +243,40 @@
                 </div>
             </form>
 
-            <table class="striped centered grid-border">
-                <thead class="grid-background">
-                    <tr>
-                        <th class="grid-border">IDT</th>
-                        <th class="grid-border">UN</th>
-                        <th class="grid-border">Conta</th>
-                        <th class="grid-border">SI</th>
-                        <th class="grid-border">Evento</th>
-                        <th class="grid-border">Descrição Evento</th>
-                        <th class="grid-border">Fato</th>
-                        <th class="grid-border">Descrição Fato</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- | filter : CodEventoContabil  -->
-                    <tr ng-repeat="d in _dataGridModal" ng-click="selectForm(d)" class="modal-action modal-close">
-                        <td class="grid-border">{{ d.CodIdentidadeContabil }}</td>
-                        <td class="grid-border">{{ d.CodUnidadeNegocio }}</td>
-                        <td class="grid-border">{{ d.CodContaContabil }}</td>
-                        <td class="grid-border">{{ d.NomSistemaInformacao }}</td>
-                        <td class="grid-border">{{ d.CodEventoContabil }}</td>
-                        <td class="grid-border">{{ d.DesEventoContabil }}</td>
-                        <td class="grid-border">{{ d.CodFatoContabil }}</td>
-                        <td class="grid-border">{{ d.DesFatoContabil }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
-            </pagination-controls>
+            <div ng-hide="_gridModalSize > 0" class="row">
+                Nenhum registro encontrado
+            </div>
+            <div ng-hide="_gridModalSize == 0" class="row">
+                <table class="striped centered grid-border">
+                    <thead class="grid-background">
+                        <tr>
+                            <th class="grid-border">IDT</th>
+                            <th class="grid-border">UN</th>
+                            <th class="grid-border">Conta</th>
+                            <th class="grid-border">SI</th>
+                            <th class="grid-border">Evento</th>
+                            <th class="grid-border">Descrição Evento</th>
+                            <th class="grid-border">Fato</th>
+                            <th class="grid-border">Descrição Fato</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- | filter : CodEventoContabil  -->
+                        <tr ng-repeat="d in _dataGridModal" ng-click="selectForm(d)" class="modal-action modal-close">
+                            <td class="grid-border">{{ d.CodIdentidadeContabil }}</td>
+                            <td class="grid-border">{{ d.CodUnidadeNegocio }}</td>
+                            <td class="grid-border">{{ d.CodContaContabil }}</td>
+                            <td class="grid-border">{{ d.NomSistemaInformacao }}</td>
+                            <td class="grid-border">{{ d.CodEventoContabil }}</td>
+                            <td class="grid-border">{{ d.DesEventoContabil }}</td>
+                            <td class="grid-border">{{ d.CodFatoContabil }}</td>
+                            <td class="grid-border">{{ d.DesFatoContabil }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próxima">
+                </pagination-controls>
+            </div>
         </div>
         <div class="modal-footer">
             <button ng-disabled="_gridModalSize != 1" ng-click="selecionarMovimentoContabil()" type="button" class="btn-confirm modal-action modal-close waves-effect waves-blue btn blue"

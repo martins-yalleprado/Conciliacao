@@ -1,6 +1,6 @@
 angular.module('MartinsApp').controller('PeriodoAging',
 
-    function ($scope, $http, AppConstants) {
+    function ($scope, $http, LocalStorageService) {
 
         var data = [];
         var dataIntervalo;
@@ -14,7 +14,7 @@ angular.module('MartinsApp').controller('PeriodoAging',
         }
 
         $scope.buscaTodosPeriodos = function () {
-            $http.get(AppConstants.API_ROOT + '/api/Periodo')
+            $http.get(LocalStorageService.getUrlBack() + '/api/Periodo')
                 .then(function (ResData) {
                     $scope.data = ResData.data.Data;
                 })
@@ -30,7 +30,7 @@ angular.module('MartinsApp').controller('PeriodoAging',
         $scope.getBuscaPeriodos = function () {
             let periodo = $scope.datepicker + "";
             if ((periodo !== undefined) && (periodo !== "")) {
-                $http.get(AppConstants.API_ROOT + '/api/Periodo/' + periodo)
+                $http.get(LocalStorageService.getUrlBack() + '/api/Periodo/' + periodo)
                     .then(function (ResData) {
                         $scope.data = ResData.data.Data;
                     })
@@ -48,7 +48,7 @@ angular.module('MartinsApp').controller('PeriodoAging',
         }
 
         $scope.buscaIntervalos = function (idPeriodo) {
-            $http.get(AppConstants.API_ROOT + '/api/Intervalo/' + idPeriodo)
+            $http.get(LocalStorageService.getUrlBack() + '/api/Intervalo/' + idPeriodo)
                 .then(function (ResData) {
                     $scope.dataIntervalo = ResData.data.Data;
                 })
@@ -67,7 +67,7 @@ angular.module('MartinsApp').controller('PeriodoAging',
                 "nome": $scope.agingPeriod.nome,
                 "situacao": $scope.agingPeriod.situacao
             };
-            $http.put(AppConstants.API_ROOT + '/api/Periodo?acao=' + 'inativar', obj)
+            $http.put(LocalStorageService.getUrlBack() + '/api/Periodo?acao=' + 'inativar', obj)
                 .then(function (ResData) {
                     swal('Feito!', 'O período foi ativado/desativado com sucesso.', 'success');
                     $scope.onInit();
@@ -88,7 +88,7 @@ angular.module('MartinsApp').controller('PeriodoAging',
                 "codPeriodo": $scope.agingPeriod.codPeriodo,
                 "nome": $scope.editNameAging
             };
-            $http.put(AppConstants.API_ROOT + '/api/Periodo?acao=' + 'alterar', obj)
+            $http.put(LocalStorageService.getUrlBack() + '/api/Periodo?acao=' + 'alterar', obj)
                 .then(function (ResData) {
                     swal('Feito!', 'O período foi atualizado com sucesso.', 'success');
                     $scope.buscaTodosPeriodos();
@@ -105,7 +105,7 @@ angular.module('MartinsApp').controller('PeriodoAging',
         }
 
         $scope.salvarNovoPeriodo = function () {
-            $http.post(AppConstants.API_ROOT + '/api/Periodo', this.agingPeriod)
+            $http.post(LocalStorageService.getUrlBack() + '/api/Periodo', this.agingPeriod)
                 .then(function (ResData) {
                     if (ResData.data.ErroModel.Sucesso === true) {
                         swal('Feito!','Período criado com sucesso.','success');
@@ -132,7 +132,7 @@ angular.module('MartinsApp').controller('PeriodoAging',
             if ($scope.agingPeriodInterval !== undefined && (!isNaN($scope.agingPeriodInterval.inicio) && !isNaN($scope.agingPeriodInterval.fim))) {
                 $scope.agingPeriodInterval.codPeriodo = $scope.agingPeriod.codPeriodo;
 
-                $http.post(AppConstants.API_ROOT + '/api/Intervalo', $scope.agingPeriodInterval)
+                $http.post(LocalStorageService.getUrlBack() + '/api/Intervalo', $scope.agingPeriodInterval)
                     .then(function (ResData) {
                         swal('Feito!', 'Intervalo criado com sucesso.', 'success');
                         $scope.buscaIntervalos($scope.agingPeriod.codPeriodo);
@@ -163,7 +163,7 @@ angular.module('MartinsApp').controller('PeriodoAging',
                 "situacao": $scope.agingPeriodInterval.situacao
             };
 
-            $http.put(AppConstants.API_ROOT + '/api/Intervalo?acao=' + acao, obj)
+            $http.put(LocalStorageService.getUrlBack() + '/api/Intervalo?acao=' + acao, obj)
                 .then(function (ResData) {
                     swal('Feito!', 'O intervalo foi atualizado com sucesso.', 'success');
                     $scope.buscaIntervalos($scope.agingPeriod.codPeriodo);

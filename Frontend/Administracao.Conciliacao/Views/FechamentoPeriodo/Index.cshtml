@@ -2,9 +2,12 @@
 @Scripts.Render("~/AngularApp/fechamentoPeriodo/fechamentoPeriodo.js")
 
 <div ng-controller="FechamentoPeriodoController">
-    <form name="pesquisaForm">        
+    <form name="pesquisaForm">
+
+        @*<button ng-click="calcularData()">teste</button>*@
+
         <div class="row">
-            <div class="input-field col s3 m3 l3">
+            <div class="input-field col s1 m1 l1">
                 <input id="conta" type="text" name="CodConta" ng-model="fechamentoModel.CodConta" readonly>
                 <label for="conta">Conta</label>
             </div>
@@ -14,7 +17,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s3 m3 l3">
+            <div class="input-field col s1 m1 l1">
                 <input id="un" type="text" name="CodUnidade" ng-model="fechamentoModel.CodUnidade" readonly>
                 <label for="un">Unidade</label>
             </div>
@@ -25,23 +28,22 @@
         </div>
 
         <div class="row">
-            <div class="input-field col s6 m6 l6">
+            <div class="input-field col s4 m4 l4">
                 <ul class="collapsible">
                     <li>
                         <div class="collapsible-header">
-                            <i class="material-icons">search</i>Período Vigente
+                            <i class="material-icons">search</i>Fechamento
                         </div>
-                        <div class="collapsible-body">
+                        <div style="padding: 2rem;">
 
                             <div class="row">
-                                <div class="input-field col s3 m3 l3">
-                                    @*<input type="radio" name="gender" value="mensal" checked>Mensal
-                                        <input type="radio" name="gender" value="anual">Anual*@
-
-                                    <input type="radio" id="titulo" name="tipo" value="mensal" ng-model="fechamentoModel.TipoFechamento" />
-                                    <label for="titulo" style="padding-left:23px; margin-right:14px">Mensal</label>
-                                    <input type="radio" id="contabil" name="tipo" value="anual" ng-model="fechamentoModel.TipoFechamento" />
-                                    <label for="contabil" style="padding-left:23px; margin-right:14px">Contábil</label>
+                                <div class="input-field col s6 m6 l6">                                    
+                                    <input type="radio" id="mensal" name="tipo" value="M" ng-model="fechamentoModel.TipoFechamento" ng-click="getFechamentoPeriodo()" />
+                                    <label for="mensal" style="padding-left:23px; margin-right:14px">Mensal</label>
+                                </div>
+                                <div class="input-field col s6 m6 l6">
+                                    <input type="radio" id="anual" name="tipo" value="A" ng-model="fechamentoModel.TipoFechamento" ng-click="getFechamentoPeriodo()" />
+                                    <label for="anual" style="padding-left:23px; margin-right:14px">Anual</label>
                                 </div>
                             </div>
                         </div>
@@ -50,23 +52,23 @@
             </div>
             <div class="input-field col s6 m6 l6">
                 <div class="input-field col s2 m2 l2">
-                    <input id="diaPadrao" type="number" name="DiaFechamentoPadrao" placeholder="" readonly>
+                    <input id="diaPadrao" type="text" name="FechamentoPadrao" ng-model="FechamentoPadrao" placeholder="" readonly>
                     <label for="diaPadrao">Dia Fechamento Padrão</label>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="input-field col s6 m6 l6">
+            <div class="input-field col s4 m4 l4">
                 <ul class="collapsible">
                     <li>
                         <div class="collapsible-header">
                             <i class="material-icons">search</i>Período Vigente
                         </div>
-                        <div class="collapsible-body">
+                        <div style="padding: 2rem;">
 
                             <div class="row">
-                                <div class="input-field col s3 m3 l3">
+                                <div class="input-field col s12 m12 l12">
                                     <label for="datepicker">Início</label>
                                     <input input-date
                                            type="text"
@@ -88,11 +90,12 @@
                                            clear="clear"
                                            close="close"
                                            select-years="15"
+                                           on-set="calcularData()"                                             
                                            class="datepicker" />
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="input-field col s3 m3 l3">
+                                <div class="input-field col s12 m12 l12">
                                     <label for="datepicker">Fim</label>
                                     <input input-date
                                            type="text"
@@ -114,6 +117,7 @@
                                            clear="clear"
                                            close="close"
                                            select-years="15"
+                                           on-set="calcularData()"
                                            class="datepicker" />
                                 </div>
                             </div>
@@ -122,64 +126,24 @@
                 </ul>
 
             </div>
-            <div class="input-field col s6 m6 l6">
+            <div class="input-field col s4 m4 l4">
                 <ul class="collapsible">
                     <li>
                         <div class="collapsible-header">
                             <i class="material-icons">search</i>Próximo Período
                         </div>
-                        <div class="collapsible-body">
+                        <div style="padding: 2rem;">
 
                             <div class="row">
-                                <div class="input-field col s3 m3 l3">
+                                <div class="input-field col s12 m12 l12">
                                     <label for="datepicker">Início</label>
-                                    <input input-date
-                                           type="text"
-                                           name="DataInicioPeriodoPrev"
-                                           id="datepicker"
-                                           ng-model="DataInicioPeriodoPrev"
-                                           container=""
-                                           format="dd/mm/yyyy"
-                                           months-full="{{ month }}"
-                                           months-short="{{ monthShort }}"
-                                           weekdays-full="{{ weekdaysFull }}"
-                                           weekdays-short="{{ weekdaysShort }}"
-                                           weekdays-letter="{{ weekdaysLetter }}"
-                                           disable="disable"
-                                           min="{{ minDate }}"
-                                           max="{{ maxDate }}"
-                                           today="today"
-                                           first-day="1"
-                                           clear="clear"
-                                           close="close"
-                                           select-years="15"
-                                           class="datepicker" />
+                                    <input type="text" ng-model="DataInicioPeriodoPrev" placeholder="" readonly />
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="input-field col s3 m3 l3">
+                                <div class="input-field col s12 m12 l12">
                                     <label for="datepicker">Fim</label>
-                                    <input input-date
-                                           type="text"
-                                           name="DataFimPeriodoPrev"
-                                           id="datepicker"
-                                           ng-model="DataFimPeriodoPrev"
-                                           container=""
-                                           format="dd/mm/yyyy"
-                                           months-full="{{ month }}"
-                                           months-short="{{ monthShort }}"
-                                           weekdays-full="{{ weekdaysFull }}"
-                                           weekdays-short="{{ weekdaysShort }}"
-                                           weekdays-letter="{{ weekdaysLetter }}"
-                                           disable="disable"
-                                           min="{{ minDate }}"
-                                           max="{{ maxDate }}"
-                                           today="today"
-                                           first-day="1"
-                                           clear="clear"
-                                           close="close"
-                                           select-years="15"
-                                           class="datepicker" />
+                                    <input type="text" ng-model="DataFimPeriodoPrev" placeholder="" readonly />
                                 </div>
                             </div>
                         </div>

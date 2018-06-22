@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace Administracao.Conciliacao.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -13,18 +16,16 @@ namespace Administracao.Conciliacao.Controllers
             return View();
         }
 
-        public ActionResult About()
+        [AllowAnonymous]
+        public JsonResult UrlBack()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return Json(WebConfigurationManager.AppSettings["UrlBackEnd"], JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Contact()
+        [AllowAnonymous]
+        public JsonResult UrlFront()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return Json(WebConfigurationManager.AppSettings["UrlBackFront"], JsonRequestBehavior.AllowGet);
         }
     }
 }

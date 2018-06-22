@@ -1,9 +1,9 @@
-﻿angular.module("MartinsApp").service("authService", function ($http, AppConstants) {
+﻿angular.module("MartinsApp").service("authService", function ($http, $location) {
 
     var TOKEN_NAME = 'jwt_token';
 
     this.login = function (user) {
-        return $http.post(AppConstants.API_ROOT + '/oauth2/token', user);
+        return $http.post(LocalStorageService.getUrlBack() + '/oauth2/token', user);
     };
 
     this.setToken = function (token) {

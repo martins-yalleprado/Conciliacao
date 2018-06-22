@@ -1,7 +1,7 @@
 angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
 
 
-    function ($scope, $http, AppConstants, $timeout) {
+    function ($scope, $http, LocalStorageService, $timeout) {
 
 
         var vm = this;
@@ -28,7 +28,7 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
 
         vm.getContas = function () {
             debugger;
-            $http.get(AppConstants.API_ROOT + '/api/Conta')
+            $http.get(LocalStorageService.getUrlBack() + '/api/Conta')
                 .then(function (ResData) {
                     debugger;
                     $scope.selectedConta = ResData.data.Data;
@@ -42,7 +42,7 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
 
         vm.getUnidade = function () {
             debugger;
-            $http.get(AppConstants.API_ROOT + '/api/Unidade')
+            $http.get(LocalStorageService.getUrlBack() + '/api/Unidade')
                 .then(function (ResData) {
                     debugger;
                     $scope.selectedUnidade = ResData.data.Data;
@@ -110,7 +110,7 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
         vm.relacionaUnidadeConta = function (unidade, conta) {
             debugger;
 
-            $http.get(AppConstants.API_ROOT + '/api/UnidadeConta/' + unidade.CodUnidade + '/' + conta.CodContaContabil)
+            $http.get(LocalStorageService.getUrlBack() + '/api/UnidadeConta/' + unidade.CodUnidade + '/' + conta.CodContaContabil)
                 .then(function (ResData) {
                     debugger;
                     retorno = ResData.data.Data.length;
@@ -129,7 +129,7 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
                         };
 
 
-                        $http.post(AppConstants.API_ROOT + '/api/UnidadeConta', data)
+                        $http.post(LocalStorageService.getUrlBack() + '/api/UnidadeConta', data)
                             .then(function (ResData) {
                                 debugger;
                                 $scope.UnidadesContas = ResData.data.Data;
@@ -170,7 +170,7 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
                 codUnidade = unidade.CodUnidade;
             }
 
-            $http.get(AppConstants.API_ROOT + '/api/UnidadeConta/' + codUnidade + '/' + codConta)
+            $http.get(LocalStorageService.getUrlBack() + '/api/UnidadeConta/' + codUnidade + '/' + codConta)
                 .then(function (ResData) {
                     debugger;
                     $scope.UnidadesContas = ResData.data.Data;
@@ -214,7 +214,7 @@ angular.module('MartinsApp').controller('ConfiguracaoEmpresa',
             }).then((result) => {
                 if (result.value) {
                     debugger;
-                    $http.put(AppConstants.API_ROOT + '/api/UnidadeConta/' + unidadeConta.CodEmpresa + '/' + unidadeConta.ContaModel.CodContaContabil + '/' + unidadeConta.UnidadeModel.CodUnidade)
+                    $http.put(LocalStorageService.getUrlBack() + '/api/UnidadeConta/' + unidadeConta.CodEmpresa + '/' + unidadeConta.ContaModel.CodContaContabil + '/' + unidadeConta.UnidadeModel.CodUnidade)
                         .then(function (resultado) {
                             debugger;
                             this.data = resultado.data.Data;
