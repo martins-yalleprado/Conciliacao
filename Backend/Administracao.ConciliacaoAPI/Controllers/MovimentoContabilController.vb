@@ -9,10 +9,11 @@ Namespace Controllers
         Inherits ApiController
 
         ' GET api/<controller>
-        Public Function GetValues() As Object
+        <Route("api/MovimentoContabil")>
+        Public Function GetMovimentosPorUnidade(<FromUri()> ByVal codUnidadeNegocio As Integer) As Object
             Try
                 Dim bll As New MovimentoContabilBLL
-                Return New ResultModel(bll.SelectMovimentoContabil())
+                Return New ResultModel(bll.SelectMovimentoContabil(codUnidadeNegocio))
             Catch ex As Exception
                 Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
             End Try
@@ -20,6 +21,7 @@ Namespace Controllers
 
 
         ' GET api/<controller>/5
+        <Route("api/MovimentoContabil/{id}")>
         Public Function GetValue(ByVal id As Integer) As Object
             Try
                 Dim bll As New MovimentoContabilBLL
@@ -34,6 +36,16 @@ Namespace Controllers
             Try
                 Dim bll As New MovimentoContabilBLL
                 Return New ResultModel(bll.SelectMovimentoContabilPorUnidadeConta(codunidade, codConta, CodEventoContabil, CodFatoContabil, DesEventoContabil, DesFatoContabil, NomSistemaInformacao))
+            Catch ex As Exception
+                Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
+            End Try
+        End Function
+
+        <Route("api/MovimentoContabil/detail/{numSeqCarga}")>
+        Public Function GetValues(ByVal numSeqCarga As Integer) As Object
+            Try
+                Dim bll As New MovimentoContabilBLL
+                Return New ResultModel(bll.SelectDatasMovimentoContabilPorCarga(numSeqCarga))
             Catch ex As Exception
                 Return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message)
             End Try

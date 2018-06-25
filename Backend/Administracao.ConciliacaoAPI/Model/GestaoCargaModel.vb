@@ -12,16 +12,16 @@ Namespace Model
       End Set
     End Property
     Private m_codGestaoCarga As Integer
-    Public Property data() As DateTime?
-      Get
-        Return m_data
-      End Get
-      Set
-        m_data = Value
-      End Set
-    End Property
-    Private m_data As DateTime?
-    Public Property dataMovimentacao() As DateTime
+        Public Property data() As DateTime
+            Get
+                Return m_data
+            End Get
+            Set
+                m_data = Value
+            End Set
+        End Property
+        Private m_data As DateTime
+        Public Property dataMovimentacao() As DateTime
       Get
         Return m_dataMovimentacao
       End Get

@@ -32,17 +32,17 @@ Namespace Code.GestaoCarga
 
       Try
         If reader.Read() Then
-          gestaoCarga = New GestaoCargaModel() With {
-               .codGestaoCarga = reader.GetInt32(0),
-              .data = reader.GetDateTime(1),
-              .dataMovimentacao = reader.GetDateTime(2),
+                    gestaoCarga = New GestaoCargaModel() With {
+              .codGestaoCarga = reader.GetInt32(0),
+              .dataMovimentacao = reader.GetDateTime(1),
+              .data = reader.GetDateTime(2),
               .tipo = reader.GetString(3),
               .versao = reader.GetInt32(4),
               .versaoOficial = reader.GetString(5),
               .valor = reader.GetFloat(6),
                .versaoOficialLabel = If(reader.GetString(5) = "1", "Sim", "Não")
           }
-        End If
+                End If
 
 
         Return gestaoCarga
@@ -101,10 +101,10 @@ Namespace Code.GestaoCarga
       Try
 
         While reader.Read()
-          gestaoCarga.Add(New GestaoCargaModel() With {
+                    gestaoCarga.Add(New GestaoCargaModel() With {
                         .codGestaoCarga = reader.GetInt32(0),
-                        .data = reader.GetDateTime(1),
-                        .dataMovimentacao = reader.GetDateTime(2),
+                        .dataMovimentacao = reader.GetDateTime(1),
+                        .data = reader.GetDateTime(2),
                         .tipo = reader.GetString(3),
                         .versao = reader.GetInt32(4),
                         .versaoOficial = reader.GetString(5),
@@ -114,7 +114,7 @@ Namespace Code.GestaoCarga
                         .valor = reader.GetFloat(8),
                         .quantidade = reader.GetInt32(9)
                     })
-        End While
+                End While
 
 
         Return gestaoCarga

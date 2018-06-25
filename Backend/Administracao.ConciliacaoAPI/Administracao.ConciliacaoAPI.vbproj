@@ -218,6 +218,9 @@
     <Compile Include="Code\MovimentoAcerto\MovimentoAcertoBLL.vb" />
     <Compile Include="Code\MovimentoAcerto\MovimentoAcertoDAL.vb" />
     <Compile Include="Code\MovimentoAcerto\MovimentoAcertoSQL.vb" />
+    <Compile Include="Code\MovimentoAging\MovimentoAgingBLL.vb" />
+    <Compile Include="Code\MovimentoAging\MovimentoAgingDAL.vb" />
+    <Compile Include="Code\MovimentoAging\MovimentoAgingSQL.vb" />
     <Compile Include="Code\MovimentoConciliacao\MovimentoConciliacaoBLL.vb" />
     <Compile Include="Code\MovimentoConciliacao\MovimentoConciliacaoDAL.vb" />
     <Compile Include="Code\MovimentoConciliacao\MovimentoConciliacaoSQL.vb" />
@@ -256,6 +259,7 @@
     <Compile Include="Controllers\GestaoCargaController.vb" />
     <Compile Include="Controllers\IntervaloController.vb" />
     <Compile Include="Controllers\MovimentoAcertoController.vb" />
+    <Compile Include="Controllers\MovimentoAgingController.vb" />
     <Compile Include="Controllers\MovimentoConciliacaoController.vb" />
     <Compile Include="Controllers\MovimentoContabilController.vb" />
     <Compile Include="Controllers\MovimentoTituloController.vb" />
@@ -355,6 +359,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\MovimentoAging\" />
     <Folder Include="Views\MovimentoTitulo\" />
     <Folder Include="Views\RelatorioAging\" />
   </ItemGroup>
